@@ -40,6 +40,8 @@
     [self getAdvertisingImage];
     
     //github提交测试
+    
+    //github branch 测试
     return YES;
 }
 
