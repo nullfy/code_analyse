@@ -13,3 +13,6 @@ Creating a new branch is quick and simple
 //分支冲突
 Creating a new branch is quick adn simple
 >>>>>>> feature1
+
+
+分支管理策略
