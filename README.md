@@ -16,3 +16,5 @@ Creating a new branch is quick adn simple
 
 
 分支管理策略
+
+//bug分支
