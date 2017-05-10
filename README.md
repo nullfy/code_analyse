@@ -1,20 +1,10 @@
-# mumuno
-mumu first update
-mumu second update
-
-<<<<<<< HEAD
-//git 分支合并
-
-//git 分支master修改
-
-//master add
-Creating a new branch is quick and simple
-=======
-//分支冲突
-Creating a new branch is quick adn simple
->>>>>>> feature1
+# NoteBook
 
 
-分支管理策略
+# AD
 
-//bug分支
+用于启动页的广告，支持本地缓存
+
+#MMKit
+
+对YY大神的膜拜项目，主要是在拜读大神的代码过程中对未知的问题进行的一些总结
