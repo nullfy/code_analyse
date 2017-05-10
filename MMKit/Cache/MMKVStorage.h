@@ -2,7 +2,7 @@
 ////  MMKvStorage.h
 ////  PracticeKit
 ////
-////  Created by 李晓东 on 17/1/12.
+////  Created by 晓东 on 17/1/12.
 ////  Copyright © 2017年 Xiaodong. All rights reserved.
 ////
 //
