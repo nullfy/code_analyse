@@ -7,7 +7,7 @@
 //
 
 #import "MMDiskCache.h"
-#import "MMKvStorage.h"
+#import "MMKVStorage.h"
 #import "NSString+MMAdd.h"
 #import "UIDevice+MMAdd.h"
 #import <objc/runtime.h>
@@ -270,7 +270,7 @@ static void _MMDiskCacheSetGlobal(MMDiskCache *cache){
     }
     
     Lock();
-    //[_kv saveItemWithKey:key value:value filename:filename extendedData:extendedData];
+    [_kv saveItemWithKey:key value:value fileName:filename extendedData:extendedData];
     Unlock();
 }
 
@@ -434,9 +434,5 @@ static void _MMDiskCacheSetGlobal(MMDiskCache *cache){
     Unlock();
     return enabled;
 }
-
-
-
-
 
 @end

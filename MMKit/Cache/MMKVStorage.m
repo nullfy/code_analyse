@@ -5,177 +5,6 @@
 ////  Created by 晓东 on 17/1/12.
 ////  Copyright © 2017年 Xiaodong. All rights reserved.
 ////
-//
-//#import "MMKVStorage.h"
-//#import "UIApplication+MMAdd.h"
-//#import <UIKit/UIKit.h>
-//#import <time.h>
-//
-//#if __has_include(<sqlite3.h>)
-//#import <sqlite3.h>
-//#else
-//#import "sqlite3.h"
-//#endif
-//
-//static const NSUInteger kMaxErroRetryCount = 8;
-//static const NSTimeInterval kMinRetryTimeInterval = 2.0;
-//static const int kPathLengthMax = PATH_MAX -64;
-//static NSString *const kDBFileName = @"mainfest.sqlite";
-//static NSString *const kDBShmFileName = @"mainfest.sqlite-shm";
-//static NSString *const kDBWalFileName = @"mainfest.sqlite-wal";
-//static NSString *const kDataDirectioryName = @"data";
-//static NSString *const kTrashDirectoryName = @"trash";
-//
-//@implementation MMKVStorageItem
-//
-//@end
-//
-//@implementation MMKVStorage {
-//    dispatch_queue_t _trashQueue;
-//
-//    NSString *_path;
-//    NSString *_dbPath;
-//    NSString *_dataPath;
-//    NSString *_trashPath;
-//
-//    sqlite3 *_db;
-//    CFMutableDictionaryRef _dbStmtCache;
-//    NSTimeInterval _dbLastOpenErrorTime;
-//    NSUInteger _dbOpenErrorCount;
-//}
-//
-//- (BOOL)_dbOpen {
-//    if (_db ) return YES;
-//    int result = sqlite3_open(_dbPath.UTF8String, &_db);
-//    if (result == SQLITE_OK) {
-//        CFDictionaryKeyCallBacks keyCallbacks = kCFCopyStringDictionaryKeyCallBacks;
-//        CFDictionaryValueCallBacks valueCallbacks = {0};
-//        _dbStmtCache = CFDictionaryCreateMutable(CFAllocatorGetDefault(), 0, &keyCallbacks, &valueCallbacks);
-//        _dbLastOpenErrorTime = 0;
-//        _dbOpenErrorCount = 0;
-//        return YES;
-//    } else {
-//        _db = NULL;
-//        if (_dbStmtCache) CFRelease(_dbStmtCache);
-//        _dbStmtCache = NULL;
-//        _dbLastOpenErrorTime = CACurrentMediaTime();
-//        _dbOpenErrorCount++;
-//        if (_errorLogsEnabled) {
-//            NSLog(@"%s line:%d sqlite open failed (%d).",__FUNCTION__, __LINE__, result);
-//        }
-//        return NO;
-//    }
-//}
-//
-//- (BOOL)_dbClose {
-//    if (!_db) return YES;
-//
-//    int result = 0;
-//    BOOL retry = NO;
-//    BOOL stmtFinalized = NO;
-//
-//    if (_dbStmtCache) CFRelease(_dbStmtCache);
-//    _dbStmtCache = NULL;
-//
-//    do {
-//        retry = NO;
-//        result = sqlite3_close(_db);
-//        if (result == SQLITE_BUSY || result == SQLITE_LOCKED) {
-//            if (!stmtFinalized) {
-//                stmtFinalized = YES;
-//                /*
-//                 因为你可以把 sqlite3_stmt * 所表示的内容看成是 sql语句，但是实际上它不是我们所熟知的sql语句。它是一个已经把sql语句解析了的、用sqlite自己标记记录的内部数据结构。
-//                 */
-//                sqlite3_stmt *stmt;
-//                while ((stmt = sqlite3_next_stmt(_db, nil)) != 0) {
-//                    sqlite3_finalize(stmt);
-//                    retry = YES;
-//                }
-//
-//            }
-//        } else if (result != SQLITE_OK) {
-//            if (_errorLogsEnabled) {
-//                /*
-//                 人如其名 __FUNCTION__  就是函数名    数据类型char const*
-//                 __LINE__      就是行号     数据类型是 int
-//                 */
-//                NSLog(@"%s line:%d sqlite close failed (%d).",__FUNCTION__, __LINE__, result);
-//            }
-//        }
-//    } while (retry);
-//    _db = NULL;
-//    return YES;
-//}
-//
-//- (BOOL)_dbCheck {
-//    if (!_db) {
-//        if (_dbOpenErrorCount < kMaxErroRetryCount && CACurrentMediaTime() - _dbLastOpenErrorTime > kMinRetryTimeInterval) {
-//            return [self _dbOpen] && [self _dbInitialize];
-//        } else {
-//            return NO;
-//        }
-//    }
-//    return YES;
-//}
-//
-//- (BOOL)_dbInitialize {
-//    NSString *sql = @"pragma journal_mode = wal; pragma synchronous = normal; create table if not exists mainfest (key text, filename text, size integer, inline_data blob, modification_time integer, last_access_time integer, extended_data blob, primary key(key)); create index if not exists last_access_time_idx on mainfest(last_access_time);";
-//    return [self _dbExcute:sql];
-//}
-//
-//- (void)_dbCheckPoint {
-//    if (![self _dbCheck]) return;
-//    sqlite3_wal_checkpoint(_db, NULL);
-//}
-//
-//- (BOOL)_dbExcute:(NSString *)sql {
-//    if (sql.length == 0) return NO;
-//    if (![self _dbCheck]) return NO;
-//
-//    char *error = NULL;
-//    int result = sqlite3_exec(_db, sql.UTF8String, NULL, NULL, &error);
-//    if (error) {
-//        if (_errorLogsEnabled) NSLog(@"%s line: %d sqlite exec error (%d) : %s",__FUNCTION__, __LINE__, result, error);
-//        sqlite3_free(error);
-//    }
-//    return result == SQLITE_OK;
-//}
-//
-//- (sqlite3_stmt *)_dbPrepareStmt:(NSString *)sql {
-//    if (![self _dbCheck] || sql.length == 0 || !_dbStmtCache) return NULL;
-//    sqlite3_stmt *stmt = (sqlite3_stmt *)CFDictionaryGetValue(_dbStmtCache, (__bridge const void *)(sql));
-//    if (!stmt) {
-//        int result = sqlite3_prepare_v2(_db, sql.UTF8String, -1, &stmt, NULL);
-//        if (result != SQLITE_OK) {
-//            if (_errorLogsEnabled) NSLog(@"%s line:%d sqlite stmt prepare error:(%d) : %s", __FUNCTION__, __LINE__, result, sqlite3_errmsg(_db));
-//            return NULL;
-//        }
-//        CFDictionarySetValue(_dbStmtCache, (__bridge const void *)(sql), stmt);
-//    } else {
-//        sqlite3_reset(stmt);
-//    }
-//    return stmt;
-//}
-//
-//- (NSString *)_dbJoinedKeys:(NSArray *)keys {
-//    NSMutableString *string = [NSMutableString new];
-//    for (NSUInteger i = 0, max = keys.count; i < max; i++) {
-//        [string appendString:@"?"];
-//        if (i + 1 != max) {
-//            [string appendString:@","];
-//        }
-//    }
-//    return string;
-//}
-//
-//- (void)_dbBindJoinedKeys:(NSArray *)keys stmt:(sqlite3_stmt *)stmt fromIndex:(int)index {
-//
-//}
-//
-//@end
-//
-//
-
 #import "MMKVStorage.h"
 #import "UIApplication+MMAdd.h" //在dealloc中用到
 #import <time.h>
@@ -305,6 +134,31 @@
          sqlite3_exec()的替代，sqlite3_prepare(), sqlite3_step(), sqlite3_finalize()
             1.共同涉及到的类型sqlite3_stmt  
             2.这三个函数实现将sql语句编译成字节码，然后执行释放，这三个函数都有V2版本，应该尽量使用新版，V2版本和原版本都是基于UTF-8编码，在返回值上V2版本更丰富
+            3.函数原型
+                int sqlite3_prepare(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail)
+                int sqlite3_prepare_v2(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail)
+                int sqlite3_step(sqlite3_stmt *)
+                int sqlite3_finalize(sqlite3_stmt *pStmt)
+            4.参数说明 sqlite3_prepare()
+                1.参数为sqlite3 *类型，为指向sqlite3_open() 函数打开的数据库连接
+                2.参数为需要编译成字节码的sql 语句，如果输入的参数有多条sql 语句，只有第一个sql语句被编译
+                3.若小于0 的值，系统会自动读取第一个参数一直到出现字符结束符，若该参数大于0，则它表明要读入的sql 的最大的程度，建议设置其值为sql语句的字节数加上字符结束符后的值，执行的效率会提升
+                4.返回编译好的sqlite3_stmt指针， 若第一个参数不包含sql 语句或传进来的sql 语句有错，则此函数返回时被置为NULL
+                5.参数若不为NULL，则它会指向第一条sql 语句结尾后面的第一个字节，这个参数用于指向剩下的未编译的语句
+            5.函数功能说明
+                sqlite3_prepare() 函数用于将sql语句编译成字节码，并通过sqlite3_stmt 类型的参数返回，
+                sqlite3_step()  函数通过使用这个参数一次或多次来执行这个sql 语句，更具sqlite3_prepare() 函数版本不同，具体的操作也不同
+                sqlite3_finalize()  最后需要调用此函数将这个准备的sql 声明（sqlite3_stmt类型的参数） 销毁，避免内存泄漏
+            6.返回值
+                sqlite3_prepare() 系列函数和sqlite3_finalize() 函数执行成功返回SQLITE_OK, 否则返回错误码，
+                sqlite3_step() 函数返回根据sqlite3_prepare()版本不同
+                    老版本有：   
+                        SQLITE_BUSY:无法获取数据库锁来执行次操作
+                        SQLITE_DONE: sql 语句执行完成，在没有再次调用sqlite3_reset() 重设SQL 到初始状态前不能在调用sqlite3_setp()
+                        SQLITE_ROW: 如果执行的SQL语句返回了数据，则每次返回一行新的数据
+                        SQLITE_ERROR: 执行SQL语句出错
+                        SQLITE_MISUSE: 未知
+                    新版本：返回任何可能的结果编码
          
          */
         if (result == SQLITE_BUSY || result == SQLITE_LOCKED) {
@@ -416,6 +270,18 @@ static NSString *const kTrashDirectoryName = @"trash";
 }
 
 - (BOOL)_dbSaveWithKey:(NSString *)key value:(NSData *)value fileName:(NSString *)fileName extendedData:(NSData *)extendedData {
+    /**
+     SQLITE 的写入步骤
+     0.sqlite3_open(_dbPath.UTF8String, &_db);
+     1.sqlite3_wal_checkpoint(_db,NULL) //在_dbInitialize
+     2.sqlite3_exec(_db, sql.UTF8String, NULL, NULL, &error)
+     3.sqlite3_prepare_v2(_db, sql.UTF8String, -1, &stmt, NULL);
+     4._dbStmtCache中存在该stmt，还需要sqlite3_reset(stmt)
+     5.sqlite3_bind_**(stmt, 1, ***, -1, NULL)      //不同类型的数据传入的参数会不同，详情见代码
+     6.sqlite3_step(stmt)
+     */
+
+    
     NSString *sql = @"insert or replace into mainfest (key, filename, size, inline_data, modification_time, last_access_time, extended_data) values (?1, ?2, ?3, ?4, ?5, ?6, ?7);";
     sqlite3_stmt *stmt = [self _dbPrepareStmt:sql];
     if (!stmt) return NO;
@@ -818,6 +684,13 @@ static NSString *const kTrashDirectoryName = @"trash";
 
 #pragma mark    -File
 
+/**
+ 文件操作主要用到了以下几种方法
+ 1.-(BOOL)writeToFile:(NSString *)file  atomically:(BOOL)useAuxiliaryFile       写入到指定目录下
+ 2.+(NSData *)dataWithContentesOfFile:(NSString *)path                          读取指定目录下文件
+ 3.-(BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error             清理指定目录下文件
+ 4.-(BOOL)moveItemAtPath:(NSString *)path toPath:(NSString *)path error:(NSError **)error   移动指定目录下文件到另外一文件目录下
+ */
 - (BOOL)_fileWriteWithName:(NSString *)filename data:(NSData *)data {
     NSString *path = [_dataPath stringByAppendingPathComponent:filename];
     return [data writeToFile:path atomically:NO];
@@ -1248,20 +1121,26 @@ static NSString *const kTrashDirectoryName = @"trash";
 
 - (NSDictionary *)getItemValueForKeys:(NSArray *)keys {
     NSMutableArray *items = (NSMutableArray *)[self getItemForKeys:keys];
+    NSMutableDictionary *kv = [NSMutableDictionary new];
+    for (MMKVStorageItem *item in items) {
+        if (item.key && item.value) {
+            [kv setObject:item.value forKey:item.key];
+        }
+    }
+    return kv.count ? kv : nil;
 }
 
+- (BOOL)itemExistsForKey:(NSString *)key {
+    if (key.length == 0) return NO;
+    return [self _dbGetItemCountWithKey:key] > 0;
+}
 
+- (int)getItemsCount {
+    return [self _dbGetTotalItemCount];
+}
 
-
-
-
-
-
-
-
-
-
-
-
+- (int)getItemsSize {
+    return [self _dbGetTotalItemSize];
+}
 
 @end
