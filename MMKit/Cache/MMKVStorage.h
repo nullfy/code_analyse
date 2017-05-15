@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+
+/**
+ MMKVStorageItem 为缓存的最小一层NSObject封装
+ 
+ 在MMKVStorage初始化时会根据路径 做两种缓存方式
+ 1.以NSFileManager为基础的文件
+ 2.基于Sqlite3 的数据库缓存
+ 
+ 文件缓存
+ a.定义全局的_dataPath 与 _trashPath来保存缓存文件与垃圾缓存
+ b.清理缓存垃圾由自定义_trashQueue 处理
+ */
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MMKVStorageItem : NSObject

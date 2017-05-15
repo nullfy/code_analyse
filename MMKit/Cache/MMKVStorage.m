@@ -281,7 +281,6 @@ static NSString *const kTrashDirectoryName = @"trash";
      6.sqlite3_step(stmt)
      */
 
-    
     NSString *sql = @"insert or replace into mainfest (key, filename, size, inline_data, modification_time, last_access_time, extended_data) values (?1, ?2, ?3, ?4, ?5, ?6, ?7);";
     sqlite3_stmt *stmt = [self _dbPrepareStmt:sql];
     if (!stmt) return NO;

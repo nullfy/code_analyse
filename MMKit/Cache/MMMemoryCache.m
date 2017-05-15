@@ -289,7 +289,6 @@ static inline dispatch_queue_t MMMemoryCacheGetReleaseQueue() {
     }
 }
 
-
 - (void)_appDidReciveMemoryWarningNotification {
     if (self.didReceiveMemoryWaringBlock) {
         self.didReceiveMemoryWaringBlock(self);
@@ -475,7 +474,6 @@ static inline dispatch_queue_t MMMemoryCacheGetReleaseQueue() {
 - (void)trimToAge:(NSTimeInterval)age {
     [self _trimToAge:age];
 }
-
 
 - (NSString *)description {
     if (_name) return [NSString stringWithFormat:@"<%@: %p>(%@)",self.class,self,_name];
