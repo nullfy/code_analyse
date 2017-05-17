@@ -8,7 +8,8 @@
 
 #import "MMClassInfo.h"
 
-MMEncodingType MMEncodingGetType(const char *typeEncoding) {
+MMEncodingType MMEncodingGetType(const char *typeEncoding
+                                 ) {
     char *type = (char *)typeEncoding;
     if (!type) return MMEncodingTypeUnknown;
     size_t len = strlen(type);

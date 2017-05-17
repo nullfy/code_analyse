@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_OPTIONS(NSUInteger, MMEncodingType) {
-    MMEncodingTypeMask              = 0xFF,
+    MMEncodingTypeMask              = 0xFF, //255
     MMEncodingTypeUnknown           = 0,
     MMEncodingTypeVoid              = 1,
     MMEncodingTypeBool              = 2,
@@ -38,20 +38,20 @@ typedef NS_OPTIONS(NSUInteger, MMEncodingType) {
     MMEncodingTypeCString           = 21,
     MMEncodingTypeCArray            = 22,
     
-    MMEncodingTypeQualifierMask             = 0xFF00,
-    MMEncodingTypeQualifierConst            = 1 << 8,
-    MMEncodingTypeQualifierIn               = 1 << 9,
-    MMEncodingTypeQualifierInout            = 1 << 10,
-    MMEncodingTypeQualifierOut              = 1 << 11,
-    MMEncodingTypeQualifierBycopy           = 1 << 12,
-    MMEncodingTypeQualifierByref            = 1 << 13,
-    MMEncodingTypeQualifierOneway           = 1 << 14,
+    MMEncodingTypeQualifierMask             = 0xFF00,   //65280
+    MMEncodingTypeQualifierConst            = 1 << 8,   //100000000              256
+    MMEncodingTypeQualifierIn               = 1 << 9,   //1000000000             512
+    MMEncodingTypeQualifierInout            = 1 << 10,  //10000000000            1024
+    MMEncodingTypeQualifierOut              = 1 << 11,  //100000000000           2048
+    MMEncodingTypeQualifierBycopy           = 1 << 12,  //1000000000000          4096
+    MMEncodingTypeQualifierByref            = 1 << 13,  //10000000000000         8192
+    MMEncodingTypeQualifierOneway           = 1 << 14,  //100000000000000
     
-    MMEncodingTypePropertyMask              = 0xFF0000,
-    MMEncodingTypePropertyReadonly          = 1 << 16,
-    MMEncodingTypePropertyCopy              = 1 << 17,
-    MMEncodingTypePropertyRetain            = 1 << 18,
-    MMEncodingTypePropertyNonatomic         = 1 << 19,
+    MMEncodingTypePropertyMask              = 0xFF0000,// 16711680
+    MMEncodingTypePropertyReadonly          = 1 << 16,  //1000000000000000          32768
+    MMEncodingTypePropertyCopy              = 1 << 17,  //10000000000000000         65536
+    MMEncodingTypePropertyRetain            = 1 << 18,  //100000000000000000        131072
+    MMEncodingTypePropertyNonatomic         = 1 << 19,  //1000000000000000000
     MMEncodingTypePropertyWeak              = 1 << 20,
     MMEncodingTypePropertyCustomGetter      = 1 << 21,
     MMEncodingTypePropertyCustomSetter      = 1 << 22,
@@ -59,6 +59,14 @@ typedef NS_OPTIONS(NSUInteger, MMEncodingType) {
 };
 
 MMEncodingType MMEncodingGetType(const char *typeEncoding);
+
+/**
+ 1.IvarInfo         获取变量信息
+ 2.MethodInfo       获取方法信息
+ 3.PropertyInfo     获取属性信息
+ 4.ClassInfo        以上三个封装到classinfo中，同时获取 superclassInfo、metaInfo
+ */
+
 
 @interface MMClassIvarInfo : NSObject
 @property (nonatomic, assign, readonly) Ivar ivar;
