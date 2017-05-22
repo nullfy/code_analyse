@@ -8,6 +8,21 @@
 
 #import "MMImageCoder.h"
 
-@implementation MMImageCoder
+@implementation MMImageFrame
+
+
+
+@end
+
+@implementation MMImageDecoder
+
+
+@end
+
+
+@implementation MMImageEncoder
+
+
+
 
 @end

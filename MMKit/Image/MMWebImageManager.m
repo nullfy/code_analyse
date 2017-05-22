@@ -39,6 +39,7 @@
     _queue = queue;
     _timeout = 15.0f;
     
+    
     return self;
 }
 

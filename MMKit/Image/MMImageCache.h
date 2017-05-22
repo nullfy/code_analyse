@@ -39,7 +39,49 @@ typedef NS_OPTIONS(NSUInteger, MMImageCacheType) {
 
 };
 
+/**
+ imageCache 缓存也是分别做了memoryCache 和 diskCache
+ diskCachePath = [NSSearchPathForDirectoriesInDomains(NSCacheDirectory, NSUserDomainMask, YES), lastObject];
+ diskCachePath/com.ibireme.yykit/images
+ 
+ 
+ allowAnimatedImage 这个属性用于控制从diskMemory读取图片时对gif 进行解码，默认是YES
+ decodeForDisplay   默认是YES 用于控制是否将图片解码成位图到内存中
+ 
+ 方法提供三个方面 都是通过key
+ 1.增改 
+    setImage: forKey:
+    setImage: imageData: forKey: withType:
+ 2.删
+    removeImageForKey:
+    removeImageForKey: withType:
+ 3.查
+    containImageForKey:
+    contaimImageForKey: withType:
+    
+    getImageForKey:
+    getImgaeForKey: withType:
+    getImageForKey: withType: withBlock:
+    getImageDataForKey:
+    getImageDataForKey: withBlock:
+ 
+ 
+ ImageCacheI/O
+ 1.通过创建优先级为NSQualityOfServiceDefault／DISPATCH_QUEUE_PRIORITY_DEFAULT 的队列I／O操作
+ 
+ ImageCacheDecode
+ 1.通过创建优先级为NSQualityOfServiceDefault／DISPATCH_QUEUE_PRIORITY_DEFAULT 的队列进行解码操作
+ 
+ 内部匿名方法
+ 1.获取图片的大小
+ 2.imageData->UIImage
+
+ 
+ */
+
+
 @interface MMImageCache : NSObject
+#pragma mark -Attribute
 
 @property (nullable, copy) NSString *name;
 

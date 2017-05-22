@@ -37,7 +37,7 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
 @interface MMImageCache ()
 
 - (NSUInteger)imageCost:(UIImage *)image;
-- (UIImage *)imageFormData:(NSData *)data;
+- (UIImage *)imageFromData:(NSData *)data;
 
 @end
 
@@ -63,7 +63,7 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
     UIImage *image;
     if (_allowAnimatedImage) {
         image = [[YYImage alloc] initWithData:data scale:scale];
-        //if (_decodeForDisplay) image = [image imageByDecoded];
+        if (_decodeForDisplay) image = [image imageByDecoded];
     } else {
         
     }
@@ -118,9 +118,9 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
     if (!key || (image == nil && imageData.length == 0)) return;
     
     __weak typeof(self) _self = self;
-    if (type & MMImageCacheTypeMemory) {    //add MemoryCache
+    if (type & MMImageCacheTypeMemory) {    //add MemoryCache type 是否包含MMImageCacheTypeMemory
         if (image) {
-            if (image.isDecodedForDisplay) {
+            if (image.isDecodedForDisplay) { //isDecodedForDisplay控制着图片显示在屏幕上是否需要额外的解码  如果已解码好就直接缓存，否则通过DecodeQueue进行解码后再缓存
                 [_memoryCache setObject:image forKey:key withCost:[_self imageCost:image]];
             } else {
                 dispatch_async(MMImageCacheDecodeQueue(), ^{
@@ -133,7 +133,7 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
             dispatch_async(MMImageCacheDecodeQueue(), ^{
                 __strong typeof(_self) self = _self;
                 if (!self) return ;
-                UIImage *newImage = [self imageFormData:imageData];
+                UIImage *newImage = [self imageFromData:imageData];
                 [self.memoryCache setObject:newImage forKey:key withCost:[self imageCost:newImage]];
             });
         }
@@ -141,7 +141,7 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
     
     if (type & MMImageCacheTypeDisk) {
         if (imageData) {
-        
+            [MMDiskCache setExtendedData:[NSKeyedArchiver archivedDataWithRootObject:@(image.scale)] toObject:imageData];
         } else if (image) {
             dispatch_async(MMImageCacheIOQueue(), ^{
                 __strong typeof(_self) self = _self;
@@ -198,13 +198,49 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
     return nil;
 }
 
-- (void)getImageForKey:(NSString *)key withType:(MMImageCacheType)type withBlock:(void (^)(UIImage * _Nullable, MMImageCacheType))block {
-    
+- (void)getImageForKey:(NSString *)key withType:(MMImageCacheType)type withBlock:(void (^)(UIImage * image, MMImageCacheType))block {
+    if (!block) return;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage *image = nil;
+        if (type & MMImageCacheTypeMemory) {
+            image = [_memoryCache objectForKey:key];
+            if (image) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    block(image, MMImageCacheTypeMemory);
+                });
+                return;
+            }
+        }
+        
+        if (type & MMImageCacheTypeDisk) {
+            NSData *data = (id)[_diskCache objectForKey:key];
+            image = [self imageFromData:data];
+            if (image) {
+                [_memoryCache setObject:image forKey:key];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    block(image, MMImageCacheTypeDisk);
+                });
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(nil, MMImageCacheTypeNone);
+        });
+    });
 }
 
 - (NSData *)getImageDataForKey:(NSString *)key {
     return (id)[_diskCache objectForKey:key];
 }
 
+- (void)getImageDataForKey:(NSString *)key withBlock:(void (^)(NSData * imageData))block {
+    if (!block) return;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSData *data = (id)[_diskCache objectForKey:key];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(data);
+        });
+    });
+}
 
 @end

@@ -24,6 +24,20 @@ typedef NS_ENUM(NSUInteger, MMImageType) {
     MMImageTypeOther,
 };
 
+/**
+ iOS从磁盘中加载一张图片，使用UIImageView 显示在屏幕下需要经过以下步骤
+ 1.从磁盘拷贝数据到内核缓冲区
+ 2.从内核缓冲区复制数据到用户空间
+ 3.生成UIImageView，把图像数据赋值给UIImageView
+ 4.如果图像数据为未解码的 PNG／JPG，解码为位图数据
+ 5.CATransaction 捕获到UIImageView layer树的变化
+ 6.主线程Runloop提交CATransaction，开始进行图像渲染
+    6.1.如果数据没有字节对齐，Core Animatiion 会再拷贝一份数据，进行字节对齐
+    6.2.GPU 处理位图数据，进行渲染
+ 
+ */
+
+
 //渲染前处理图片
 typedef NS_ENUM(NSUInteger, MMImageDisposeMehtod) {
     MMImageDisposeNone = 0,
@@ -31,7 +45,7 @@ typedef NS_ENUM(NSUInteger, MMImageDisposeMehtod) {
     MMImageDisposePrevious,
 };
 
-//图片混合
+//图片合成
 typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
     MMImageBlendNone = 0,
     MMImageBlendOver,
@@ -53,6 +67,7 @@ typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
 
 @interface MMImageDecoder : NSObject
 
+#pragma mark  - Attribute
 @property (nullable, nonatomic, readonly) NSData *data;
 @property (nonatomic, readonly) MMImageType type;
 @property (nonatomic, readonly) CGFloat scale;
@@ -62,6 +77,7 @@ typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
 @property (nonatomic, readonly) NSUInteger height;
 @property (nonatomic, readonly, getter = isFinalized) BOOL finalized;
 
+#pragma mark - Public Mehtod
 - (instancetype)initWithScale:(CGFloat)scale NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)updateData:(nullable NSData *)data final:(BOOL)finally;
@@ -80,11 +96,13 @@ typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
 
 @interface MMImageEncoder : NSObject
 
+#pragma mark  - Attribute
 @property (nonatomic, readonly) MMImageType type;
 @property (nonatomic) NSUInteger loopCount;
 @property (nonatomic) BOOL lossless;
 @property (nonatomic) CGFloat quality;
 
+#pragma mark - Public Mehod
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 
