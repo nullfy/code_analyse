@@ -10,10 +10,6 @@
 #import "view.h"
 #import "Person.h"
 
-void viewTest() {
-    view *v = [[view alloc] initWithFrame:NSMakeRect(0, 0, 12, 12)];
-    [v description];
-}
 
 int a = 10;         //全局初始化区
 char *p;            //全局未初始化区
@@ -23,9 +19,9 @@ void memoryTest () {
     //char s[] = "abc";                     //栈
     char *p1;                               //栈
     char *p2 = "124";                       //栈
-    static int c = 0;                       //全局静态初始化
-    char *w1 = (char *)malloc(100*1024*1024);      //
-    char *w2 = (char *)malloc(10);
+    static int c = 0;                       //全局区 的数据初始化区
+    char *w1 = (char *)malloc(100*1024*1024);      //堆区
+    char *w2 = (char *)malloc(10);                 //堆区
     printf("\n\
             全局初始化a    :%p \n\
             全局未初始化*p  :%p\n\
@@ -38,6 +34,11 @@ void memoryTest () {
 
 void varibleTest() {
     [[Person new] test];
+}
+
+void viewTest() {
+    view *v = [[view alloc] initWithFrame:NSMakeRect(0, 0, 12, 12)];
+    [v description];
 }
 
 

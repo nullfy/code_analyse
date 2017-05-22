@@ -10,20 +10,28 @@
 
 
 //全局区
-int a1 = 1;     //全局变量
-static int a2=2;//全局静态变量
-const int a3=3; //全局常量
+int a1 = 1;     //全局区 0x100002520
+static int a2=2;//全局区 0x100002528   全局区自低向高
+const int a3=3; //常量区 0x100001fa0
 
 int add(int a,int b) {
     return a+b;
 }
+/*
+ add: 0x1000014f0 --->
+ main:0x100001510 代码区 自低向高
+ 
+ 地址从下至上
+ add -> main -> a1 -> b2 -> a2 -> a3 -> b3 -> b1
+ add -> main -> a1 -> a2 -> a3 -> b1 -> b2 -> b3
+ */
 
 void main1() {
-    int b1=4;
-    static int b2=5;
-    const int b3 =6;
+    int b1=4;           //栈区
+    static int b2=5;    //常量区 0x100002524
+     int const b3 =6;    //栈区   0x7fff5fbff568     为什么不是常量区呢
     
-    int *p1=malloc(40);
+    int *p1=malloc(40); //堆区   0x100500cd0
     
     printf("全局变量a1:%p\n",&a1);
     printf("全局静态a2:%p\n",&a2);
