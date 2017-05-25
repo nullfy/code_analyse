@@ -23,13 +23,13 @@ void memoryTest () {
     char *w1 = (char *)malloc(100*1024*1024);      //堆区
     char *w2 = (char *)malloc(10);                 //堆区
     printf("\n\
-            全局初始化a    :%p \n\
-            全局未初始化*p  :%p\n\
-            局部static c  :%p\n\
-            局部初始化*p2  :%p\n\
-            局部未初始化*p  :%p\n\
-            局部malloc大w1 :%p\n\
-            局部malloc小w2 :%p\n",&a,&p,&c,&p2,&p1,&w1,&w2);
+           全局初始化a    :%p 数据区\n\
+           全局未初始化*p  :%p\n\
+           局部static c  :%p\n\
+           局部初始化*p2  :%p\n\
+           局部未初始化*p  :%p\n\
+           局部malloc大w1 :%p\n\
+           局部malloc小w2 :%p\n",&a,&p,&c,&p2,&p1,&w1,&w2);
 }
 
 void varibleTest() {

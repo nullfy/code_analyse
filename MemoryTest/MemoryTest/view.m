@@ -29,19 +29,28 @@ int add(int a,int b) {
 void main1() {
     int b1=4;           //栈区
     static int b2=5;    //常量区 0x100002524
-     int const b3 =6;    //栈区   0x7fff5fbff568     为什么不是常量区呢
+    int const b3 =6;    //栈区   0x7fff5fbff568     为什么不是常量区呢
     
     int *p1=malloc(40); //堆区   0x100500cd0
     
-    printf("全局变量a1:%p\n",&a1);
-    printf("全局静态a2:%p\n",&a2);
-    printf("全局常量a3:%p\n",&a3);
-    printf("局部变量b1:%p\n",&b1);
-    printf("局部静态b2:%p\n",&b2);
-    printf("局部常量b3:%p\n",&b3);
-    printf("局部创建p1:%p\n",p1);
-    printf("无返回main:%p\n",&main1);
-    printf("有返回add:%p\n",&add);
+    printf("\
+           全局变量a1:%p\n",&a1);
+    printf("\
+           全局静态a2:%p\n",&a2);
+    printf("\
+           全局常量a3:%p\n",&a3);
+    printf("\
+           局部变量b1:%p\n",&b1);
+    printf("\
+           局部静态b2:%p\n",&b2);
+    printf("\
+           局部常量b3:%p\n",&b3);
+    printf("\
+           局部创建p1:%p\n",p1);
+    printf("\
+           无返回main:%p\n",&main1);
+    printf("\
+           有返回add:%p\n",&add);
 }
 
 NSView  * view1;
@@ -58,9 +67,9 @@ NSView  * view1;
         view1 = [NSView new];
         NSView *v3 = [[NSView alloc] init];
         printf("\n\
-                全局View v1:%p\n\
-                匿名全局 v2:%p\n\
-                局部View v3:%p\n\n",view1, _view2, v3);
+               全局View v1:%p\n\
+               匿名全局 v2:%p\n\
+               局部View v3:%p\n\n",view1, _view2, v3);
         main1();
     }
     return self;
