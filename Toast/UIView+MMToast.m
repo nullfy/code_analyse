@@ -10,7 +10,7 @@
 
 static CGFloat const kToastDuration = 1.5;
 static CGFloat const kToastAnimationTime = 0.1;
-static CGFloat const kToastFontSize = 14.f;
+static CGFloat const kToastFontSize = 12.f;
 #define kToastFont(font) [UIFont systemFontOfSize:font]
 @implementation UIView (MMToast)
 
@@ -53,10 +53,10 @@ static CGFloat const kToastFontSize = 14.f;
         case MMToastPositionTop:
             contentLabelY = 100.0;
             break;
-            case MMToastPositionMiddle:
+        case MMToastPositionMiddle:
             contentLabelY = screenSize.height / 2.0;
             break;
-            case MMToastPositionBottom:
+        case MMToastPositionBottom:
             contentLabelY = screenSize.height - 100.0;
         default:
             break;
@@ -66,11 +66,11 @@ static CGFloat const kToastFontSize = 14.f;
             fontColor = [UIColor whiteColor];
             backColor = [UIColor blackColor];
             break;
-            case MMToastStyleBlur:
+        case MMToastStyleBlur:
             fontColor = [UIColor colorWithWhite:0.95 alpha:0.9];
             backColor = [UIColor colorWithWhite:0.3 alpha:0.9];
             break;
-            case MMToastStyleBlack:
+        case MMToastStyleBlack:
             fontColor = [UIColor blackColor];
             backColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
             break;
@@ -96,24 +96,47 @@ static CGFloat const kToastFontSize = 14.f;
     
     NSMutableDictionary *attr = [NSMutableDictionary new];
     attr[NSFontAttributeName] = kToastFont(kToastFontSize);
-    //attr[NSParagraphStyleAttributeName] = ;
     
-    CGSize msgSize = [msg boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
-                                       options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
-                                    attributes:attr
-                                       context:nil].size;
+    
+    //[msg sizeForFont:<#(nonnull UIFont *)#> size:<#(CGSize)#> mode:<#(NSLineBreakMode)#>]
+    CGSize result;
+    UIFont *font = kToastFont(kToastFontSize);
+    if ([msg respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
+        NSMutableDictionary *attr = [NSMutableDictionary new];
+        attr[NSFontAttributeName] = kToastFont(kToastFontSize);
+        
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        attr[NSParagraphStyleAttributeName] = paragraphStyle;
+        
+        CGRect rect = [msg boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
+                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                     attributes:attr
+                                        context:nil];
+        result = rect.size;
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        result = [msg sizeWithFont:font constrainedToSize:CGSizeMake(MAXFLOAT, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+#pragma clang diagnostic pop
+    }
+    
+    
+    CGSize msgSize = result;
     CGFloat contentLabelWidth = msgSize.width + padding * 2;
     NSInteger multiple = (NSInteger)(msgSize.width / (screenSize.width - padding * 2)) + 1;
     if (multiple > 1) contentLabelWidth = screenSize.width - padding * 2;
     
     UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake((screenSize.width - contentLabelWidth) / 2.0, contentLabelY, contentLabelWidth, multiple * msgSize.height + padding)];
     contentLabel.numberOfLines = 0;
+    contentLabel.font = font;
     contentLabel.backgroundColor = backColor;
     contentLabel.textColor = fontColor;
     contentLabel.textAlignment = NSTextAlignmentCenter;
     contentLabel.center = CGPointMake(screenSize.width/2, contentLabelY);
     contentLabel.text = msg;
     contentLabel.layer.cornerRadius = 8.0;
+    contentLabel.layer.masksToBounds = YES;
     contentLabel.transform = CGAffineTransformMakeScale(0.5, 0.6);
     [self addSubview:contentLabel];
     
