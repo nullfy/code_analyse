@@ -68,7 +68,7 @@ static CGFloat const kToastFontSize = 12.f;
             break;
         case MMToastStyleBlur:
             fontColor = [UIColor colorWithWhite:0.95 alpha:0.9];
-            backColor = [UIColor colorWithWhite:0.3 alpha:0.9];
+            backColor = [UIColor colorWithWhite:0.45 alpha:0.85];
             break;
         case MMToastStyleBlack:
             fontColor = [UIColor blackColor];
@@ -132,7 +132,8 @@ static CGFloat const kToastFontSize = 12.f;
     contentLabel.font = font;
     contentLabel.backgroundColor = backColor;
     contentLabel.textColor = fontColor;
-    contentLabel.textAlignment = NSTextAlignmentCenter;
+    contentLabel.textAlignment = NSTextAlignmentJustified;
+    if (multiple <= 1) contentLabel.textAlignment = NSTextAlignmentCenter;
     contentLabel.center = CGPointMake(screenSize.width/2, contentLabelY);
     contentLabel.text = msg;
     contentLabel.layer.cornerRadius = 8.0;
