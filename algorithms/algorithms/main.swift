@@ -175,6 +175,15 @@ let num2 = [6, 4, 2];
 let m = SortArary().findMedianSortedArrays(num3, num2);
 //print(m);
 
+//var arr = [1,2,2,2,4]
+//let ali = leetcode.removeElment(array: &arr, n: arr.count, elem: 2)
 
-let ali = leetcode.removeDupliteFromSortedArray(array: &num)
+var arr = [1,4,4,6,7,8]
+let ali = leetcode.removeDupliteFromSortedArray(array: &arr)
+
+//var arr = [1,3,3,3,5,5,7,8]
+//let ali = leetcode.removeMultipDupliteFromSortedArray(array: &arr)
+
+//var arr = [1,9,9,9]
+//let ali = leetcode.plusOne(array: &arr)
 print(ali)
