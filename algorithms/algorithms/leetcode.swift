@@ -144,4 +144,47 @@ class leetcode: NSObject {
         array.insert(1, at: 0)
         return array
     }
+    
+    /*
+     Given numRows, generate the first numRows of Pascal's triangle.
+     For example, given numRows = 5, Return
+     
+     [
+     [1]
+     [1, 1]
+     [1, 2, 1]
+     [1, 3, 3, 1]
+     [1, 4, 6, 4, 1]
+     [1, 5, 10, 10, 5, 1]
+     [1, 6, 15, 20, 15, 6, 1]
+     [1, 7, 21, 35, 35, 21, 7, 1]
+     ]
+     要得到一个帕斯卡三角，我们只需要找到规律即可。
+     第k层有k个元素
+     每层第一个以及最后一个元素值为1
+     对于第k（k > 2）层第n（n > 1 && n < k）个元素A[k][n]，A[k][n] = A[k-1][n-1] + A[k-1][n]
+     
+     
+     */
+    public class func generatePascaltriangle(row: Int) -> [[Int]] {
+        if row <= 0 {
+            return [[Int]]()
+        }
+        var array = [[Int]]()
+        for i in 1...row {
+            var sub = [Int]()
+            for j in 0...i-1 {
+                if j == 0 || (j > 0 && j == i-1){
+                    sub.append(1)
+                } else {
+                    let before = array[i-2]
+                    sub.append(before[j]+before[j-1])
+                    //print("i--",i,"j---j",before)
+                }
+            }
+            array.append(sub)
+            print(sub)
+        }
+        return array
+    }
 }
