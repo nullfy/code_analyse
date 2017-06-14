@@ -187,4 +187,35 @@ class leetcode: NSObject {
         }
         return array
     }
+    
+    
+    /*
+     Given an index k, return the kth row of the Pascal's triangle.
+     For example, given k = 3, Return [1,3,3,1].
+     
+     帕斯卡三角II 与上面不同的是不需要返回从1到n的所有数组，只要n对应的数组
+     */
+    
+    public class func generatePascalTriangleII(_ row: Int) -> [Int] {
+        if row <= 0 {
+            return [[Int]]()
+        }
+        var array = [[Int]]()
+        for i in 1...row {
+            var sub = [Int]()
+            for j in 0...i-1 {
+                if j == 0 || (j > 0 && j == i-1){
+                    sub.append(1)
+                } else {
+                    let before = array[i-2]
+                    sub.append(before[j]+before[j-1])
+                    //print("i--",i,"j---j",before)
+                }
+            }
+            array.append(sub)
+            print(sub)
+        }
+        return array[row-1]
+    }
+    
 }
