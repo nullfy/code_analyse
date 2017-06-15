@@ -170,8 +170,8 @@ class SortArary {
 }
 
 //
-let num3 = [9, 8, 10];
-let num2 = [6, 4, 2];
+let num3 = [7, 9, 10];
+let num2 = [1, 3, 5];
 let m = SortArary().findMedianSortedArrays(num3, num2);
 //print(m);
 
@@ -187,5 +187,7 @@ let m = SortArary().findMedianSortedArrays(num3, num2);
 //var arr = [1,9,9,9]
 //let ali = leetcode.plusOne(array: &arr)
 
-let ali = leetcode.generatePascaltriangle(row: 8)
+//let ali = leetcode.generatePascaltriangle(row: 8)
+
+let ali = leetcode.mergeSortedArray(array1: num2, array2: num3)
 print(ali)

@@ -194,11 +194,13 @@ class leetcode: NSObject {
      For example, given k = 3, Return [1,3,3,1].
      
      帕斯卡三角II 与上面不同的是不需要返回从1到n的所有数组，只要n对应的数组
+     
+     以下是我比较偷懒的做法啦
      */
     
     public class func generatePascalTriangleII(_ row: Int) -> [Int] {
         if row <= 0 {
-            return [[Int]]()
+            return [Int]()
         }
         var array = [[Int]]()
         for i in 1...row {
@@ -217,5 +219,52 @@ class leetcode: NSObject {
         }
         return array[row-1]
     }
+    
+    /*
+     Given two sorted integer arrays A and B, merge B into A as one sorted array.
+     Note: You may assume that A has enough space (size that is greater or equal to m + n) to hold
+     additional elements from B. The number of elements initialized in A and B are m and n respectively.
+     
+     合并两个已经排序好的数组 返回新的排序数组
+     
+     题解：如果这题用swift来做的话，直接用高阶函数sorted 就好了>_<
+     但是
+     */
+    
+    public class func mergeSortedArray(array1: [Int], array2: [Int]) -> [Int] {
+        var array = [Int]()
+        if array1.count == 0 && array2.count == 0 {
+            return array
+        }
+        //array.append(contentsOf: array1)
+        //array.append(contentsOf: array2)
+        //return array.sorted()
+        
+        var n = array1.count + array2.count - 1
+        var i = array1.count - 1
+        var j = array2.count - 1
+        while n >= 0{
+            if i >= 0 && j >= 0 {
+                if array1[i] > array2[j] {
+                    array.insert(array1[i], at: 0)
+                    i -= 1
+                } else {
+                    array.insert(array2[j], at: 0)
+                    j -= 1
+                }
+            } else if j >= 0 {
+                array.insert(array2[j], at: 0)
+                j -= 1
+            } else if i >= 0 {
+                array.insert(array1[i], at: 0)
+                i -= 1
+            }
+            
+            n -= 1
+        }
+        return array
+    }
+    
+    
     
 }
