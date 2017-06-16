@@ -3,7 +3,7 @@
 //  algorithms
 //
 //  Created by 李晓东 on 2017/5/2.
-//  Copyright © 2017年 XD. All rights reserved.
+//  Copyright © 2017年 Xiaodong. All rights reserved.
 //
 
 import Foundation
