@@ -60,19 +60,19 @@ class Solution {
 
 var num: [Int] = []
 var a = 2
-for i in 1...90 {
-    if i > 2 {
-        num.append(a)
+for i in 1...1000 {
+    if i > 1 {
         a += 2
-        continue
+        num.append(a)
+    } else {
+        num.append(a)
     }
-    num.append(a)
 }
 
 
-let target = 16021;
-var solu = Solution()
-var sum = solu.twoSum(num, target);
+//let target = 16021;
+//var solu = Solution()
+//var sum = solu.twoSum(num, target);
 
 
 
@@ -169,11 +169,12 @@ class SortArary {
 
 }
 
-//
+/*
 let num3 = [7, 9, 10];
 let num2 = [1, 3, 5];
 let m = SortArary().findMedianSortedArrays(num3, num2);
-//print(m);
+print(m);
+*/
 
 //var arr = [1,2,2,2,4]
 //let ali = leetcode.removeElment(array: &arr, n: arr.count, elem: 2)
@@ -189,5 +190,9 @@ let m = SortArary().findMedianSortedArrays(num3, num2);
 
 //let ali = leetcode.generatePascaltriangle(row: 8)
 
-let ali = leetcode.mergeSortedArray(array1: num2, array2: num3)
+//let ali = leetcode.mergeSortedArray(array1: num2, array2: num3)
+
+
+//let sumNum = [1,7,10,19,27,19];
+let ali = leetcode.twoSumSolution(num, 12);
 print(ali)

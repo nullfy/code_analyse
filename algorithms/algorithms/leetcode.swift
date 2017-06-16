@@ -236,10 +236,12 @@ class leetcode: NSObject {
         if array1.count == 0 && array2.count == 0 {
             return array
         }
+        // SolutionI O(1)
         //array.append(contentsOf: array1)
         //array.append(contentsOf: array2)
         //return array.sorted()
         
+        // Solution II O(n)
         var n = array1.count + array2.count - 1
         var i = array1.count - 1
         var j = array2.count - 1
@@ -265,6 +267,59 @@ class leetcode: NSObject {
         return array
     }
     
+    /*
+     2 Sum
+     
+     Given an array of intergers, find two numbers such that they add up to a specific target number. The
+     function twoSum should return indices of the two numbers such that they add up to the target,
+     where index1 must be less than index2 Please note that your returned answers (both index1 and
+     index2) are not zero-based.
+     You may assume that each input would have exactly one solution.
+     Input: numbers={2, 7, 11, 15}, target=9 Output: index1=1, index2=2
+     
+     题意是给定一个数组和一个值，让求出这个数组中两个值的和等于这个给定值的下标，输出是有要求的
+     1.下标较小的在前面，下标不能为0
+     2.假设数组中至少有一组值的和等于给定值
+     这是多数求和的第一题，后面还有 3Sum、4Sum等，解题思路是相似的
+     */
     
-    
+    public class func twoSumSolution(_ array: [Int], _ target: Int) -> [Int]{
+        var indexes = [Int]()
+        if array.count == 0  {
+            return indexes
+        }
+        
+        //Solution I
+//        for i in 0...array.count-1 {
+//            let a = array[i]
+//            for j in i...array.count-1 {
+//                if j == array.count-1 {
+//                    continue
+//                }
+//                let b = array[j+1]
+//                if a+b==target {
+//                    indexes.append(i+1)
+//                    indexes.append(j+1)
+//                    print("a---\(a)b---\(b)")
+//                }
+//            }
+//        }
+//        return indexes
+        
+        //Solution II 这个解法就是利用hash 的特性将时间复杂度从O(n^2) 降到 O(n)
+        
+        var dic = [Int:Int]()
+        var index = 0
+        for num in array {
+            let a = target - num
+            if dic.keys.contains(num) {
+                indexes.append(dic[num]! + 1)
+                indexes.append(index + 1)
+            } else {
+                dic[a] = index
+            }
+            index += 1
+        }
+        return indexes
+    }
 }
