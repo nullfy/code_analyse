@@ -294,7 +294,7 @@ static void URLInBlackListAdd(NSURL *url) {
     }
 }
 
-- (void)_cancleOperation {
+- (void)_cancelOperation {
     @autoreleasepool {
         if (_connection) {
             if (![_request.URL isFileURL] && (_options & MMWebImageOptionShowNetworkActivity)) {
@@ -549,14 +549,219 @@ static void URLInBlackListAdd(NSURL *url) {
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     @autoreleasepool {
         [_lock lock];
-        
+        _connection = nil;
+        if (![self isCancelled]) {
+            __weak typeof(self) _self = self;
+            dispatch_async([self.class _imageQueue], ^{
+                __strong typeof(_self) self = _self;
+                if (!self) return ;
+                
+                BOOL shouldDecode = (self.options & MMWebImageOptionIgnoreImageDecoding) == 0;
+                BOOL allowAnimation = (self.options & MMWebImageOptionIngoreAnimatedImage) == 0;
+                UIImage *image;
+                BOOL hasAnimation = NO;
+                if (allowAnimation) {
+                    image = [[MMImage alloc] initWithData:self.data scale:[UIScreen mainScreen].scale];
+                    if (shouldDecode) image = [image imageByDecoded];
+                    if ([((MMImage *)image) animatedImageFrameCount] > 1) {
+                        hasAnimation = YES;
+                    }
+                } else {
+                    MMImageDecoder *decoder = [MMImageDecoder decoderWithData:self.data scale:[UIScreen mainScreen].scale];
+                    image = [decoder frameAtIndex:0 decodeForDisplay:shouldDecode].image;
+                }
+                
+                MMImageType imageType = MMImageDetectType((__bridge CFDataRef)self.data);
+                switch (imageType) {
+                    case MMImageTypeJPEG:
+                        case MMImageTypeGIF:
+                        case MMImageTypePNG:
+                    case MMImageTypeWebP:{
+                        if (!hasAnimation) {
+                            if (imageType == MMImageTypeGIF ||
+                                imageType == MMImageTypeWebP) {
+                                self.data = nil;
+                            }
+                        }
+                    } break;
+                    default: {
+                        self.data = nil;
+                    } break;
+                }
+                if ([self isCancelled]) return;
+                if (self.transform && image) {
+                    UIImage *newImage = self.transform(image, self.request.URL);
+                    if (newImage != image) {
+                        self.data = nil;
+                    }
+                    image = newImage;
+                    if ([self isCancelled]) return;
+                }
+                
+                [self performSelector:@selector(_didReceiveImageFromWeb:) onThread:[self.class _networkThread] withObject:image waitUntilDone:NO];
+            });
+            if (![self.request.URL isFileURL] && (self.options & MMWebImageOptionShowNetworkActivity)) {
+                [[UIApplication sharedExtensionApplication] decrementNetworkActivityCount];
+            }
+        }
         [_lock unlock];
     }
 }
 
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    @autoreleasepool {
+        [_lock  lock];
+        if (![self isCancelled]) {
+            if (_completion) {
+                _completion(nil, _request.URL, MMWebImageFromNone, MMWebImageStageFinished , error);
+            }
+            connection = nil;
+            _data = nil;
+            if (![_request.URL isFileURL] && (_options & MMWebImageOptionShowNetworkActivity)) {
+                [[UIApplication sharedExtensionApplication] decrementNetworkActivityCount];
+            }
+            [self _finish];
+            
+            if (_options & MMWebImageOptionIgnoreFailedURL) {
+                if (error.code != NSURLErrorNotConnectedToInternet &&
+                    error.code != NSURLErrorCancelled &&
+                    error.code != NSURLErrorTimedOut &&
+                    error.code != NSURLErrorUserCancelledAuthentication) {
+                    URLInBlackListAdd(_request.URL);
+                }
+            }
+        }
+        [_lock unlock];
+    }
+}
 
+- (void)start {
+    @autoreleasepool {
+        [_lock lock];
+        self.started = YES;
+        if ([self isCancelled]) {
+            [self performSelector:@selector(_cancelOperation) onThread:[self.class _networkThread] withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+            self.finished = YES;
+        } else if ([self isReady] && ![self isFinished] && ![self isExecuting]) {
+            if (!_request) {
+                self.finished = YES;
+                if (_completion) {
+                    NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorFileDoesNotExist userInfo:@{NSLocalizedDescriptionKey: @"requst in nil"}];
+                    _completion(nil, _request.URL, MMWebImageFromNone, MMWebImageStageFinished, error);
+                }
+            } else {
+                self.executing = YES;
+                [self performSelector:@selector(_startOperation) onThread:[self.class _networkThread] withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+                if ((_options & MMWebImageOptionAllowBackgroundTask) && ![UIApplication isAppExtension]) {
+                    __weak typeof(self) _self = self;
+                    if (_taskID == UIBackgroundTaskInvalid) {
+                        _taskID = [[UIApplication sharedExtensionApplication] beginBackgroundTaskWithExpirationHandler:^{
+                            __strong typeof(_self) self = _self;
+                            if (self) {
+                                [self cancel];
+                                self.finished = YES;
+                            }
+                        }];
+                    }
+                }
+                
+            }
+        }
+        [_lock unlock];
+    }
+}
 
+- (void)cancel {
+    [_lock lock];
+    if (![self isCancelled]) {
+        [super cancel];
+        if ([self isExecuting]) {
+            self.executing = NO;
+            [self performSelector:@selector(_cancelOperation) onThread:[self.class _networkThread] withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+        }
+        if (self.started) {
+            self.finished = YES;
+        }
+    }
+    [_lock unlock];
+}
 
+- (void)setExecuting:(BOOL)executing {
+    [_lock lock];
+    if (_executing != executing) {
+        [self willChangeValueForKey:@"isExecuting"];
+        _executing = executing;
+        [self didChangeValueForKey:@"isExecuting"];
+    }
+    [_lock unlock];
+}
+
+- (BOOL)isExecuting {
+    [_lock lock];
+    BOOL executing = _executing;
+    [_lock unlock];
+    return executing;
+}
+
+- (BOOL)isFinished {
+    [_lock lock];
+    BOOL finished = _finished;
+    [_lock unlock];
+    return finished;
+}
+
+- (void)setFinished:(BOOL)finished {
+    [_lock lock];
+    if (_finished != finished) {
+        [self willChangeValueForKey:@"isFinished"];
+        _finished = finished;
+        [self didChangeValueForKey:@"isFinished"];
+    }
+    [_lock unlock];
+}
+
+- (BOOL)isCancelled {
+    [_lock lock];
+    BOOL cancelled = _cancelled;
+    [_lock unlock];
+    return cancelled;
+}
+
+- (void)setCancelled:(BOOL)cancelled {
+    [_lock lock];
+    if (_cancelled != cancelled) {
+        [self willChangeValueForKey:@"isCancelled"];
+        _cancelled = cancelled;
+        [self didChangeValueForKey:@"isCancelled"];
+    }
+    [_lock unlock];
+}
+
+- (BOOL)isConcurrent {
+    return YES;
+}
+
+- (BOOL)isAsynchronous {
+    return YES;
+}
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
+    if ([key isEqualToString:@"isExecuting"] ||
+        [key isEqualToString:@"isFinished"] ||
+        [key isEqualToString:@"isCancelled"]) {
+        return NO;
+    }
+    return [super automaticallyNotifiesObserversForKey:key];
+}
+
+- (NSString *)description {
+    NSMutableString *string = [NSMutableString stringWithFormat:@"<%@ : %p ",self.class, self];
+    [string appendFormat:@" executing: %@",[self isExecuting] ? @"YES" : @"NO"];
+    [string appendFormat:@" finished: %@",[self isExecuting] ? @"YES" : @"NO"];
+    [string appendFormat:@" cancelled: %@",[self isExecuting] ? @"YES" : @"NO"];
+    [string appendFormat:@" > "];
+    return string;
+}
 
 
 @end
