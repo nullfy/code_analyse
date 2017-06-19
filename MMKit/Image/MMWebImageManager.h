@@ -25,7 +25,7 @@ typedef NS_OPTIONS(NSUInteger, MMWebImageOptions) {
     MMWebImageOptionAllowBackInvalidSSLCertificates = 1 << 4,
     MMWebImageOptionAllowBackgroundTask = 1 << 5,
     MMWebImageOptionHandleCookies = 1 << 6,
-    MMWebImageOptionRefreshDiskCache = 1 << 7,
+    MMWebImageOptionRefreshImageCache = 1 << 7,
     MMWebImageOptionIngnoreDiskCache = 1 << 8,
     MMWebImageOptionIgnorePlaceHolder = 1 << 9,
     MMWebImageOptionIgnoreImageDecoding = 1 << 10,
@@ -35,7 +35,7 @@ typedef NS_OPTIONS(NSUInteger, MMWebImageOptions) {
     MMWebImageOptionIgnoreFailedURL = 1 << 14,
 };
 
-//图片来源  1.无状态   2.闪存    3.内存    4.硬盘    5.网页或文件
+//图片来源  1.无状态   2.闪存    3.内存    4.磁盘    5.网页或文件
 typedef NS_OPTIONS(NSUInteger, MMWebImageFromType) {
     MMWebImageFromNone = 0,
     MMWebImageFromMemoryCacheFast,

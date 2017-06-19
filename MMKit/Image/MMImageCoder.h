@@ -51,6 +51,11 @@ typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
     MMImageBlendOver,
 };
 
+/**
+ ImageFrame 包含了图片等尺寸信息
+ */
+
+
 @interface MMImageFrame : NSObject<NSCopying>
 
 @property (nonatomic) NSUInteger index;
@@ -110,7 +115,7 @@ typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
 
 - (void)addImage:(UIImage *)image duration:(NSTimeInterval)duration;
 
-- (void)addImageWithData:(UIImage *)image duration:(NSTimeInterval)duration;
+- (void)addImageWithData:(NSData *)data duration:(NSTimeInterval)duration;
 
 - (void)addImageWithFile:(NSString *)path duration:(NSTimeInterval)duration;
 
@@ -123,4 +128,154 @@ typedef NS_ENUM(NSUInteger, MMImageBlendOperation) {
 + (nullable NSData *)encodeImageWithDecoder:(MMImageDecoder *)decoder type:(MMImageType)type quality:(CGFloat)quality;
 
 @end
+
+
+#pragma mark - Helper
+
+/// Detect a data's image type by reading the data's header 16 bytes (very fast).
+CG_EXTERN MMImageType MMImageDetectType(CFDataRef data);
+
+/// Convert MMImageType to UTI (such as kUTTypeJPEG).
+CG_EXTERN CFStringRef _Nullable MMImageTypeToUTType(MMImageType type);
+
+/// Convert UTI (such as kUTTypeJPEG) to MMImageType.
+CG_EXTERN MMImageType MMImageTypeFromUTType(CFStringRef uti);
+
+/// Get image type's file extension (such as @"jpg").
+CG_EXTERN NSString *_Nullable MMImageTypeGetExtension(MMImageType type);
+
+/// Returns the shared DeviceRGB color space.
+CG_EXTERN CGColorSpaceRef MMCGColorSpaceGetDeviceRGB();
+
+/// Returns the shared DeviceGray color space.
+CG_EXTERN CGColorSpaceRef MMCGColorSpaceGetDeviceGray();
+
+/// Returns whether a color space is DeviceRGB.
+CG_EXTERN BOOL MMCGColorSpaceIsDeviceRGB(CGColorSpaceRef space);
+
+/// Returns whether a color space is DeviceGray.
+CG_EXTERN BOOL MMCGColorSpaceIsDeviceGray(CGColorSpaceRef space);
+
+/// Convert EXIF orientation value to UIImageOrientation.
+CG_EXTERN UIImageOrientation MMUIImageOrientationFromEXIFValue(NSInteger value);
+
+/// Convert UIImageOrientation to EXIF orientation value.
+CG_EXTERN NSInteger MMUIImageOrientationToEXIFValue(UIImageOrientation orientation);
+
+
+
+/**
+ Create a decoded image.
+ 
+ @discussion If the source image is created from a compressed image data (such as
+ PNG or JPEG), you can use this method to decode the image. After decoded, you can
+ access the decoded bytes with CGImageGetDataProvider() and CGDataProviderCopyData()
+ without additional decode process. If the image has already decoded, this method
+ just copy the decoded bytes to the new image.
+ 
+ @param imageRef          The source image.
+ @param decodeForDisplay  If YES, this method will decode the image and convert
+ it to BGRA8888 (premultiplied) or BGRX8888 format for CALayer display.
+ 
+ @return A decoded image, or NULL if an error occurs.
+ */
+CG_EXTERN CGImageRef _Nullable MMCGImageCreateDecodedCopy(CGImageRef imageRef, BOOL decodeForDisplay);
+
+/**
+ Create an image copy with an orientation.
+ 
+ @param imageRef       Source image
+ @param orientation    Image orientation which will applied to the image.
+ @param destBitmapInfo Destimation image bitmap, only support 32bit format (such as ARGB8888).
+ @return A new image, or NULL if an error occurs.
+ */
+CG_EXTERN CGImageRef _Nullable MMCGImageCreateCopyWithOrientation(CGImageRef imageRef,
+                                                                  UIImageOrientation orientation,
+                                                                  CGBitmapInfo destBitmapInfo);
+
+/**
+ Create an image copy with CGAffineTransform.
+ 
+ @param imageRef       Source image.
+ @param transform      Transform applied to image (left-bottom based coordinate system).
+ @param destSize       Destination image size
+ @param destBitmapInfo Destimation image bitmap, only support 32bit format (such as ARGB8888).
+ @return A new image, or NULL if an error occurs.
+ */
+CG_EXTERN CGImageRef _Nullable MMCGImageCreateAffineTransformCopy(CGImageRef imageRef,
+                                                                  CGAffineTransform transform,
+                                                                  CGSize destSize,
+                                                                  CGBitmapInfo destBitmapInfo);
+
+/**
+ Encode an image to data with CGImageDestination.
+ 
+ @param imageRef  The image.
+ @param type      The image destination data type.
+ @param quality   The quality (0.0~1.0)
+ @return A new image data, or nil if an error occurs.
+ */
+CG_EXTERN CFDataRef _Nullable MMCGImageCreateEncodedData(CGImageRef imageRef, MMImageType type, CGFloat quality);
+
+
+/**
+ Whether WebP is available in MMImage.
+ */
+CG_EXTERN BOOL MMImageWebPAvailable();
+
+/**
+ Get a webp image frame count;
+ 
+ @param webpData WebP data.
+ @return Image frame count, or 0 if an error occurs.
+ */
+CG_EXTERN NSUInteger MMImageGetWebPFrameCount(CFDataRef webpData);
+
+/**
+ Decode an image from WebP data, returns NULL if an error occurs.
+ 
+ @param webpData          The WebP data.
+ @param decodeForDisplay  If YES, this method will decode the image and convert it
+ to BGRA8888 (premultiplied) format for CALayer display.
+ @param useThreads        YES to enable multi-thread decode.
+ (speed up, but cost more CPU)
+ @param bypassFiltering   YES to skip the in-loop filtering.
+ (speed up, but may lose some smooth)
+ @param noFancyUpsampling YES to use faster pointwise upsampler.
+ (speed down, and may lose some details).
+ @return The decoded image, or NULL if an error occurs.
+ */
+CG_EXTERN CGImageRef _Nullable MMCGImageCreateWithWebPData(CFDataRef webpData,
+                                                           BOOL decodeForDisplay,
+                                                           BOOL useThreads,
+                                                           BOOL bypassFiltering,
+                                                           BOOL noFancyUpsampling);
+
+typedef NS_ENUM(NSUInteger, MMImagePreset) {
+    MMImagePresetDefault = 0,  ///< default preset.
+    MMImagePresetPicture,      ///< digital picture, like portrait, inner shot
+    MMImagePresetPhoto,        ///< outdoor photograph, with natural lighting
+    MMImagePresetDrawing,      ///< hand or line drawing, with high-contrast details
+    MMImagePresetIcon,         ///< small-sized colorful images
+    MMImagePresetText          ///< text-like
+};
+
+/**
+ Encode a CGImage to WebP data
+ 
+ @param imageRef      image
+ @param lossless      YES=lossless (similar to PNG), NO=lossy (similar to JPEG)
+ @param quality       0.0~1.0 (0=smallest file, 1.0=biggest file)
+ For lossless image, try the value near 1.0; for lossy, try the value near 0.8.
+ @param compressLevel 0~6 (0=fast, 6=slower-better). Default is 4.
+ @param preset        Preset for different image type, default is MMImagePresetDefault.
+ @return WebP data, or nil if an error occurs.
+ */
+CG_EXTERN CFDataRef _Nullable MMCGImageCreateEncodedWebPData(CGImageRef imageRef,
+                                                             BOOL lossless,
+                                                             CGFloat quality,
+                                                             int compressLevel,
+                                                             MMImagePreset preset);
+
 NS_ASSUME_NONNULL_END
+

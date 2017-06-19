@@ -12,6 +12,7 @@
 #import "UIImage+MMAdd.h"
 #import "NSObject+MMAdd.h"
 #import "MMImage.h"
+#import "MMImageCoder.h"
 
 #if __has_include("MMDispatchQueuePool.h")
 #import "MMDispatchQueuePool.h"
@@ -62,10 +63,11 @@ static inline dispatch_queue_t MMImageCacheDecodeQueue() {
     if (scale <= 0) scale = [UIScreen mainScreen].scale;
     UIImage *image;
     if (_allowAnimatedImage) {
-        image = [[YYImage alloc] initWithData:data scale:scale];
+        image = [[MMImage alloc] initWithData:data scale:scale];
         if (_decodeForDisplay) image = [image imageByDecoded];
     } else {
-        
+        MMImageDecoder *decoder = [MMImageDecoder decoderWithData:data scale:scale];
+        image = [decoder frameAtIndex:0 decodeForDisplay:_decodeForDisplay].image;
     }
     return image;
 }
