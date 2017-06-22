@@ -9,6 +9,10 @@
 #ifndef MMImagePickerMacro_h
 #define MMImagePickerMacro_h
 
+#import "CALayer+ImageLayout.h"
+#import "UIImage+imagePicker.h"
+#import "NSBundle+ImagePicker.h"
+
 #ifndef kiOS6Later
 #define kiOS6Later ([UIDevice currentDevice].systemVersion.floatValue >= 6.0f)
 #endif
@@ -29,6 +33,11 @@
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 //屏幕的高
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+#ifndef Color//(r,g,b,a)
+#define Color(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+#endif
+
 
 //#if __has_include(<YYKit/YYKit.h>)
 //#import <YYKit/YYKit.h>

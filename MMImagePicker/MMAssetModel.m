@@ -7,7 +7,7 @@
 //
 
 #import "MMAssetModel.h"
-#import "MMPickImageManager.h"
+#import "MMImagePickManager.h"
 
 @implementation MMAssetModel
 
@@ -33,7 +33,7 @@
     _result = result;
     BOOL allowPickImage = [[[NSUserDefaults standardUserDefaults] objectForKey:@"mm_allowPickImage"]isEqualToString:@"1"];;
     BOOL allowPickVideo = [[[NSUserDefaults standardUserDefaults] objectForKey:@"mm_allowPickVedio"] isEqualToString:@"1"];
-    [[MMPickImageManager manager] getAssetsFromFetchResult:result allowPickImage:allowPickImage allowPickVideo:allowPickVideo completion:^(NSArray<MMAlbumModel *> *models) {
+    [[MMImagePickManager manager] getAssetsFromFetchResult:result allowPickImage:allowPickImage allowPickVideo:allowPickVideo completion:^(NSArray<MMAlbumModel *> *models) {
         _models = models;
         if (_selectedModels) [self checkSelectedModels];
     }];
@@ -51,7 +51,7 @@
         [seletedAssets addObject:model.asset];
     }
     for (MMAssetModel *model in _models) {
-        if ([[MMPickImageManager manager] isAssetsArray:seletedAssets containAsset:model.asset]){
+        if ([[MMImagePickManager manager] isAssetsArray:seletedAssets containAsset:model.asset]){
             self.selectedCount++;
         }
     }

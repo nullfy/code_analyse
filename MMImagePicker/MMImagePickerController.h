@@ -74,8 +74,30 @@
 
 @property (nonatomic, weak) id<MMImagePickerControllerDelegate> pickerDelegate;
 
-- (void)cancelButtonClick;
 
+- (instancetype)initWithSelectedAssets:(NSMutableArray *)selectedAssets
+                        selectedPhotos:(NSMutableArray *)selectedPhotos
+                                 index:(NSInteger)index;
+
+- (instancetype)initCropTypeWithAsset:(id)asset
+                                photo:(UIImage *)photo
+                           completion:(void (^)(UIImage *cropImage,id asset))completion;
+
+- (instancetype)initWithMaxImagesCount:(NSInteger)maxImagesCount
+                              delegate:(id<MMImagePickerControllerDelegate>)delegate;
+
+- (instancetype)initWithMaxImagesCount:(NSInteger)maxImagesCount
+                          columnNumber:(NSInteger)columnNumber
+                              delegate:(id<MMImagePickerControllerDelegate>)delegate;
+
+- (instancetype)initWithMaxImagesCount:(NSInteger)maxImagesCount
+                          columnNumber:(NSInteger)columnNumber
+                              delegate:(id<MMImagePickerControllerDelegate>)delegate
+                     pushPhotoPickerVC:(BOOL)pushPhotoPickerVC;
+
+
+
+- (void)cancelButtonClick;
 
 - (id)showAlertWithTitle:(NSString *)title;
 - (void)hideAlertView:(id)alertView;
@@ -101,14 +123,14 @@ didFinishPickingMediaWithInfo:(NSArray<UIImage *> *)photos
 - (void)imagePickerController:(MMImagePickerController *)picker didFinishPickingVideo:(UIImage *)coverImage sourceAssets:(id)assets;
 - (void)imagePickerController:(MMImagePickerController *)picker didFinishPickingGIF:(UIImage *)gif sourceAssets:(id)assets;
 
-- (BOOL)isAlbumCanSeletct:(NSString *)albumName result:(id)result;
-- (BOOL)isAssetCanSeletct:(id)asset;
+- (BOOL)isAlbumCanSelect:(NSString *)albumName result:(id)result;
+- (BOOL)isAssetCanSelect:(id)asset;
 
 @end
 
 @interface MMAlbumPickerController : UIViewController
 
-@property (nonatomic, assign) NSInteger columNumber;
+@property (nonatomic, assign) NSInteger columnNumber;
 
 - (void)configTableView;
 

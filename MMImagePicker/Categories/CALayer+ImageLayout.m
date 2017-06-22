@@ -125,9 +125,11 @@
     NSNumber *bigScale = (type == MMOscillatorAnimationTypeToBigger) ? @(1.15) : @(0.5);
     NSNumber *smallScale = (type == MMOscillatorAnimationTypeToSmaller) ? @(0.92) : @(1.15);
     
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:0.15 delay:0 options: UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut animations:^{
-         [self setValue:bigScale forKeyPath:@"transform.scale"];
+         [weakSelf setValue:bigScale forKeyPath:@"transform.scale"];
      } completion:^(BOOL finished) {
+         __strong typeof(weakSelf) self = weakSelf;
          [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionBeginFromCurrentState |UIViewAnimationOptionCurveEaseInOut animations:^{
              [self setValue:smallScale forKeyPath:@"transform.scale"];
          } completion:^(BOOL finished) {

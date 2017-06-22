@@ -19,9 +19,9 @@ typedef NS_ENUM(NSUInteger, MMAssetCellType) {
 
 @interface MMAssetCell : UICollectionViewCell
 
-@property (nonatomic, weak) UIButton *seletePhotButton;
+@property (nonatomic, weak) UIButton *selectPhotoButton;
 @property (nonatomic, strong) MMAssetModel *model;
-@property (nonatomic, copy) NSString *seleteImageName;
+@property (nonatomic, copy) NSString *selectImageName;
 @property (nonatomic, copy) NSString *defImageName;
 @property (nonatomic, copy) NSString *representedAssetID;
 
@@ -38,7 +38,7 @@ typedef NS_ENUM(NSUInteger, MMAssetCellType) {
 @interface MMAlbumCell : UITableViewCell
 
 @property (nonatomic, strong) MMAlbumModel *model;
-@property (nonatomic, weak) UIButton *seletedCountButton;
+@property (nonatomic, weak) UIButton *selectedCountButton;
 
 @end
 
