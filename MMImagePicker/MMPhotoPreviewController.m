@@ -7,6 +7,9 @@
 //
 
 #import "MMPhotoPreviewController.h"
+#import "MMAssetModel.h"
+#import "MMImagePickManager.h"
+#import "MMImagePickerMacro.h"
 
 @interface MMPhotoPreviewController ()
 
@@ -16,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {

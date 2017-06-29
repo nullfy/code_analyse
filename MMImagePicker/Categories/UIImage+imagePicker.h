@@ -12,5 +12,6 @@
 
 + (UIImage *)imageNamedFromMyBundle:(NSString *)name;
 
++ (UIImage *)mm_animatedGIFWithData:(NSData *)data;
 
 @end

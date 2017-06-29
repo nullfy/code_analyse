@@ -12,7 +12,14 @@
 
 @end
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @implementation MMPhotoPickerController
+
++ (void)load {
+    NSLog(@"photo----%f",CACurrentMediaTime());
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -23,3 +30,4 @@
 }
 
 @end
+#pragma clang diagnostic pop

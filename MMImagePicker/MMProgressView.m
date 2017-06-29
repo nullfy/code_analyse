@@ -29,14 +29,14 @@
         _progressLayer.lineWidth = 5;
         
         [_progressLayer setShadowColor:[UIColor blackColor].CGColor];
-        [_progressLayer setShadowOffset:CGSizeMake(1, 1)];
-        [_progressLayer setShadowOpacity:0.5];
-        [_progressLayer setShadowRadius:2.0f];
+        [_progressLayer setShadowOffset:CGSizeMake(1, 1)];//设置阴影的偏移
+        [_progressLayer setShadowOpacity:0.5];//设置阴影的清晰度
+        [_progressLayer setShadowRadius:2.0f];//设置阴影圆环的宽度
     }
     return self;
 }
 
-- (void)drawRect:(CGRect)rect {
+- (void)drawRect:(CGRect)rect {//(渲染树)   呈现树->层级树->渲染树
     CGPoint center = CGPointMake(rect.size.width/2, rect.size.height/2);
     CGFloat radius = rect.size.width/2;
     CGFloat startA = -M_PI_2;
@@ -52,7 +52,7 @@
 
 - (void)setProgress:(double)progress {
     _progress = progress;
-    [self setNeedsDisplay];
+    [self setNeedsDisplay];//这里之后会调用drawRect
 }
 
 

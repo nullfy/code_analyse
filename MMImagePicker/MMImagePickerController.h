@@ -19,7 +19,7 @@
 @property (nonatomic, assign) BOOL sortAscendingByModificationDate;
 @property (nonatomic, assign) CGFloat photoWidth;
 @property (nonatomic, assign) CGFloat photoPreviewMaxWidth;
-@property (nonatomic, assign) NSInteger timeOut;
+@property (nonatomic, assign) NSInteger timeout;
 @property (nonatomic, assign) BOOL allowPickOriginalPhoto;
 @property (nonatomic, assign) BOOL allowPickVideo;
 @property (nonatomic, assign) BOOL allowPickGif;
@@ -65,7 +65,7 @@
 @property (nonatomic, copy) NSString *previewButtonTitle;
 @property (nonatomic, copy) NSString *fullImageButtonTitle;
 @property (nonatomic, copy) NSString *settingButtonTitle;
-@property (nonatomic, copy) NSString *processHint;
+@property (nonatomic, copy) NSString *processHintTitle;
 
 @property (nonatomic, copy) void(^didFinishPickPhotosHandle)(NSArray<UIImage *> *photos, NSArray *assets, BOOL isOriginal);
 @property (nonatomic, copy) void(^didFinishPickPhotosWithInfosHandle)(NSArray<UIImage *> *photos, NSArray *assets, BOOL isOriginal, NSArray<NSDictionary *> *infos);
@@ -136,8 +136,4 @@ didFinishPickingMediaWithInfo:(NSArray<UIImage *> *)photos
 
 @end
 
-@interface UIImage(imagePicker)
 
-+ (UIImage *)imageNamedFromBundle:(NSString *)name;
-
-@end
