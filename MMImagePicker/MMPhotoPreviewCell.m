@@ -47,7 +47,7 @@
     _previewView.cropRect = cropRect;
 }
 
-- (void)recoverSubViews {
+- (void)recoverSubViews {//主要是resizesubview
     [_previewView recoverSubViews];
 }
 
@@ -65,7 +65,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _scrollView = [[UIScrollView alloc] init];
-        _scrollView.frame = CGRectMake(10, 0, self.width - 20, self.height);
+        _scrollView.frame = CGRectMake(10, 0, self.width - 20, self.height);// 这里是屏幕宽
         _scrollView.bouncesZoom = YES;
         _scrollView.maximumZoomScale = 2.5;
         _scrollView.minimumZoomScale = 1.0;
@@ -191,6 +191,7 @@
 }
 
 - (void)resizeSubViews {
+    //根据单击双击改变containerView的尺寸
     _containerView.origin = CGPointZero;
     _containerView.width = self.scrollView.width;
     
@@ -262,9 +263,8 @@
 
 - (void)refreshImageContainerViewCenter {
     CGFloat offsetx = (_scrollView.width > _scrollView.contentSize.width) ? ((_scrollView.width - _scrollView.contentSize.width) * 0.5) : 0.0;
-    CGFloat offsety =
+    CGFloat offsety = (_scrollView.height > _scrollView.contentSize.height) ? ((_scrollView.height - _scrollView.contentSize.height) * 0.5) : 0.0;
+    self.containerView.center = CGPointMake(_scrollView.contentSize.width * 0.5 + offsetx, _scrollView.contentSize.height * 0.5 + offsety);
 }
-
-
 
 @end

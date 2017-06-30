@@ -35,7 +35,7 @@
 @property (nonatomic, assign) NSInteger minPhotoHeightSelectable;
 @property (nonatomic, assign) BOOL hideWhenUnSelectable;
 @property (nonatomic, assign) BOOL isStatusBarDefault;
-@property (nonatomic, assign) BOOL showSelectButton;
+@property (nonatomic, assign) BOOL showSelectButton;    //最大可选图片大于1时就显示选择框
 @property (nonatomic, assign) BOOL allowCrop;
 @property (nonatomic, assign) BOOL needCircleCrop;
 @property (nonatomic, assign) CGRect cropRect;
@@ -71,6 +71,7 @@
 @property (nonatomic, copy) void(^didFinishPickPhotosWithInfosHandle)(NSArray<UIImage *> *photos, NSArray *assets, BOOL isOriginal, NSArray<NSDictionary *> *infos);
 @property (nonatomic, copy) void(^imagePickerControllerDidCancelHandle)();
 @property (nonatomic, copy) void(^didFinishPickVideoHandle)(UIImage *coverImage, id asset);
+@property (nonatomic, copy) void(^didFinishPickGIFHandle)(UIImage *animatedImage, id asset);
 
 @property (nonatomic, weak) id<MMImagePickerControllerDelegate> pickerDelegate;
 

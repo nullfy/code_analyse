@@ -52,7 +52,7 @@
 + (CGImageRef)newTransformedImage:(CGAffineTransform)transform sourceImage:(CGImageRef)sourceImage sourceSize:(CGSize)sourceSize outputWidth:(CGFloat)width cropSize:(CGSize)cropSize imageViewSize:(CGSize)imageViewSize {
     CGImageRef source = [self newScaledImage:sourceImage toSize:sourceSize];
     CGFloat aspect = cropSize.height/cropSize.width;
-    CGSize outputSize = CGSizeMake(width, outputSize.height*aspect);
+    CGSize outputSize = CGSizeMake(width, width*aspect);
     
     CGContextRef context = CGBitmapContextCreate(NULL, outputSize.width, outputSize.height, CGImageGetBitsPerComponent(source), 0, CGImageGetColorSpace(source), CGImageGetBitmapInfo(source));
     CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
@@ -87,7 +87,7 @@
     return result;
 }
 
-+ (UIImage *)circularClipImage:(UIImage *)image {
++ (UIImage *)circularClipImage:(UIImage *)image {//圆形切图
     UIGraphicsBeginImageContextWithOptions(image.size, NO, [UIScreen mainScreen].scale);
     
     CGContextRef context = UIGraphicsGetCurrentContext();

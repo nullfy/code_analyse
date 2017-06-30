@@ -12,6 +12,7 @@
 #import "MMImagePickManager.h"
 #import "MMImagePickerMacro.h"
 #import "MMPhotoPreviewController.h"
+#import "MMImagePickerController.h"
 #import "MMPhotoPickerController.h"
 
 @interface MMImagePickerController () {
@@ -577,29 +578,59 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (!_tableView) {
                     CGFloat top = 0;
-                    CGFloat tabHeight = 0;
+                    CGFloat tableHeight = 0;
                     if (self.navigationController.navigationBar.isTranslucent) {//iOS6After  YES
                         top = 44;
                         if (kiOS7Later) top += 20;
-                        tabHeight = self.view.height - top;
+                        tableHeight = self.view.height - top;
                     } else {
                         CGFloat navHeight = 44;
-                        if (kiOS7Later) 
+                        if (kiOS7Later) navHeight += 20;
+                        tableHeight = self.view.height - navHeight;
                     }
+                    
+                    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, top, self.view.width, tableHeight) style:UITableViewStylePlain];
+                    _tableView.delegate = self;
+                    _tableView.dataSource = self;
+                    _tableView.rowHeight = 75;
+                    _tableView.tableFooterView = [UIView new];
+                    [_tableView registerClass:[MMAlbumCell class] forCellReuseIdentifier:@"MMAlbumCell"];
+                    [self.view addSubview:_tableView];
+                } else {
+                    [_tableView reloadData];
                 }
             });
-            
         }];
-        
-        
     });
 }
 
+#pragma mark - UITableViewDataSource && Delegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _albumArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MMAlbumCell *cell = (MMAlbumCell *)[tableView dequeueReusableCellWithIdentifier:@"MMAlbumCell"];
+    MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
+    cell.selectedCountButton.backgroundColor = nav.okButtonTitleColorNormal;
+    cell.model = _albumArray[indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MMPhotoPickerController *photoPickerVc = [[MMPhotoPickerController alloc] init];
+    photoPickerVc.columnNumber = self.columnNumber;
+    MMAlbumModel *model = _albumArray[indexPath.row];
+    photoPickerVc.model = model;
+    [self.navigationController pushViewController:photoPickerVc animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 - (void)didReceiveMemoryWarning {
     
 }
-
 
 @end
 #pragma clang diagnostic pop
