@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, MMAssetCellType) {
 @property (nonatomic, copy) NSString *representedAssetID;
 
 @property (nonatomic, assign) MMAssetCellType type;
-@property (nonatomic, assign) int32_t imageRequstID;
+@property (nonatomic, assign) int32_t imageRequestID;
 
 @property (nonatomic, assign) BOOL allowPickGIF;
 @property (nonatomic, assign) BOOL showSeletedButton;

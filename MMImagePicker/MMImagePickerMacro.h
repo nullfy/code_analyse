@@ -9,9 +9,11 @@
 #ifndef MMImagePickerMacro_h
 #define MMImagePickerMacro_h
 
+
 #import "CALayer+ImageLayout.h"
 #import "UIImage+imagePicker.h"
 #import "NSBundle+ImagePicker.h"
+#import "UIView+imageLayout.h"
 
 #ifndef kiOS6Later
 #define kiOS6Later ([UIDevice currentDevice].systemVersion.floatValue >= 6.0f)

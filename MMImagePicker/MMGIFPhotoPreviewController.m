@@ -11,6 +11,7 @@
 #import "MMPhotoPreviewCell.h"
 #import "MMImagePickManager.h"
 #import "MMAssetModel.h"
+#import "MMImagePickerMacro.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"

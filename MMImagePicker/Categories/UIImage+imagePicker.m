@@ -11,7 +11,7 @@
 
 @implementation UIImage (imagePicker)
 + (UIImage *)imageNamedFromMyBundle:(NSString *)name {
-    UIImage *image = [UIImage imageNamed:[@"MMImagePicke.bundle" stringByAppendingPathComponent:name]];
+    UIImage *image = [UIImage imageNamed:[@"MMImagePicker.bundle" stringByAppendingPathComponent:name]];
     if (image) {
         return image;
     } else {

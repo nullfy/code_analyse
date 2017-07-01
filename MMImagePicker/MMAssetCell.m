@@ -32,37 +32,79 @@
     if (kiOS8Later) {
         self.representedAssetID = [[MMImagePickManager manager] getAssetIdentifier:model.asset];
     }
-    int32_t imageRequstID = [[MMImagePickManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+    int32_t imageRequestID = [[MMImagePickManager manager] getPhotoWithAsset:model.asset photoWidth:self.width completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
         if (_progressView) {
             self.progressView.hidden = YES;
-            self.imageView.alpha = 1.0f;
+            self.imageView.alpha = 1.0;
         }
+        // Set the cell's thumbnail image if it's still showing the same asset.
         if (!kiOS8Later) {
-            self.imageView.image = photo;
-            return ;
+            self.imageView.image = photo; return;
         }
         if ([self.representedAssetID isEqualToString:[[MMImagePickManager manager] getAssetIdentifier:model.asset]]) {
-            [[PHImageManager defaultManager] cancelImageRequest:self.imageRequstID];
+            self.imageView.image = photo;
+        } else {
+            // NSLog(@"this cell is showing other asset");
+            [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
         }
-        if (!isDegraded) self.imageRequstID = 0;
+        if (!isDegraded) {
+            self.imageRequestID = 0;
+        }
     } progressHandler:nil networkAccessAllowed:NO];
-    
-    if (imageRequstID && self.imageRequstID && imageRequstID != self.imageRequstID) {
-        [[PHImageManager defaultManager] cancelImageRequest:self.imageRequstID];
+    if (imageRequestID && self.imageRequestID && imageRequestID != self.imageRequestID) {
+        [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
+        // NSLog(@"cancelImageRequest %d",self.imageRequestID);
     }
-    
-    self.imageRequstID = imageRequstID;
+    self.imageRequestID = imageRequestID;
     self.selectPhotoButton.selected = model.isSelected;
     self.selectImageView.image = self.selectPhotoButton.isSelected ? [UIImage imageNamedFromMyBundle:self.selectImageName] : [UIImage imageNamedFromMyBundle:self.defImageName];
     self.type = (NSInteger)model.type;
-    
+    // 让宽度/高度小于 最小可选照片尺寸 的图片不能选中
     if (![[MMImagePickManager manager] isPhotoSelectableWithAsset:model.asset]) {
         if (_selectImageView.hidden == NO) {
             self.selectPhotoButton.hidden = YES;
-            self.selectImageView.hidden = YES;
+            _selectImageView.hidden = YES;
         }
     }
-    if (model.isSelected) [self fetchBigImage];
+    // 如果用户选中了该图片，提前获取一下大图
+    if (model.isSelected) {
+        [self fetchBigImage];
+    }
+//    _model = model;
+//    if (kkiOS8Later) {
+//        self.representedAssetID = [[MMImagePickManager manager] getAssetIdentifier:model.asset];
+//    }
+//    int32_t imageRequstID = [[MMImagePickManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+//        if (_progressView) {
+//            self.progressView.hidden = YES;
+//            self.imageView.alpha = 1.0f;
+//        }
+//        if (!kkiOS8Later) {
+//            self.imageView.image = photo;
+//            return ;
+//        }
+//        if ([self.representedAssetID isEqualToString:[[MMImagePickManager manager] getAssetIdentifier:model.asset]]) {
+//            [[PHImageManager defaultManager] cancelImageRequest:self.imageRequstID];
+//        }
+//        if (!isDegraded) self.imageRequstID = 0;
+//    } progressHandler:nil networkAccessAllowed:NO];
+//    
+//    if (imageRequstID && self.imageRequstID && imageRequstID != self.imageRequstID) {
+//        [[PHImageManager defaultManager] cancelImageRequest:self.imageRequstID];
+//    }
+//    
+//    self.imageRequstID = imageRequstID;
+//    self.selectPhotoButton.selected = model.isSelected;
+//    self.selectImageView.image = self.selectPhotoButton.isSelected ? [UIImage imageNamedFromMyBundle:self.selectImageName] : [UIImage imageNamedFromMyBundle:self.defImageName];
+//    self.type = (NSInteger)model.type;
+//    
+//    if (![[MMImagePickManager manager] isPhotoSelectableWithAsset:model.asset]) {
+//        if (_selectImageView.hidden == NO) {
+//            self.selectPhotoButton.hidden = YES;
+//            self.selectImageView.hidden = YES;
+//        }
+//    }
+//    if (model.isSelected) [self fetchBigImage];
 }
 
 - (void)setShowSeletedButton:(BOOL)showSeletedButton {

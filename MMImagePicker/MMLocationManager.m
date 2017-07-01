@@ -7,6 +7,8 @@
 //
 
 #import "MMLocationManager.h"
+#import "MMImagePickerMacro.h"
+#import <CoreText/CoreText.h>
 
 @interface MMLocationManager ()<CLLocationManagerDelegate>
 

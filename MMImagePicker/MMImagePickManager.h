@@ -46,7 +46,7 @@
 
 - (void)getAssetsFromFetchResult:(id)result
                   allowPickImage:(BOOL)allowPickImage allowPickVideo:(BOOL)allowPickVideo
-                      completion:(void (^)(NSArray<MMAlbumModel *> * models))completion;
+                      completion:(void (^)(NSArray<MMAssetModel *> * models))completion;
 
 - (void)getAssetsFromFetchResult:(id)result
                          atIndex:(NSUInteger)index

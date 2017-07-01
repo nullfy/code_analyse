@@ -10,6 +10,52 @@
 
 @implementation NSBundle (ImagePicker)
 
+//+ (NSString *)mm_localizedStringForKey:(NSString *)key value:(NSString *)value {
+//    static NSBundle *bundle = nil;
+//    if (bundle == nil) {
+//        NSString *language = [NSLocale preferredLanguages].firstObject;
+//        if ([language rangeOfString:@"zh-Hans"].location != NSNotFound) {
+//            language = @"zh-Hans";
+//        } else {
+//            language = @"en";
+//        }
+//        bundle = [NSBundle bundleWithPath:[[NSBundle mm_imagePickerBundle] pathForResource:language ofType:@"lproj"]];
+//    }
+//    NSString *result = [bundle localizedStringForKey:key value:value table:nil];
+//    return result;
+//}
+//
+//+ (instancetype)mm_imagePickerBundle {
+//    static NSBundle *bundle = nil;
+//    if (bundle == nil) {
+//        NSString *path = [[NSBundle mainBundle] pathForResource:@"MMImagePicker" ofType:@"bundle"];
+//        if (!path) {
+//            path = [[NSBundle mainBundle] pathForResource:@"MMImagePicker" ofType:@"bundle" inDirectory:@"Frameworks/MMImagePicker.framwork/"];
+//        }
+//        bundle = [NSBundle bundleWithPath:path];
+//    }
+//    return bundle;
+//}
+//
+//+ (NSString *)mm_localizedStringForKey:(NSString *)key {
+//    return [self mm_localizedStringForKey:key value:@""];
+//}
++ (instancetype)mm_imagePickerBundle {
+    static NSBundle *tzBundle = nil;
+    if (tzBundle == nil) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"MMImagePicker" ofType:@"bundle"];
+        if (!path) {
+            path = [[NSBundle mainBundle] pathForResource:@"MMImagePicker" ofType:@"bundle" inDirectory:@"Frameworks/MMImagePicker.framework/"];
+        }
+        tzBundle = [NSBundle bundleWithPath:path];
+    }
+    return tzBundle;
+}
+
++ (NSString *)mm_localizedStringForKey:(NSString *)key {
+    return [self mm_localizedStringForKey:key value:@""];
+}
+
 + (NSString *)mm_localizedStringForKey:(NSString *)key value:(NSString *)value {
     static NSBundle *bundle = nil;
     if (bundle == nil) {
@@ -21,24 +67,8 @@
         }
         bundle = [NSBundle bundleWithPath:[[NSBundle mm_imagePickerBundle] pathForResource:language ofType:@"lproj"]];
     }
-    NSString *result = [bundle localizedStringForKey:key value:value table:nil];
-    return result;
-}
-
-+ (instancetype)mm_imagePickerBundle {
-    static NSBundle *bundle = nil;
-    if (bundle == nil) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"MMImagePicker" ofType:@"bundle"];
-        if (!path) {
-            path = [[NSBundle mainBundle] pathForResource:@"MMImagePicker" ofType:@"bundle" inDirectory:@"Frameworks/MMImagePicker.framwork/"];
-        }
-        bundle = [NSBundle bundleWithPath:path];
-    }
-    return bundle;
-}
-
-+ (NSString *)mm_localizedStringForKey:(NSString *)key {
-    return [self mm_localizedStringForKey:key value:@""];
+    NSString *value1 = [bundle localizedStringForKey:key value:value table:nil];
+    return value1;
 }
 
 

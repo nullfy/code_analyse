@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MMImagePickerMacro.h"
 
 @interface MMImageCropManager : NSObject
 

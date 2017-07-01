@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MMAssetModel.h"
-#import "NSBundle+ImagePicker.h"
+#import "MMImagePickerMacro.h"
 
 @protocol MMImagePickerControllerDelegate;
 @interface MMImagePickerController : UINavigationController
@@ -112,7 +112,8 @@
 @optional
 - (void)imagePickerController:(MMImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSArray<UIImage *> *)photos
-                 sourceAssets:(NSArray *)assets isSelectOriginalPhoto:(BOOL)isOriginal;
+                 sourceAssets:(NSArray *)assets
+        isSelectOriginalPhoto:(BOOL)isOriginal;
 
 - (void)imagePickerController:(MMImagePickerController *)picker
 didFinishPickingMediaWithInfo:(NSArray<UIImage *> *)photos

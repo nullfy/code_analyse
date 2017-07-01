@@ -28,7 +28,7 @@ static CGFloat MMScreenScale;
 - (void)setColumnNumber:(NSInteger)columnNumber {
     _columnNumber = columnNumber;
     CGFloat margin = 4;
-    CGFloat width = (kScreenWidth - 2 * margin - 4) / columnNumber - margin;
+    CGFloat width = (SCREEN_WIDTH - 2 * margin - 4) / columnNumber - margin;
     AssetGridThumbnailSize = CGSizeMake(width * MMScreenScale, width * MMScreenScale);
 }
 
@@ -50,7 +50,7 @@ static CGFloat MMScreenScale;
             manager.cachingImageManager = [[PHCachingImageManager alloc] init];
         }
         MMScreenScale = 2.0;
-        if (kScreenWidth > 700)     MMScreenScale = 1.5;
+        if (SCREEN_WIDTH > 700)     MMScreenScale = 1.5;
     });
     return manager;
 }
@@ -95,32 +95,30 @@ static CGFloat MMScreenScale;
 
 - (void)getCameraRollAlbum:(BOOL)allowPickImage allowPickVideo:(BOOL)allowPickVideo completion:(void (^)(MMAlbumModel *))completion {
     __block MMAlbumModel *model;
-    if (kiOS8Later) {
-        PHFetchOptions *options = [[PHFetchOptions alloc] init];
-        if (!allowPickVideo) {
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
-        }
-        if (!allowPickImage) {
-            options.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeVideo];
-        }
-        //options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:self.sortAscendingByModificationDate]];
-        if (!self.sortAscendingByModificationDate) {
-            options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:self.sortAscendingByModificationDate]];
-        }
     
+    if (kiOS8Later) {
+        PHFetchOptions *option = [[PHFetchOptions alloc] init];
+        if (!allowPickVideo) option.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld", PHAssetMediaTypeImage];
+        if (!allowPickImage) option.predicate = [NSPredicate predicateWithFormat:@"mediaType == %ld",
+                                                    PHAssetMediaTypeVideo];
+        // option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"modificationDate" ascending:self.sortAscendingByModificationDate]];
+        if (!self.sortAscendingByModificationDate) {
+            option.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:self.sortAscendingByModificationDate]];
+        }
         PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeAlbumRegular options:nil];
         for (PHAssetCollection *collection in smartAlbums) {
-            if (![collection isKindOfClass:[PHAssetCollection class]]) return;
+            // 有可能是PHCollectionList类的的对象，过滤掉
+            if (![collection isKindOfClass:[PHAssetCollection class]]) continue;
             if ([self isCameraRollAlbum:collection.localizedTitle]) {
-                PHFetchResult *result = [PHAsset fetchAssetsInAssetCollection:collection options:options];
-                model = [self modelWithResult:result name:collection.localizedTitle];
+                PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:collection options:option];
+                model = [self modelWithResult:fetchResult name:collection.localizedTitle];
                 if (completion) completion(model);
                 break;
             }
         }
     } else {
         [self.assetLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            if ([group numberOfAssets] < 1) return ;
+            if ([group numberOfAssets] < 1) return;
             NSString *name = [group valueForProperty:ALAssetsGroupPropertyName];
             if ([self isCameraRollAlbum:name]) {
                 model = [self modelWithResult:group name:name];
@@ -203,15 +201,19 @@ static CGFloat MMScreenScale;
     }
 }
 
-- (void)getAssetsFromFetchResult:(id)result allowPickImage:(BOOL)allowPickImage allowPickVideo:(BOOL)allowPickVideo completion:(void (^)(NSArray<MMAlbumModel *> *))completion {
-    __block NSMutableArray *photos = @[].mutableCopy;
-    if ([result isKindOfClass:[PHFetchResult class]]) {//Photos
-        PHFetchResult *_result = (PHFetchResult *)result;
-        [_result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            MMAssetModel *model = [self assetModelWithAsset:_result allowPickImage:allowPickImage allowPickVideo:allowPickVideo];
-            if (model) [photos addObject:model];
+//加载单个相册集中的图片
+- (void)getAssetsFromFetchResult:(id)result allowPickImage:(BOOL)allowPickImage allowPickVideo:(BOOL)allowPickVideo completion:(void (^)(NSArray<MMAssetModel *> *))completion {
+    NSMutableArray *photoArr = [NSMutableArray array];
+    if ([result isKindOfClass:[PHFetchResult class]]) {
+        PHFetchResult *fetchResult = (PHFetchResult *)result;
+        [fetchResult enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            MMAssetModel *model = [self assetModelWithAsset:obj allowPickImage:allowPickImage allowPickVideo:allowPickVideo];
+                                   //assetModelWithAsset:obj allowPickingVideo:allowPickingVideo allowPickingImage:allowPickingImage];
+            if (model) {
+                [photoArr addObject:model];
+            }
         }];
-        if (completion) completion(photos);
+        if (completion) completion(photoArr);
     } else if ([result isKindOfClass:[ALAssetsGroup class]]) {
         ALAssetsGroup *group = (ALAssetsGroup *)result;
         if (allowPickImage && allowPickVideo) {
@@ -221,20 +223,23 @@ static CGFloat MMScreenScale;
         } else if (allowPickImage) {
             [group setAssetsFilter:[ALAssetsFilter allPhotos]];
         }
-        ALAssetsGroupEnumerationResultsBlock resultBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop) {
+        ALAssetsGroupEnumerationResultsBlock resultBlock = ^(ALAsset *result, NSUInteger index, BOOL *stop)  {
             if (result == nil) {
-                if (completion) completion(photos);
+                if (completion) completion(photoArr);
             }
-            MMAssetModel *model = [self assetModelWithAsset:result allowPickImage:allowPickImage allowPickVideo:allowPickVideo ];
-            if (model) [photos addObject:model];
+            MMAssetModel *model = [self assetModelWithAsset:result allowPickImage:allowPickImage allowPickVideo:allowPickVideo];
+                                   //assetModelWithAsset:result allowPickingVideo:allowPickingVideo allowPickingImage:allowPickingImage];
+            if (model) {
+                [photoArr addObject:model];
+            }
         };
         if (self.sortAscendingByModificationDate) {
             [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                if (resultBlock) resultBlock(result, index, stop);
+                if (resultBlock) { resultBlock(result,index,stop); }
             }];
         } else {
             [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                if (resultBlock) resultBlock(result, index, stop);
+                if (resultBlock) { resultBlock(result,index,stop); }
             }];
         }
     }

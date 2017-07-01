@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <CoreLocation/CoreLocation.h>
 @interface MMLocationManager : NSObject
 
 + (instancetype)manager;
