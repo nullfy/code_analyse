@@ -194,5 +194,9 @@ print(m);
 
 
 //let sumNum = [1,7,10,19,27,19];
-let ali = leetcode.twoSumSolution(num, 12);
+//let ali = leetcode.twoSumSolution(num, 12);
+
+let minimumArray = [7, 2, 6, 4 , 0, 1, 5, 3];
+//let ali = leetcode.findMinimunNumInRotateArray(minimumArray)
+let ali = leetcode.Medium_003_Longest_Substring_Without_Repeating_Characters.longest("aaabbbdeedb")
 print(ali)

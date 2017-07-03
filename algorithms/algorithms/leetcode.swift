@@ -322,4 +322,100 @@ class leetcode: NSObject {
         }
         return indexes
     }
+    
+    public class func findMinimunNumInRotateArray(_ array: [Int]) -> Int {
+        if array.count == 0 {
+            return 0
+        } else if array.count == 1 {
+            return array[0]
+        } else if array.count == 2 {
+            return min(array[0], array[1])
+        }
+        
+        var start = 0
+        var stop = array.count - 1
+        while start < stop-1 {
+            if array[start] < array[stop] {
+                return array[start]
+            }
+            
+            let mid = start + (stop - start)/2
+            if array[mid] > num[start] {
+                start = mid
+            } else if array[mid] < array[start] {
+                stop = mid
+            }
+        }
+        return min(array[start], array[stop])
+    }
+    
+    
+    /*
+     https://oj.leetcode.com/problems/longest-substring-without-repeating-characters/
+     #3 Longest Substring Without Repeating Characters
+     Level: medium
+     Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. For "bbbbb" the longest substring is "b", with the length of 1.
+     Inspired by @heiyanbin at https://oj.leetcode.com/discuss/6168/my-o-n-solution
+     
+     在一串字符串中去掉重复的字符，同时返回去重后的字符长度
+     题解步骤
+     1. 将sting的字符与下标保存到map中
+     2. 如果map中有过当前字符，这里要注意的是map中的有可能首元素是否重复的问题所以需要多判断一步
+     3. 如果没有该字符，max 和 tmpMax 同时加1
+     
+     temp 2 maxl 2 ["b": 1, "a": 0]
+     temp 3 maxl 3 ["b": 1, "a": 0, "c": 2]
+     temp 3 maxl 3 ["b": 1, "a": 3, "c": 2]
+     temp 1 maxl 3 ["b": 1, "a": 4, "c": 2]
+     temp 2 maxl 3 ["b": 5, "a": 4, "c": 2]
+     temp 1 maxl 3 ["b": 6, "a": 4, "c": 2]
+     temp 2 maxl 3 ["b": 6, "a": 4, "d": 7, "c": 2]
+     */
+
+    struct Medium_003_Longest_Substring_Without_Repeating_Characters {
+        // t = O(N), s = O(1)
+        static func longest(_ s: String) -> Int {
+            let charArr = s.randomAccessCharactersArray()
+            let len = charArr.count
+            if len <= 1 {
+                return len
+            } else {
+                var tmpMaxLen = 1
+                var maxLen = 1
+                var hashMap = Dictionary<Character, Int>()
+                hashMap[charArr[0]] = 0
+                for i in 1..<len {
+                    if let lastPosition = hashMap[charArr[i]] {
+                        if lastPosition < i - tmpMaxLen {
+                            tmpMaxLen += 1//用于记录 单个字符重复次数
+                        } else {
+                            tmpMaxLen = i - lastPosition
+                        }
+                    } else {
+                        tmpMaxLen += 1
+                    }
+                    hashMap[charArr[i]] = i
+                    if tmpMaxLen > maxLen {
+                        maxLen = tmpMaxLen
+                    }
+                    print("i",i,"temp",tmpMaxLen,"maxl",maxLen,hashMap)
+                }
+                return maxLen+1
+            }
+        }
+    }
 }
+
+private extension String {
+    /*
+     Ref: http://oleb.net/blog/2014/07/swift-strings/
+     "Because of the way Swift strings are stored, the String type does not support random access to its Characters via an integer index — there is no direct equivalent to NSStringʼs characterAtIndex: method. Conceptually, a String can be seen as a doubly linked list of characters rather than an array."
+     
+     By creating and storing a seperate array of the same sequence of characters,
+     we could hopefully achieve amortized O(1) time for random access.
+     */
+    func randomAccessCharactersArray() -> [Character] {
+        return Array(self.characters)
+    }
+}
+
