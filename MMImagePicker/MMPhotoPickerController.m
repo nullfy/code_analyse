@@ -305,105 +305,56 @@ static CGSize AssetGridThumbnailSize;
 #pragma mark    Click && Event
 
 - (void)doneButtonClick {
-//    MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
-//    
-//    if (nav.minImagesCount && nav.selectedModels.count < nav.minImagesCount) {
-//        NSString *title = [NSString stringWithFormat:[NSBundle mm_localizedStringForKey:@"Select a minimum of %zd photos" ], nav.minImagesCount];
-//        [nav showAlertWithTitle:title];
-//    }
-//    [nav showProgressHUD];
-//    
-//    NSMutableArray *photos, *assets, *infos;
-//    photos = assets = infos = @[].mutableCopy;
-//    for (NSInteger i = 0; i < nav.selectedModels.count; i++) {
-//        [photos addObject:@1];
-//        [assets addObject:@1];
-//        [infos addObject:@1];
-//    }
-//    
-//    __block BOOL hasShowAlert = YES;
-//    __block id alertView;
-//    [MMImagePickManager manager].shouldFixOrientation = YES;
-//    for (NSInteger i = 0; i < nav.selectedModels.count; i++) {
-//        MMAssetModel *model = nav.selectedModels[i];
-//        [[MMImagePickManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-//            if (isDegraded) return ;
-//            if (photo) {
-//                photo = [self scaleImage:photo toSize:CGSizeMake(nav.photoWidth, (int)(nav.photoWidth * photo.size.height / photo.size.width))];
-//                [photos replaceObjectAtIndex:i withObject:photo];
-//            }
-//            if (info) [infos replaceObjectAtIndex:i withObject:info];
-//            [assets replaceObjectAtIndex:i withObject:model.asset];
-//            
-//            for (id item in photos) {
-//                if ([item isKindOfClass:[NSNumber class]]) return;
-//            }
-//            if (hasShowAlert) {
-//                [nav hideAlertView:alertView];
-//                [self didGetAllPhotos:photos assets:assets infoArr:infos];
-//            }
-//        } progressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
-//            if (progress < 1 && hasShowAlert && !alertView) {
-//                [nav hideProgressHUD];
-//                alertView = [nav showAlertWithTitle:[NSBundle mm_localizedStringForKey:@"Synchronizing photos from iCloud"]];
-//                hasShowAlert = NO;
-//                return ;
-//            }
-//            if (progress >= 1) hasShowAlert = YES;
-//        } networkAccessAllowed:YES];
-//    }
-//    if (nav.selectedModels.count <= 0) [self didGetAllPhotos:photos assets:assets infoArr:infos];
     MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
-    // 1.6.8 判断是否满足最小必选张数的限制
+
     if (nav.minImagesCount && nav.selectedModels.count < nav.minImagesCount) {
-        NSString *title = [NSString stringWithFormat:[NSBundle mm_localizedStringForKey:@"Select a minimum of %zd photos"], nav.minImagesCount];
+        NSString *title = [NSString stringWithFormat:[NSBundle mm_localizedStringForKey:@"Select a minimum of %zd photos" ], nav.minImagesCount];
         [nav showAlertWithTitle:title];
-        return;
     }
-    
     [nav showProgressHUD];
-    NSMutableArray *photos = [NSMutableArray array];
-    NSMutableArray *assets = [NSMutableArray array];
-    NSMutableArray *infoArr = [NSMutableArray array];
-    for (NSInteger i = 0; i < nav.selectedModels.count; i++) { [photos addObject:@1];[assets addObject:@1];[infoArr addObject:@1]; }
-    
-    __block BOOL havenotShowAlert = YES;
-    [MMImagePickManager manager].shouldFixOrientation = YES;
+#warning error photos = infos = assets = @[];
+    NSMutableArray *photos, *assets, *infos;
+    photos = @[].mutableCopy;
+    assets = @[].mutableCopy;
+    infos = @[].mutableCopy;
+    for (NSInteger i = 0; i < nav.selectedModels.count; i++) {
+        [photos addObject:@1];
+        [assets addObject:@1];
+        [infos addObject:@1];
+    }
+
+    __block BOOL hasShowAlert = YES;
     __block id alertView;
+    [MMImagePickManager manager].shouldFixOrientation = YES;
     for (NSInteger i = 0; i < nav.selectedModels.count; i++) {
         MMAssetModel *model = nav.selectedModels[i];
         [[MMImagePickManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
-            if (isDegraded) return;
+            if (isDegraded) return ;
             if (photo) {
                 photo = [self scaleImage:photo toSize:CGSizeMake(nav.photoWidth, (int)(nav.photoWidth * photo.size.height / photo.size.width))];
                 [photos replaceObjectAtIndex:i withObject:photo];
             }
-            if (info)  [infoArr replaceObjectAtIndex:i withObject:info];
+            if (info) [infos replaceObjectAtIndex:i withObject:info];
             [assets replaceObjectAtIndex:i withObject:model.asset];
-            
-            for (id item in photos) { if ([item isKindOfClass:[NSNumber class]]) return; }
-            
-            if (havenotShowAlert) {
+
+            for (id item in photos) {
+                if ([item isKindOfClass:[NSNumber class]]) return;
+            }
+            if (hasShowAlert) {
                 [nav hideAlertView:alertView];
-                [self didGetAllPhotos:photos assets:assets infoArr:infoArr];
+                [self didGetAllPhotos:photos assets:assets infoArr:infos];
             }
         } progressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
-            // 如果图片正在从iCloud同步中,提醒用户
-            if (progress < 1 && havenotShowAlert && !alertView) {
+            if (progress < 1 && hasShowAlert && !alertView) {
                 [nav hideProgressHUD];
                 alertView = [nav showAlertWithTitle:[NSBundle mm_localizedStringForKey:@"Synchronizing photos from iCloud"]];
-                havenotShowAlert = NO;
-                return;
+                hasShowAlert = NO;
+                return ;
             }
-            if (progress >= 1) {
-                havenotShowAlert = YES;
-            }
+            if (progress >= 1) hasShowAlert = YES;
         } networkAccessAllowed:YES];
     }
-    if (nav.selectedModels.count <= 0) {
-        [self didGetAllPhotos:photos assets:assets infoArr:infoArr];
-    }
-
+    if (nav.selectedModels.count <= 0) [self didGetAllPhotos:photos assets:assets infoArr:infos];
 }
 
 - (void)originalPhotoButtonClick {

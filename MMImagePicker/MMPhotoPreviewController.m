@@ -91,9 +91,9 @@
         _cropBgView.userInteractionEnabled = NO;
         _cropBgView.backgroundColor = [UIColor clearColor];
         _cropBgView.frame = self.view.bounds;
-        [self.view addSubview:_cropView];
-        
-        [MMImageCropManager overlayClipWithView:_cropView rect:nav.cropRect containerView:self.view needCircleCrop:nav.needCircleCrop];
+#warning error _cropView
+        [self.view addSubview:_cropBgView];
+        [MMImageCropManager overlayClipWithView:_cropBgView rect:nav.cropRect containerView:self.view needCircleCrop:nav.needCircleCrop];
         
         _cropView = [UIView new];
         _cropView.userInteractionEnabled = NO;
@@ -102,7 +102,8 @@
         _cropView.layer.borderColor = [UIColor whiteColor].CGColor;
         _cropView.layer.borderWidth = 1.0f;
         if (nav.needCircleCrop) {
-            _cropView.layer.cornerRadius = nav.cropRect.size.width;
+#warning error nav.cropRect.size.width 没有除以2
+            _cropView.layer.cornerRadius = nav.cropRect.size.width/2;
             _cropView.clipsToBounds = YES;
         }
         [self.view addSubview:_cropView];
@@ -292,7 +293,6 @@
 
 - (void)doneButtonClick {
     MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
-
     //如果图片正在从iCloud同步，提醒用户
     if (_progress > 0 && _progress < 1) {
         _alertView = [nav showAlertWithTitle:[NSBundle mm_localizedStringForKey:@"Synchronizing photos from iCloud"]];

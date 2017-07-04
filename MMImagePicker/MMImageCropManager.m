@@ -11,6 +11,7 @@
 
 @implementation MMImageCropManager
 
+// 裁剪框背景的处理
 + (void)overlayClipWithView:(UIView *)view rect:(CGRect)rect containerView:(UIView *)container needCircleCrop:(BOOL)needCrop {
     //#import <QuartzCore/CALayer.h> CALayer CoreAnimation
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:[UIScreen mainScreen].bounds];
@@ -24,15 +25,19 @@
     layer.fillRule = kCAFillRuleEvenOdd;
     layer.fillColor = [UIColor blackColor].CGColor;
     layer.opacity = 0.5f;
-    [view.layer addSublayer:layer];
+    [view.layer addSublayer:layer];   
 }
 
+// 获得裁剪后的图片
 + (UIImage *)cropImageView:(UIImageView *)imageView toRect:(CGRect)rect scale:(CGFloat)scale containerView:(UIView *)container {
     CGAffineTransform transform = CGAffineTransformIdentity;//CoreGraphic
     CGRect imageViewRect = [imageView convertRect:imageView.bounds toView:container];
-    CGPoint point = CGPointMake(imageViewRect.origin.x + imageViewRect.size.width/2, imageViewRect.origin.y + imageViewRect.origin.y);
+    //CGPoint point = CGPointMake(imageViewRect.origin.x + imageViewRect.size.width/2, imageViewRect.origin.y + imageViewRect.origin.y);
+    CGPoint point = CGPointMake(imageViewRect.origin.x + imageViewRect.size.width/2, imageViewRect.origin.y + imageViewRect.size.height/2);
+    
     CGFloat xMargin = container.width - CGRectGetMaxX(rect) - rect.origin.x;
-    CGPoint zeroPoint = CGPointMake(container.width - xMargin/2, container.centerY);
+    //CGPoint zeroPoint = CGPointMake(container.width - xMargin/2, container.centerY);
+    CGPoint zeroPoint = CGPointMake(container.width/2 - xMargin/2, container.centerY);
     CGPoint translation = CGPointMake(point.x - zeroPoint.x, point.y - zeroPoint.y);
     transform = CGAffineTransformTranslate(transform, translation.x, translation.y);
     
@@ -50,9 +55,10 @@
 }
 
 + (CGImageRef)newTransformedImage:(CGAffineTransform)transform sourceImage:(CGImageRef)sourceImage sourceSize:(CGSize)sourceSize outputWidth:(CGFloat)width cropSize:(CGSize)cropSize imageViewSize:(CGSize)imageViewSize {
+
     CGImageRef source = [self newScaledImage:sourceImage toSize:sourceSize];
     CGFloat aspect = cropSize.height/cropSize.width;
-    CGSize outputSize = CGSizeMake(width, width*aspect);
+    CGSize outputSize = CGSizeMake(width, width * aspect);
     
     CGContextRef context = CGBitmapContextCreate(NULL, outputSize.width, outputSize.height, CGImageGetBitsPerComponent(source), 0, CGImageGetColorSpace(source), CGImageGetBitmapInfo(source));
     CGContextSetFillColorWithColor(context, [UIColor clearColor].CGColor);
@@ -61,6 +67,9 @@
     CGAffineTransform uiCoords = CGAffineTransformMakeScale(outputSize.width/cropSize.width, outputSize.height/cropSize.height);
     uiCoords = CGAffineTransformTranslate(uiCoords, cropSize.width/2.0f, cropSize.height/2.0f);
     uiCoords = CGAffineTransformScale(uiCoords, 1.0, -1.0);
+#warning  miss
+    CGContextConcatCTM(context, uiCoords);
+    
     CGContextConcatCTM(context, transform);
     CGContextScaleCTM(context, 1.0, -1.0);
     
