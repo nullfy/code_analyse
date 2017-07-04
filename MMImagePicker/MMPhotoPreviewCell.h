@@ -23,6 +23,7 @@
 
 - (void)recoverSubViews;
 
+
 @end
 
 @interface MMPhotoPreviewView : UIView

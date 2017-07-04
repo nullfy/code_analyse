@@ -241,14 +241,15 @@
 }
 
 - (void)configDefaultSetting {
-    _timeout = 15;
-    _photoWidth = 828.f;
-    _photoPreviewMaxWidth = 600.f;
-    _naviTitleColor = [UIColor whiteColor];
-    _naviTitlFont = [UIFont systemFontOfSize:17];
-    _barItemTextFont = [UIFont systemFontOfSize:15];
-    _barItemTextColor = [UIColor whiteColor];
-    _allowPreview = YES;
+#warning 没有用self.timeout
+    self.timeout = 15;
+    self.photoWidth = 828.f;
+    self.photoPreviewMaxWidth = 600.f;
+    self.naviTitleColor = [UIColor whiteColor];
+    self.naviTitlFont = [UIFont systemFontOfSize:17];
+    self.barItemTextFont = [UIFont systemFontOfSize:15];
+    self.barItemTextColor = [UIColor whiteColor];
+    self.allowPreview = YES;
     
     [self configDefaultImageName];
     [self configDefaultButtonTitle];

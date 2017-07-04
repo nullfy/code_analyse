@@ -129,6 +129,10 @@ static CGFloat MMScreenScale;
     }
 }
 
+/*
+ 获取所有相册文件夹中的图片
+ 
+ */
 - (void)getAllAlbum:(BOOL)allowPickImage allowPickVideo:(BOOL)allowVedio completion:(void (^)(NSArray<MMAlbumModel *> *))completion {
     NSMutableArray *albumArray = @[].mutableCopy;
     if (kiOS8Later) {
@@ -512,6 +516,7 @@ static CGFloat MMScreenScale;
         });
     }
     return 0;
+
 }
 
 #pragma mark 获取封面图

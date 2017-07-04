@@ -51,7 +51,7 @@
     [_previewView recoverSubViews];
 }
 
- @end
+@end
 
 
 @interface MMPhotoPreviewView ()<UIScrollViewDelegate>
@@ -60,8 +60,7 @@
 
 @implementation MMPhotoPreviewView
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _scrollView = [[UIScrollView alloc] init];
@@ -94,7 +93,10 @@
         UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
         tap2.numberOfTapsRequired = 2;
         [tap1 requireGestureRecognizerToFail:tap2];
-        
+
+#warning Miss addGesture
+        [self addGestureRecognizer:tap1];
+        [self addGestureRecognizer:tap2];
         [self configProgressView];
     }
     return self;
@@ -132,9 +134,7 @@
 }
 
 - (void)setAsset:(id)asset {
-    if (_asset && _imageRequestID) {
-        [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
-    }
+    if (_asset && _imageRequestID) [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
     
     _asset = asset;
     _imageRequestID = (uint32_t)[[MMImagePickManager manager] getPhotoWithAsset:asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
@@ -214,6 +214,8 @@
     _scrollView.contentSize = CGSizeMake(_containerView.width, contentSizeHeight);
     [_scrollView scrollRectToVisible:self.bounds animated:NO];
     _scrollView.alwaysBounceVertical = _containerView.height <= self.height ? NO : YES;
+#warning miss imageView.frame
+    _imageView.frame = _containerView.bounds;
     [self refreshScrollViewContentSize];
 }
 

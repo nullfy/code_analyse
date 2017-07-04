@@ -38,7 +38,7 @@
 
 @property (nonatomic, strong) UIView *cropBgView;
 @property (nonatomic, strong) UIView *cropView;
-@property (nonatomic, strong) id alerView;
+@property (nonatomic, strong) id alertView;
 
 
 @end
@@ -150,7 +150,8 @@
      */
     MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
     if (nav.allowPickOriginalPhoto) {
-        NSString *fullImageText = [NSBundle mm_localizedStringForKey:@"Full_image"];
+#warning error 多写了full [_originalPhotoButton setTitle:
+        //NSString *fullImageText = [NSBundle mm_localizedStringForKey:@"Full_image"];
         CGFloat fullImageWidth = [nav.fullImageButtonTitle boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:13]} context:nil].size.width;
         
         _originalPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -160,8 +161,8 @@
         [_originalPhotoButton addTarget:self action:@selector(originalPhotoButtonClick) forControlEvents:UIControlEventTouchUpInside];
         
         _originalPhotoButton.titleLabel.font = [UIFont systemFontOfSize:13];
-        [_originalPhotoButton setTitle:fullImageText forState:UIControlStateNormal];
-        [_originalPhotoButton setTitle:fullImageText forState:UIControlStateSelected];
+        [_originalPhotoButton setTitle:nav.fullImageButtonTitle forState:UIControlStateNormal];
+        [_originalPhotoButton setTitle:nav.fullImageButtonTitle forState:UIControlStateSelected];
         [_originalPhotoButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         [_originalPhotoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         [_originalPhotoButton setImage:[UIImage imageNamedFromMyBundle:nav.photoPreviewOriginDefImageName] forState:UIControlStateNormal];
@@ -178,7 +179,7 @@
     
     //完成按钮
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneButton.frame = CGRectMake(self.view.width - 44 - 12, 0, 80, 44);
+    _doneButton.frame = CGRectMake(self.view.width - 44 - 12, 0, 44, 44);
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton addTarget:self action:@selector(doneButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [_doneButton setTitle:nav.doneButtonTitle forState:UIControlStateNormal];
@@ -198,13 +199,15 @@
     _numberLabel.text = [NSString stringWithFormat:@"%zd", nav.selectedModels.count];
     _numberLabel.hidden = nav.selectedModels.count <= 0;
     _numberLabel.backgroundColor = [UIColor clearColor];
-    
-    [_toolBar addSubview:_doneButton];
-    [_toolBar addSubview:_numberLabel];
-    [_toolBar addSubview:_numberImageView];
-    [_toolBar addSubview:_originalPhotoButton];
+
     [_originalPhotoButton addSubview:_originalPhotoLabel];
+    [_toolBar addSubview:_doneButton];
+    [_toolBar addSubview:_originalPhotoButton];
+    [_toolBar addSubview:_numberImageView];
+#warning numlabel 比imageview早添加
+    [_toolBar addSubview:_numberLabel];
     [self.view addSubview:_toolBar];
+
 }
 
 #pragma mark    Click-Event
@@ -241,7 +244,6 @@
                         break;
                     }
                 }
-                
                 if (self.photos) {
                     NSArray *selectedAssetsTmp = [NSArray arrayWithArray:nav.selectedAssets];
                     for (NSInteger i = 0; i < selectedAssetsTmp.count; i++) {
@@ -257,31 +259,35 @@
             }
         }
     }
-    
     model.selected = !button.isSelected;
     [self refreshNavBarAndBottomBarState];
     if (model.isSelected) {//选中时数字变化的动画
         [_selectButton.imageView.layer showOscillatoryAnimationWithType:MMOscillatorAnimationTypeToBigger ];
     }
     [_numberImageView.layer showOscillatoryAnimationWithType:MMOscillatorAnimationTypeToSmaller];
-    
 }
 
 - (void)originalPhotoButtonClick {
+    /*
+     原图按钮的选中与反选
+     1.原图大小label的显示与否，同时更新文字
+     2.原图按钮的选择与否
+     3.右上角选中按钮的的选择（原图按钮的反选不会取消图片的选中状态）
+     4.如果该图片未曾选中过，还要判断当前选中的图片数量有没有超过最大数，同时根据配置中是否显示选中按钮来判断
+     5.如果条件都成立 就选中该张图片
+     */
     _originalPhotoButton.selected = !_originalPhotoButton.isSelected;
     _isSelectedOriginalPhoto = _originalPhotoButton.isSelected;
     _originalPhotoLabel.hidden = !_originalPhotoButton.isSelected;
     if (_isSelectedOriginalPhoto) {
         [self showPhotoBytes];
         if (!_selectButton.isSelected) {
-            
             MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
             if (nav.selectedModels.count < nav.maxImagesCount && nav.showSelectButton) {
                 [self select:_selectButton];
             }
         }
     }
-    
 }
 
 - (void)doneButtonClick {
@@ -289,7 +295,7 @@
 
     //如果图片正在从iCloud同步，提醒用户
     if (_progress > 0 && _progress < 1) {
-        _alerView = [nav showAlertWithTitle:[NSBundle mm_localizedStringForKey:@"Synchronizing photos from iCloud"]];
+        _alertView = [nav showAlertWithTitle:[NSBundle mm_localizedStringForKey:@"Synchronizing photos from iCloud"]];
         return;
     }
     
@@ -336,7 +342,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[MMPhotoPreviewCell class]]) [(MMPhotoPreviewCell *)cell recoverSubViews];
-    
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -365,14 +370,29 @@
     cell.imageProgressUpdateBlock = ^(double progress) {
         weakSelf.progress = progress;
         if (progress >= 1) {
-            if (weakSelf.alerView) {
-                [nav hideAlertView:weakSelf.alerView];
+            if (weakSelf.alertView) {
+                [nav hideAlertView:weakSelf.alertView];
                 [weakSelf doneButtonClick];
             }
         }
     };
     return cell;
 }
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat offSetWidth = scrollView.contentOffset.x;
+    offSetWidth = offSetWidth +  ((self.view.width + 20) * 0.5);
+    
+    NSInteger currentIndex = offSetWidth / (self.view.width + 20);
+    
+    if (currentIndex < _models.count && _currentIndex != currentIndex) {
+        _currentIndex = currentIndex;
+        [self refreshNavBarAndBottomBarState];
+    }
+}
+
 
 #pragma mark    View Cycle
 - (void)viewWillAppear:(BOOL)animated {
@@ -400,13 +420,12 @@
     _photosTemp = [NSArray arrayWithArray:photos];
 }
 
-
 #pragma mark    Private method
 - (void)refreshNavBarAndBottomBarState {
     MMImagePickerController *nav = (MMImagePickerController *)self.navigationController;
     MMAssetModel *model = _models[_currentIndex];
     _selectButton.selected = model.isSelected;
-    _numberLabel.text = [NSString stringWithFormat:@"%zd",nav.selectedModels.count]; //%zd 补0 凑成两位
+    _numberLabel.text = [NSString stringWithFormat:@"%zd",nav.selectedModels.count];
     _numberImageView.hidden = (nav.selectedModels.count <= 0 || _isHideNavBar || _isCropImage);
     _numberLabel.hidden = (nav.selectedModels.count <= 0 || _isHideNavBar || _isCropImage);
     
@@ -414,14 +433,28 @@
     _originalPhotoLabel.hidden = !_originalPhotoButton.isSelected;
     if (_isSelectedOriginalPhoto) [self showPhotoBytes];
     
+    // If is previewing video, hide original photo button
+    // 如果正在预览的是视频，隐藏原图按钮
     if (!_isHideNavBar) {
         if (model.type == MMAssetModelMediaTypeVideo) {
             _originalPhotoButton.hidden = YES;
             _originalPhotoLabel.hidden = YES;
         } else {
             _originalPhotoButton.hidden = NO;
-            if (_isSelectedOriginalPhoto) _originalPhotoLabel.hidden = NO;
+            if (_isSelectedOriginalPhoto)  _originalPhotoLabel.hidden = NO;
         }
+    }
+    
+    _doneButton.hidden = NO;
+    _selectButton.hidden = !nav.showSelectButton;
+    // 让宽度/高度小于 最小可选照片尺寸 的图片不能选中
+    if (![[MMImagePickManager manager] isPhotoSelectableWithAsset:model.asset]) {
+        _numberLabel.hidden = YES;
+        _numberImageView.hidden = YES;
+        _selectButton.hidden = YES;
+        _originalPhotoButton.hidden = YES;
+        _originalPhotoLabel.hidden = YES;
+        _doneButton.hidden = YES;
     }
 }
 
