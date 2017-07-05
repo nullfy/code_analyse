@@ -477,6 +477,34 @@ class leetcode: NSObject {
             return 0.0
         }
     }
+    
+    /*
+     Determine whether an integer is a palindrome number
+     
+     题解：验证一个数是否是回文数，例如 121是回文数，122就不是回文数，要注意的是负数不是，0 是
+     1.首先取到个位，同时对该数除以10，
+     2.再取到十位，同时对该数除以10
+     */
+    struct Easy_001_Palindrome_Number {
+        static func isPalindromeNumber(_ a: Int) -> Bool {
+            if a < 0 {
+                return false
+            } else if a == 0 {
+                return true
+            }
+            
+            var tmp = a
+            var y = 0
+            while tmp != 0 {
+                y = y*10 + tmp%10
+                tmp = tmp/10
+            }
+            if y == a {
+                return true
+            }
+            return false
+        }
+    }
 }
 
 private extension String {

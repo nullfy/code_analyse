@@ -200,7 +200,9 @@ print(m);
 //let ali = leetcode.findMinimunNumInRotateArray(minimumArray)
 //let ali = leetcode.Medium_003_Longest_Substring_Without_Repeating_Characters.longest("aaabbbdeedb")
 
-let sortA = [11]
-let sortB = [1]
-let ali = leetcode.Hard_004_Median_Of_Two_Sorted_Arrays.findMedianSortedArrays(smallArray: sortA, bigArray: sortB)
+//let sortA = [11]
+//let sortB = [1]
+//let ali = leetcode.Hard_004_Median_Of_Two_Sorted_Arrays.findMedianSortedArrays(smallArray: sortA, bigArray: sortB)
+
+let ali = leetcode.Easy_001_Palindrome_Number.isPalindromeNumber(1221)
 print(ali)
