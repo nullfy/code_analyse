@@ -404,6 +404,79 @@ class leetcode: NSObject {
             }
         }
     }
+    
+    /*
+     https://leetcode.com/problems/median-of-two-sorted-arrays/
+     #4 Median of Two Sorted Arrays
+     Level: hard
+     There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+     Inspired by @MissMary at https://leetcode.com/discuss/15790/share-my-o-log-min-m-n-solution-with-explanation
+     
+     中位数：可以通过把所有观察值高低排序后找出正中间的一个作为中位数。如果观察值有偶数个，通常取最中间的两个数值的平均数作为中位数。
+     
+     题解：找出两个排序数组的中位数
+     1. i为元素较少数组的count／2  j为两个数组的元素个数的count+1／2 因为是向下取整
+     2.
+     */
+    
+    struct Hard_004_Median_Of_Two_Sorted_Arrays {
+        // t = O(log(min(M, N))), s = O(1)
+        static func findMedianSortedArrays(smallArray: [Int], bigArray: [Int]) -> Double {
+            let small = smallArray.count
+            let big = bigArray.count
+            
+            if small > big {
+                return findMedianSortedArrays(smallArray: bigArray, bigArray: smallArray)
+            }
+            
+            var tmpMin = 0
+            var tmpMax = small
+            while tmpMin <= tmpMax {//tmpMax 为少数数组的元素个数
+                let halfSmall = (tmpMin + tmpMax) / 2
+                let halfBig = ((small + big + 1) / 2) - halfSmall   //这里的i 和 j 类型推断会默认向下取整
+                print("i===",halfSmall, "j---",halfBig)
+                if halfBig > 0 && halfSmall < small && bigArray[halfBig-1] > smallArray[halfSmall] {
+                    /*
+                     
+                     */
+                    tmpMin = halfSmall + 1
+                } else if halfSmall > 0 && halfBig < big && smallArray[halfSmall-1] > bigArray[halfBig] {
+                    tmpMax = halfSmall - 1
+                } else {
+                    /*
+                     1.走进这里的分支的情况是 两个数组都是只有一个元素
+                     */
+                    var firstNum: Int
+                    if halfSmall == 0 {
+                        firstNum = bigArray[halfBig-1]
+                    }
+                    else if halfBig == 0 {
+                        firstNum = smallArray[halfSmall-1]
+                    }
+                    else {
+                        firstNum = max(smallArray[halfSmall-1], bigArray[halfBig-1])
+                    }
+                    
+                    // if (m + n) is odd
+                    if (small+big) & 1 != 0 {//位运算 双数为0 单数为1
+                        return Double(firstNum)
+                    }
+                    
+                    var secondNum: Int
+                    if halfSmall == small {
+                        secondNum = bigArray[halfBig]
+                    } else if halfBig == big {
+                        secondNum = smallArray[halfSmall]
+                    } else {
+                        secondNum = min(smallArray[halfSmall], bigArray[halfBig])
+                    }
+                    
+                    return Double((firstNum + secondNum))/2.0
+                }
+            }
+            return 0.0
+        }
+    }
 }
 
 private extension String {
