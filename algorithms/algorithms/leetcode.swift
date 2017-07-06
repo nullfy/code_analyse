@@ -505,6 +505,47 @@ class leetcode: NSObject {
             return false
         }
     }
+    /*
+    The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+    P   A   H   N
+    A P L S I I G
+    Y   I   R
+    And then read line by line: "PAHNAPLSIIGYIR"
+    Write the code that will take a string and make this conversion given a number of rows:
+    string convert(string text, int nRows);
+    convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
+    Inspired by @dylan_yu at https://leetcode.com/discuss/10493/easy-to-understand-java-solution
+     
+     题解：输入一串字符串，然后按指定排数进行折线重排，然后在从左至右从上到下一次重新组合成字符串
+    */
+    struct Easy_006_ZigZag_Conversion {
+        // t = O(N), s = O(N)
+        static func convert(s: String, nRows: Int) -> String {
+            var arr = Array<String>(repeating: String(), count: nRows)
+            var i = 0
+            let charArr = s.randomAccessCharactersArray()
+            let len = charArr.count
+            while i < len {
+                var index = 0 //表示纵列
+                while index < nRows && i < len {
+                    arr[index].append(charArr[i])
+                    i += 1
+                    index += 1
+                }
+                index = nRows - 2 //这里index -2 用来放第二行第二列的字母
+                while index > 0 && i < len {
+                    arr[index].append(charArr[i])
+                    i += 1
+                    index -= 1
+                }
+            }
+            var res = String()
+            for i in 0 ..< nRows {
+                res += arr[i]
+            }
+            return res
+        }
+    }
 }
 
 private extension String {

@@ -204,5 +204,7 @@ print(m);
 //let sortB = [1]
 //let ali = leetcode.Hard_004_Median_Of_Two_Sorted_Arrays.findMedianSortedArrays(smallArray: sortA, bigArray: sortB)
 
-let ali = leetcode.Easy_001_Palindrome_Number.isPalindromeNumber(1221)
+//let ali = leetcode.Easy_001_Palindrome_Number.isPalindromeNumber(1221)
+
+let ali = leetcode.Easy_006_ZigZag_Conversion.convert(s: "HPLJLKJHKGHGKJHKJH", nRows: 3)
 print(ali)
