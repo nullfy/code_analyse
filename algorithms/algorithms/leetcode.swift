@@ -534,7 +534,7 @@ class leetcode: NSObject {
                 }
                 index = nRows - 2 //这里index -2 用来放第二行第二列的字母
                 while index > 0 && i < len {
-                    arr[index].append(charArr[i])
+                    arr[index].append(charArr[i])       //这里是用来放折线点的那些字符
                     i += 1
                     index -= 1
                 }
@@ -544,6 +544,63 @@ class leetcode: NSObject {
                 res += arr[i]
             }
             return res
+        }
+    }
+    
+    
+    /*
+     https://oj.leetcode.com/problems/reverse-integer/
+     #7 Reverse Integer
+     Level: easy
+     Reverse digits of an integer.
+     Example1: x = 123, return 321
+     Example2: x = -123, return -321
+     Have you thought about this?
+     Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+     If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
+     Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
+     For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+     Update (2014-11-10):
+     Test cases had been added to test the overflow behavior.
+     Inspired by @wshaoxuan at https://leetcode.com/discuss/120/how-do-we-handle-the-overflow-case
+
+     */
+    
+    struct Easy_007_Reverse_Integer {
+        // t = O(N), s = O(1)
+        static func reverse(_ x: Int) -> Int {
+            var i: UInt
+            var negtive: Bool
+            if x < 0 {
+                negtive = true
+                if x == Int.min {
+                    i = UInt(-(x+1))
+                    i = i + 1
+                } else {
+                    i = UInt(-x)
+                }
+                
+            } else {
+                negtive = false
+                i = UInt(x)
+            }
+            
+            var res: UInt = 0
+            while i > 0 {
+                res = res * 10 + UInt(i%10)
+                i = i / 10
+            }
+            
+            if negtive == false && res > UInt(Int.max) {
+                return 0
+            } else if negtive == true && res > UInt(Int.max) + 1 {
+                return 0
+            }
+            if negtive {
+                return (-1) * Int(res)
+            } else {
+                return Int(res)
+            }
         }
     }
 }
