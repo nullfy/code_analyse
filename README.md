@@ -17,7 +17,7 @@
 
 通过swift来实现常见的算法题解，首先来看一下算法中两个比较重要的点
 
-关于算法的更多基础知识可以点击[这里]()
+关于算法的更多基础知识可以点击[这里](https://github.com/mumusa/mumuno/blob/master/MarkDown/%E5%B8%B8%E8%A7%81%E7%AE%97%E6%B3%95%E8%A7%A3%E6%9E%90.md)
 
 # MMAvoidCrash
 
