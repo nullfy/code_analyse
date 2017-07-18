@@ -85,7 +85,7 @@
     
 }
 
-#pragma private-method
+# pragma mark private-method
 
 + (NSString *)getMainCallStackSymbolMessageWithCallStacksSymbols:(NSArray<NSString *> *)callSymbols {
     __block NSString *mainCallStackSymbolMsg = nil;

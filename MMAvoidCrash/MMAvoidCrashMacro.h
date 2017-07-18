@@ -31,6 +31,20 @@ static NSString *const MMAvoidCrashSeparatorWithFlag = @"=======================
 #define MMAvoidCrashLog(...)
 #endif
 
+#if __has_include(<MMAvoidCrash/MMAvoidCrashMacro.h>)
+
+#import <MMAvoidCrash/NSObject+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSArray+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSMutableArray+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSDictionary+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSMutableDictionary+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSString+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSMutableString+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSAttributedString+MMAvoidCrash.h>
+#import <MMAvoidCrash/NSMutableAttributedString+MMAvoidCrash.h>
+
+#else
+
 #import "NSObject+MMAvoidCrash.h"
 #import "NSArray+MMAvoidCrash.h"
 #import "NSMutableArray+MMAvoidCrash.h"
@@ -41,5 +55,6 @@ static NSString *const MMAvoidCrashSeparatorWithFlag = @"=======================
 #import "NSAttributedString+MMAvoidCrash.h"
 #import "NSMutableAttributedString+MMAvoidCrash.h"
 
+#endif
 
 #endif /* MMAvoidCrashMacro_h */

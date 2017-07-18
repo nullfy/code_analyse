@@ -47,7 +47,7 @@
 }
 
 
-#pragma private-method
+# pragma mark private-method
 
 - (unichar)avoidCrashCharacterAtIndex:(NSUInteger)index {
     unichar characteristic;

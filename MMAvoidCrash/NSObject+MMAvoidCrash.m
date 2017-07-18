@@ -32,7 +32,7 @@
     });
 }
 
-#pragma private-method
+# pragma mark private-method
 
 - (void)avoidCrashSetValue:(id)value forKey:(NSString *)key {
     @try {

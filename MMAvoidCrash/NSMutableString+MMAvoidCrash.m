@@ -30,7 +30,7 @@
     });
 }
 
-#pragma private-method
+# pragma mark private-method
 
 - (void)avoidCrashReplaceCharactersInRange:(NSRange)range withString:(NSString *)replacement {
     @try {
