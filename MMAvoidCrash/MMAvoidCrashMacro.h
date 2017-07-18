@@ -22,7 +22,7 @@ static NSString *const MMAvoidCrashException = @"MMAvoidCrashException";
 
 static NSString *const MMAvoidCrashMainCallStackSymbolMsg = @"崩溃方法定位失败，请查看函数调用栈来排查错误信息";
 static NSString *const MMAvoidCrashSeparator = @"==========================================================";
-static NSString *const MMAvoidCrashSeparatorWithFlag = @"=======================MMAvoidCrashLog=======================";
+static NSString *const MMAvoidCrashSeparatorWithFlag = @"======================MMAvoidCrashLog=====================";
 
 
 #ifdef DEBUG
