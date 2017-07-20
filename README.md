@@ -5,7 +5,8 @@
 
 用于启动页的广告，支持本地缓存
 
-目前LaunchScreen是不支持自定义类的，如果通过LaunchScreen.storyBoard的方式来设置LaunchImage，可以再这里加一句很关键的代码
+目前LaunchScreen.storyboard 是不支持自定义类关联的，如果通过LaunchScreen.storyBoard的方式来设置LaunchImage，可以再这里加一句很关键的代码
+
 > [self.window makeKeyAndVisible]; 
 
 在此默默感谢Desgard 大神的项目[DGAdLaunchView](https://github.com/Desgard/DGAdLaunchView)提供了这个思路
