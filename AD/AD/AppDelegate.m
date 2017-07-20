@@ -18,6 +18,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    /*
+     目前LaunchScreen是不支持自定义类的，如果通过storyBoard的方式来设置LaunchImage，可以再这里加一句很关键的代码
+     [self.window makeKeyAndVisible]; //在此默默感谢Desgard 大神的项目DGAdLaunchView提供了这个思路
+     
+     为什么说这句代码很关键呢，如果你的App结构是tab-nav,或者 nav，那么通过xib的方式是无法正确显示广告页的
+     之前看到一个思路是在RootVC对应的那个VC里面的DidAppear里面会存在页面闪烁的情况。
+     
+     */
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
