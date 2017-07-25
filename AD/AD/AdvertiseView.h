@@ -7,19 +7,34 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kscreenWidth [UIScreen mainScreen].bounds.size.width
-#define kscreenHeight [UIScreen mainScreen].bounds.size.height
+#ifndef kScreenWidth
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#endif
+
+#ifndef kScreenHeight
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#endif
+
+#ifndef kUserDefaults
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
+#endif
 static NSString *const adImageName = @"adImageName";
 static NSString *const adUrl = @"adUrl";
 @interface AdvertiseView : UIView
 
-/** 显示广告页面方法*/
-- (void)show;
-
 /** 图片路径*/
 @property (nonatomic, copy) NSString *filePath;
 
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithFrame:(CGRect)frame UNAVAILABLE_ATTRIBUTE;
++ (instancetype)new UNAVAILABLE_ATTRIBUTE;
 
+
+
++ (instancetype)shareAdvertise;
+/** 显示广告页面方法*/
+- (void)show;
+
+- (void)dismiss;
 
 @end

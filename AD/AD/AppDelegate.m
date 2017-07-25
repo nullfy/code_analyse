@@ -42,7 +42,7 @@
     BOOL isExist = [self isFileExistWithFilePath:filePath];
     if (isExist) {// 图片存在
         
-        AdvertiseView *advertiseView = [[AdvertiseView alloc] initWithFrame:self.window.bounds];
+        AdvertiseView *advertiseView = [AdvertiseView shareAdvertise];
         advertiseView.filePath = filePath;
         [advertiseView show];
         
