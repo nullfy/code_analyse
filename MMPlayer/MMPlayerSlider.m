@@ -57,6 +57,74 @@
     }
 }
 
+#pragma mark    override
+- (void)setValue:(float)value {
+    [super setValue:value];
+    [self.popUpView setAnimationOffset:[self currentValueOffset] completion:^(UIColor *opaqueColor) {
+        super.minimumTrackTintColor = opaqueColor;
+    }];
+}
+
+- (void)setValue:(float)value animated:(BOOL)animated {
+    if (animated) {
+        [self.popUpView animatedBlock:^(CFTimeInterval duration) {
+            [UIView animateWithDuration:duration animations:^{
+                [super setValue:value animated:animated];
+                
+                [self.popUpView setAnimationOffset:[self currentValueOffset] completion:^(UIColor *opaqueColor) {
+                    super.minimumTrackTintColor = opaqueColor;
+                }];
+                [self layoutIfNeeded];
+            }];
+        }];
+        
+    } else {
+        [super setValue:value animated:animated];
+    }
+}
+
+- (void)setMinimumTrackTintColor:(UIColor *)minimumTrackTintColor {
+    self.autoAdjustTrackColor = NO;
+    [super setMinimumTrackTintColor:minimumTrackTintColor];
+}
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    BOOL begin = [super beginTrackingWithTouch:touch withEvent:event];
+    if (begin && !self.popUpViewAlwaysOn) [self _showPopUpViewAnimated:NO];
+    return begin;
+}
+
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    BOOL continueTrack = [super continueTrackingWithTouch:touch withEvent:event];
+    if (continueTrack) {
+        [self.popUpView setAnimationOffset:[self currentValueOffset] completion:^(UIColor *opaqueColor) {
+            super.minimumTrackTintColor = opaqueColor;
+        }];
+    }
+    return continueTrack;
+}
+
+- (void)cancelTrackingWithEvent:(UIEvent *)event {
+    [super cancelTrackingWithEvent:event];
+    if (self.popUpViewAlwaysOn == NO) [self _hidePopUpViewAnimated:NO];
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
+    [super endTrackingWithTouch:touch withEvent:event];
+    if (self.popUpViewAlwaysOn == NO) [self _hidePopUpViewAnimated:NO];
+}
+
+- (void)setMaximumValue:(float)maximumValue {
+    [super setMaximumValue:maximumValue];
+    _valueRange = self.maximumValue - self.minimumValue;
+}
+
+- (void)setMinimumValue:(float)minimumValue {
+    [super setMinimumValue:minimumValue];
+    _valueRange = self.maximumValue - self.minimumValue;
+}
+
+
 #pragma mark    Private Method
 - (void)setUp {
     _autoAdjustTrackColor = YES;
@@ -128,6 +196,16 @@
     }
 }
 
+- (NSArray *)keyTimesFromSliderPositions:(NSArray *)positions {
+    if (!positions) return nil;
+    
+    NSMutableArray *keyTimes = @[].mutableCopy;
+    for (NSNumber *num in [positions sortedArrayUsingSelector:@selector(compare:)]) {
+        [keyTimes addObject:@((num.floatValue - self.minimumValue) / _valueRange)];
+    }
+    return keyTimes;
+}
+
 
 #pragma mark    Getter && Setter
 
@@ -157,6 +235,37 @@
     [self setPopUpViewAnimatedColors:popUpViewAnimatedColors withPositions:nil];
 }
 
+- (void)setPopUpViewCornerRadius:(CGFloat)popUpViewCornerRadius {
+    self.popUpView.cornerRadius = popUpViewCornerRadius;
+}
+
+- (CGFloat)popUpViewCornerRadius {
+    return self.popUpView.cornerRadius;
+}
+
+- (void)setPopUpViewArrowLength:(CGFloat)popUpViewArrowLength {
+    self.popUpView.arrowLength = popUpViewArrowLength;
+}
+
+- (CGFloat)popUpViewArrowLength {
+    return self.popUpView.arrowLength;
+}
+
+- (void)setPopUpViewWidthPaddingFactor:(CGFloat)popUpViewWidthPaddingFactor {
+    self.popUpView.widthPaddingFactor = popUpViewWidthPaddingFactor;
+}
+
+- (CGFloat)popUpViewWidthPaddingFactor {
+    return self.popUpView.widthPaddingFactor;
+}
+
+- (void)setPopUpViewHeightPaddingFactor:(CGFloat)popUpViewHeightPaddingFactor {
+    self.popUpView.heightPaddingFactor = popUpViewHeightPaddingFactor;
+}
+
+- (CGFloat)popUpViewHeightPaddingFactor {
+    return self.popUpView.heightPaddingFactor;
+}
 
 
 #pragma mark    Public Method
@@ -169,10 +278,13 @@
 }
 
 - (void)showPopUpViewAnimated:(BOOL)animated {
-    
+    self.popUpViewAlwaysOn = YES;
+    [self _showPopUpViewAnimated:animated];
 }
+
 - (void)hidePopUpViewAnimated:(BOOL)animated {
-    
+    self.popUpViewAlwaysOn = NO;
+    [self _hidePopUpViewAnimated:animated];
 }
 
 - (void)setPopUpViewAnimatedColors:(NSArray *)popUpViewAnimatedColors withPositions:(NSArray *)positions {
@@ -184,16 +296,16 @@
     _keyTimes = [self keyTimesFromSliderPositions:positions];
 }
 
-- (NSArray *)keyTimesFromSliderPositions:(NSArray *)positions {
-    if (!positions) return nil;
-    
-    NSMutableArray *keyTimes = @[].mutableCopy;
-    for (NSNumber *num in [positions sortedArrayUsingSelector:@selector(compare:)]) {
-        [keyTimes addObject:@((num.floatValue - self.minimumValue) / _valueRange)];
-    }
-    return keyTimes;
+
+#pragma mark    ASValuePopUpViewDelegate
+
+- (void)colorDidUpdate:(UIColor *)opaqueColor {
+    super.minimumTrackTintColor = opaqueColor;
 }
 
+- (CGFloat)currentValueOffset {
+    return (self.value - self.minimumValue) / _valueRange;
+}
 
 
 @end
