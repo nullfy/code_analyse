@@ -187,5 +187,4 @@ static NSString *kMMRingRotationAnimationKey = @"mmmaterialdesignspinner.rotatio
     self.hidden = !self.isAnimating && hiddenWhenStopped;
 }
 
-
 @end

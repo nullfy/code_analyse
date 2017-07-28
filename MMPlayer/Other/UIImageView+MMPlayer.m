@@ -9,6 +9,7 @@
 #import "UIImageView+MMPlayer.h"
 #import <objc/runtime.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "UIApplication+MMPlayer.h"
 
 @interface MMPlayerImageDownloader ()<NSURLSessionDelegate>
 
@@ -143,12 +144,77 @@
 }
 
 - (void)downloadWithRequest:(NSMutableURLRequest *)requst holdImage:(UIImage *)holdimage {
+    UIImage *cacheImage = [[UIApplication sharedApplication] mm_cacheImageForRequest:requst];
+    if (cacheImage) {
+        [self setImage:cacheImage isFromCache:YES];
+        if (self.completion) self.completion(cacheImage);
+        return;
+    }
+    [self setImage:holdimage isFromCache:YES];
     
+    if ([[UIApplication sharedApplication] mm_failTimesForRequest:requst] >= self.maxFailReloadTimes) return;
+    
+    [self cancleRequest];
+    self.imageDownloader = nil;
+    
+    __weak typeof(self) weakSelf = self;
+    self.imageDownloader = [[MMPlayerImageDownloader alloc] init];
+    [self.imageDownloader startDownloadImageWithURL:requst.URL.absoluteString progress:nil finished:^(NSData *data, NSError *error) {
+        if (data != nil && error == nil) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                UIImage *image = [UIImage imageWithData:data];
+                UIImage *finalImage = image;
+                
+                if (image) {
+                    if (weakSelf.shouldAutoClipImageToViewSize) {
+                        if (fabs(weakSelf.frame.size.width - image.size.width) != 0 &&
+                            fabs(weakSelf.frame.size.height - image.size.height) != 0 ) {
+                            finalImage = [self clipImage:image toSize:weakSelf.frame.size isScaleToMax:YES];
+                        }
+                    }
+                    
+                    [[UIApplication sharedApplication] mm_cacheImage:finalImage forRequest:requst];
+                } else {
+                    [[UIApplication sharedApplication] mm_cacheFailRequest:requst];
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (finalImage) {
+                        [weakSelf setImage:finalImage isFromCache:NO];
+                        if (weakSelf.completion) weakSelf.completion(weakSelf.image);
+                    } else {
+                        if (weakSelf.completion) weakSelf.completion(weakSelf.image);
+                    }
+                });
+            });
+        } else {
+            [[UIApplication sharedApplication] mm_cacheFailRequest:requst];
+            if (weakSelf.completion) weakSelf.completion(weakSelf.image);
+        }
+    }];
 }
 
 - (void)cancleRequest {
     [self.imageDownloader.task cancel];
 }
 
+- (UIImage *)clipImage:(UIImage *)image toSize:(CGSize)size isScaleToMax:(BOOL)isMax {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    
+    UIGraphicsBeginImageContextWithOptions(size, NO, scale);
+    CGSize aspectFitSize = CGSizeZero;
+    if (image.size.width != 0 && image.size.height != 0) {
+        CGFloat rateWidth = size.width / image.size.width;
+        CGFloat rateHeight = size.height / image.size.height;
+        
+        CGFloat rate = isMax ? MAX(rateHeight, rateWidth) : MIN(rateHeight, rateWidth);
+        
+        aspectFitSize = CGSizeMake(image.size.width * rate, image.size.height * rate);
+    }
+    [image drawInRect:CGRectMake(0, 0, aspectFitSize.width, aspectFitSize.height)];
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return result;
+}
 
 @end
