@@ -8,7 +8,7 @@
 
 #import "MMPlayerSlider.h"
 
-@interface MMPlayerSlider ()<MMPlayerTrackingSliderDelegate,ASValuePopUpViewDelegate>
+@interface MMPlayerSlider ()<ASValuePopUpViewDelegate>
 @property (nonatomic, strong) ASValuePopUpView *popUpView;
 @property (nonatomic) BOOL popUpViewAlwaysOn; //Default is NO
 @end

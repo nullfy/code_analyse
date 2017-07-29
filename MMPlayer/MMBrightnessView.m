@@ -9,7 +9,6 @@
 #import "MMBrightnessView.h"
 #import "MMPlayer.h"
 
-
 @interface MMBrightnessView ()
 
 @property (nonatomic, strong) UIImageView *backImage;
@@ -22,7 +21,7 @@
 
 @implementation MMBrightnessView
 
-+ (instancetype)sharedBrightnewss {
++ (instancetype)sharedBrightness {
     static MMBrightnessView *view;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

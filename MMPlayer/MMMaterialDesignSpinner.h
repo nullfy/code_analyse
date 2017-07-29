@@ -26,4 +26,5 @@ FOUNDATION_EXPORT const unsigned char MMMaterialDesignSpinnerVersionString[];
 
 - (void)startAnimating;
 
+- (void)stopAnimating;
 @end

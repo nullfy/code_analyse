@@ -13,13 +13,19 @@
 #import <Foundation/Foundation.h>
 
 #import "UIWindow+MMPlayer.h"
+#import "CALayer+MMPlayer.h"
+#import "UIView+MMPlayer.h"
+#import "MMPlayerSlider.h"
+#import "MMBrightnessView.h"
+#import "MMMaterialDesignSpinner.h"
+#import "ASValuePopUpView.h"
 
 #define RGBA(r,g,b,a)                   [UIColor colorWithRed:r green:g blue:b alpha:a]
 
 #define MMPlayerBundlePath(file)        [@"MMPlayer.bundle" stringByAppendingPathComponent:file]
 #define MMPlayerFrameworkPath(file)     [@"Frameworks/MMPlayer.framework/MMPlayer.bundle" stringByAppendingPathComponent:file]
 #define MMPlayerImage(file)             [UIImage imageNamed:MMPlayerBundlePath(file)] ?: [UIImage imageNamed:MMPlayerFrameworkPath(file)]
-#define MMPlayerShared                  [MMBrightnessView sharedBrightnessView]
+#define MMPlayerShared                  [MMBrightnessView sharedBrightness]
 
 #define MMPlayerOrientationIsLandscape  UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation)
 

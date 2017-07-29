@@ -22,8 +22,9 @@
 - (void)mm_controlView:(UIView *)controlView failAction:(UIButton *)failBtn;
 - (void)mm_controlView:(UIView *)controlView downloadVideoAction:(UIButton *)downloadBtn;
 - (void)mm_controlView:(UIView *)controlView resolutionAction:(UIButton *)resolutionBtn;
-- (void)mm_controlView:(UIView *)controlView progressSliderTap:(CGFload)value;
+- (void)mm_controlView:(UIView *)controlView progressSliderTap:(CGFloat)value;
 - (void)mm_controlView:(UIView *)controlView progressSliderTouchBegan:(UISlider *)slider;
+- (void)mm_controlView:(UIView *)controlView progressSliderValueChanged:(UISlider *)slider;
 - (void)mm_controlView:(UIView *)controlView progressSliderTouchEnded:(UISlider *)slider;
 - (void)mm_controlViewWillShow:(UIView *)controlView isFullScreen:(BOOL)fullScreen;
 - (void)mm_controlViewWillHidden:(UIView *)controlView isFullScreen:(BOOL)fullScreen;

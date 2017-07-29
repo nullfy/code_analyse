@@ -15,6 +15,6 @@
 @property (nonatomic, assign) BOOL isStatusBarHidden;
 @property (nonatomic, assign) BOOL isLandscape;
 
-+ (instancetype)sharedBrightnewss;
++ (instancetype)sharedBrightness;
 
 @end
