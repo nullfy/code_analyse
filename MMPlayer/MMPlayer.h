@@ -15,10 +15,14 @@
 #import "UIWindow+MMPlayer.h"
 #import "CALayer+MMPlayer.h"
 #import "UIView+MMPlayer.h"
+#import "UIImageView+MMPlayer.h"
 #import "MMPlayerSlider.h"
 #import "MMBrightnessView.h"
 #import "MMMaterialDesignSpinner.h"
+#import "MMPlayerControlViewDelegate.h"
 #import "ASValuePopUpView.h"
+#import "MMPlayerModel.h"
+#import "MMPlayerControlView.h"
 
 #define RGBA(r,g,b,a)                   [UIColor colorWithRed:r green:g blue:b alpha:a]
 
