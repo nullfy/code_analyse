@@ -7,6 +7,7 @@
 //
 
 #import "UIView+MMPlayer.h"
+#import <objc/runtime.h>
 
 @implementation UIView (MMPlayer)
 

@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 
 #import "UIWindow+MMPlayer.h"
-#import "CALayer+MMPlayer.h"
+#import "UIView+MMAdd.h"
 #import "UIView+MMPlayer.h"
 #import "UIImageView+MMPlayer.h"
 #import "MMPlayerSlider.h"
