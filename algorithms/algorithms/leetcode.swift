@@ -605,22 +605,22 @@ class leetcode: NSObject {
     }
     
     struct Easy_selectSort {
-        //这种写法无法保证 j的下标移动时得到最小值
+        //这种写法无法保证 j的下标移动时得到最小值(作废)
         static func sortArray(_ x: inout [Int]) -> [Int] {
             if x.count <= 1 {
                 return x
             }
             
-            for i in 0...x.count-2 {
-                let min = x[i]
+            for i in 0...x.count-1 {
                 var index = i
-                for j in (i+1)...x.count-1 {
-                    if x[j] < min {
+                let tmp = x[i]
+                for j in (i+1)..<x.count {
+                    if x[j] < x[index] { //如果直接拿tmp来作为min来对比的话就会出现上面提到的问题
                         index = j
                     }
                 }
                 x[i] = x[index]
-                x[index] = min
+                x[index] = tmp
                 print(x)
             }
             return x
