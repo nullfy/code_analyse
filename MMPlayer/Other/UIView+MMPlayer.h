@@ -24,7 +24,7 @@
 
 - (void)mm_playerResetControlViewForResolution;//切换分辨率时重置ControlView
 
-- (void)mm_playerCancleAutoFadeOutcontrolView;//取消自动隐藏控制层View
+- (void)mm_playerCancelAutoFadeOutcontrolView;//取消自动隐藏控制层View
 
 - (void)mm_playerItemPlaying;//开始播放
 

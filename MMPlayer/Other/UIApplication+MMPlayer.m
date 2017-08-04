@@ -8,6 +8,7 @@
 
 #import "UIApplication+MMPlayer.h"
 #import "NSString+MMPlayer.h"
+#import <objc/runtime.h>
 
 @implementation UIApplication (MMPlayer)
 

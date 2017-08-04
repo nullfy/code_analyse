@@ -304,15 +304,47 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
 }
 
 - (void)seekToTime:(NSInteger)time completion:(void(^)())completion {
-    
+    if (self.player.currentItem.status == AVPlayerStatusReadyToPlay) {
+        [self.controlView mm_playerActivity:YES];
+        [self.player pause];
+        
+        CMTime draggedTime = CMTimeMake(time, 1);
+        __weak typeof(self) weakSelf = self;
+        [self.player seekToTime:draggedTime toleranceBefore:CMTimeMake(1, 1) toleranceAfter:CMTimeMake(1, 1) completionHandler:^(BOOL finished) {
+            [weakSelf.controlView mm_playerActivity:NO];
+            
+            if (completion) completion(finished);
+            [weakSelf.player play];
+            weakSelf.seekTime = 0;
+            weakSelf.isDragged = NO;
+            
+            [weakSelf.controlView mm_playerDraggedEnd];
+            if (!weakSelf.playerItem.isPlaybackLikelyToKeepUp && !weakSelf.isLocalVideo) {
+                weakSelf.state = MMPlayerStateBuffering;
+            }
+        }];
+    }
 }
-
-- (void)createGesture {
-    
-}
-
 
 #pragma mark    Gesture
+
+- (void)createGesture {
+    self.singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapAction:)];
+    self.singleTap.delegate = self;
+    self.singleTap.numberOfTouchesRequired = 1;
+    self.singleTap.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:self.singleTap];
+    
+    self.doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapAction:)];
+    self.doubleTap.delegate = self;
+    self.doubleTap.numberOfTouchesRequired = 1;
+    self.doubleTap.numberOfTapsRequired = 2;
+    [self addGestureRecognizer:self.doubleTap];
+    
+    [self.singleTap setDelaysTouchesBegan:YES];
+    [self.doubleTap setDelaysTouchesBegan:YES];
+    [self.singleTap requireGestureRecognizerToFail:self.doubleTap];
+}
 
 - (void)shrinkPanAction:(UIPanGestureRecognizer *)pan {
     CGPoint point = [pan locationInView:[UIApplication sharedApplication].keyWindow];
@@ -359,6 +391,124 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
     }
 }
 
+- (void)singleTapAction:(UIGestureRecognizer *)tap {
+    if ([tap isKindOfClass:[NSNumber class]] && ![(id)tap boolValue]) {
+        [self _fullScreenAction];
+        return;
+    }
+    
+    if (tap.state == UIGestureRecognizerStateRecognized) {
+        if (self.isBottomVideo && !self.isFullScreen) {
+            [self _fullScreenAction];
+        } else {
+            if (self.playDidEnd) {
+                return;
+            }else {
+                [self.controlView mm_playerShowOrHidecontrolView];
+            }
+        }
+    }
+}
+
+- (void)doubleTapAction:(UIGestureRecognizer *)tap {
+    if (self.playDidEnd) return;
+    [self.controlView mm_playerShowControlView];
+    if (self.isPauseByUser) [self play];
+    else [self pause];
+    if (!self.isAutoPlay) {
+        self.isAutoPlay = YES;
+        [self configMMPlayer];
+    }
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if (self.isAutoPlay) {
+        UITouch *touch = [touches anyObject];
+        if (touch.tapCount == 1) {
+            [self performSelector:@selector(singleTapAction:) withObject:@(NO)];
+        } else if (touch.tapCount == 2) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(singleTapAction:) object:nil];
+            [self doubleTapAction:touch.gestureRecognizers.lastObject];
+        }
+    }
+}
+
+- (void)panDirection:(UIPanGestureRecognizer *)pan {
+    CGPoint locationPoint = [pan locationInView:self];
+    
+    /**
+     我们要响应水平移动和垂直移动
+     根据上次和本次移动的位置，算出一个速率的point
+     */
+    CGPoint veloctyPoint = [pan velocityInView:self];
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan: {
+            CGFloat x = fabs(veloctyPoint.x);
+            CGFloat y = fabs(veloctyPoint.y);
+            if (x > y) {
+                self.panDirection = PanDirectionHorizonMoved;
+                
+                CMTime time = self.player.currentTime;
+                self.sumTime = time.value / time.timescale;
+            } else if (x < y) {
+                self.panDirection = PanDirectionVerticalMoved;
+                if (locationPoint.x > (self.bounds.size.width/2)) {
+                    self.isVolume = YES;
+                } else {
+                    self.isVolume = NO;
+                }
+            }
+        }break;
+        case UIGestureRecognizerStateChanged: {
+            switch (self.panDirection) {
+                case PanDirectionHorizonMoved: {
+                    [self horizontalMoved:veloctyPoint.x];
+                }  break;
+                case PanDirectionVerticalMoved: {
+                    [self verticalMoved:veloctyPoint.y];
+                } break;
+                default: break;
+            }
+        } break;
+        case UIGestureRecognizerStateEnded: {
+            switch (self.panDirection) {
+                case PanDirectionHorizonMoved: {
+                    self.isPauseByUser = NO;
+                    [self seekToTime:self.sumTime completion:nil];
+                    self.sumTime = 0;
+                } break;
+                case PanDirectionVerticalMoved: {
+                    self.isVolume = NO;
+                    break;
+                } break;
+                default: break;
+            }
+        } break;
+        default: break;
+    }
+}
+
+- (void)horizontalMoved:(CGFloat)value {
+    self.sumTime += value/200;
+    
+    CMTime total = self.playerItem.duration;
+    CGFloat totalMoveDuration = (CGFloat)total.value/total.timescale;
+    if (self.sumTime > totalMoveDuration) self.sumTime = totalMoveDuration;
+    if (self.sumTime < 0) self.sumTime = 0;
+    
+    BOOL style = NO;
+    if (value > 0) style = YES;
+    if (value < 0) style = NO;
+    if (value == 0) return;
+    
+    self.isDragged = YES;
+    [self.controlView mm_playerDraggedTime:self.sumTime totalTime:totalMoveDuration isForward:style hasPreview:NO];
+}
+
+- (void)verticalMoved:(CGFloat)value {
+    self.isVolume ? (self.volumeViewSlider.value -= value/1000) : ([UIScreen mainScreen].brightness -= value/1000);
+}
+
 #pragma mark    Orientation
 
 - (void)_fullScreenAction {
@@ -382,7 +532,10 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
 }
 
 - (void)unLockTheScreen {
-    
+    MMPlayerShared.isLockScreen = NO;
+    [self.controlView mm_playerLockScreenButtonState:NO];
+    self.isLocked = NO;
+    [self interfaceOrientation:UIInterfaceOrientationPortrait];
 }
 
 - (void)interfaceOrientation:(UIInterfaceOrientation)orientation {
@@ -395,11 +548,60 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
 }
 
 - (void)setOrientationLandscapeConstraint:(UIInterfaceOrientation)orientation {
-    
+    [self toOrientation:orientation];
+    self.isFullScreen = YES;
 }
 
 - (void)setOrientationPortraitConstraint {
+    if (self.isCellVideo) {
+        if ([self.scrollView isKindOfClass:[UITableView class]]) {
+            UITableView *tableView = (UITableView *)self.scrollView;
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:self.indexPath];
+            
+            self.isBottomVideo = NO;
+            if (![tableView.visibleCells containsObject:cell]) {
+                [self updatePlayerViewToBottom];
+            } else {
+                UIView *fatherView = [cell.contentView viewWithTag:self.playerModel.fatherViewTag];
+                [self addPlayerToFatherView:fatherView];
+            }
+        } else if ([self.scrollView isKindOfClass:[UICollectionView class]]) {
+            UICollectionView *collectionView = (UICollectionView *)self.scrollView;
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:self.indexPath];
+            self.isBottomVideo = NO;
+            if (![collectionView.visibleCells containsObject:cell]) {
+                [self updatePlayerViewToBottom];
+            } else {
+                UIView *fatherView = [cell viewWithTag:self.playerModel.fatherViewTag];
+                [self addPlayerToFatherView:fatherView];
+            }
+        }
+    } else {
+        [self addPlayerToFatherView:self.playerModel.fatherView];
+    }
     
+    [self toOrientation:UIInterfaceOrientationPortrait];
+    self.isFullScreen = NO;
+}
+
+- (void)updatePlayerViewToBottom {
+    if (self.isBottomVideo) return;
+    self.isBottomVideo = YES;
+    if (self.playDidEnd) {
+        self.repeatToPlay = NO;
+        self.playDidEnd = NO;
+        [self resetPlayer];
+        return;
+    }
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:self];
+    
+    if (CGPointEqualToPoint(self.shrinkRightBottomPoint, CGPointZero)) {
+        self.shrinkRightBottomPoint = CGPointMake(10, self.scrollView.contentInset.bottom + 10);
+    } else {
+        [self setShrinkRightBottomPoint:self.shrinkRightBottomPoint];
+    }
+    [self.controlView mm_playerBottomShrinkPlay];
 }
 
 - (void)onDeviceOrientationChange {
@@ -443,7 +645,38 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
 }
 
 - (void)toOrientation:(UIInterfaceOrientation)orientation {
+    UIInterfaceOrientation currentOrientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (currentOrientation == orientation) return;
     
+    if (orientation != UIInterfaceOrientationPortrait) {
+        if (currentOrientation == UIInterfaceOrientationPortrait) {
+            [self removeFromSuperview];
+            MMBrightnessView *brightnessView = [MMBrightnessView sharedBrightness];
+            [[UIApplication sharedApplication].keyWindow insertSubview:self belowSubview:brightnessView];
+            self.frame = (CGRect){0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+        }
+    }
+    
+    [[UIApplication sharedApplication] setStatusBarOrientation:orientation animated:NO];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    self.transform = CGAffineTransformIdentity;
+    self.transform = [self getTransformRotationAngle];
+    [UIView commitAnimations];
+}
+
+- (CGAffineTransform)getTransformRotationAngle {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    
+    if (orientation == UIInterfaceOrientationPortrait) {
+        return CGAffineTransformIdentity;
+    } else if (orientation == UIInterfaceOrientationLandscapeLeft) {
+        return CGAffineTransformMakeRotation(-M_PI_2);
+    } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+        return CGAffineTransformMakeRotation(M_PI_2);
+    }
+    return CGAffineTransformIdentity;
 }
 
 #pragma mark   Setter
@@ -541,6 +774,49 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
 - (void)setPlayerModel:(MMPlayerModel *)playerModel {
     _playerModel = playerModel;
     
+    if (playerModel.seekTime) self.seekTime = playerModel.seekTime;
+    [self.controlView mm_playerModel:playerModel];
+    
+    if (playerModel.resolutionDic) self.resolutionDic = playerModel.resolutionDic;
+    
+    if (playerModel.scrollView && playerModel.indexPath && playerModel.videoURL) {
+        NSCAssert(playerModel.fatherViewTag, @"请指定playviews所在fatherViewTag");
+        [self cellVideoWithScrollView:playerModel.scrollView atIndexPath:playerModel.indexPath];
+        if ([self.scrollView isKindOfClass:[UITableView class]]) {
+            UITableView *tableView = (UITableView *)playerModel.scrollView;
+            UITableViewCell *cell = [tableView cellForRowAtIndexPath:playerModel.indexPath];
+            UIView *fatherView = [cell.contentView viewWithTag:playerModel.fatherViewTag];
+            [self addPlayerToFatherView:fatherView];
+        } else if ([self.scrollView isKindOfClass:[UICollectionView class]]) {
+            UICollectionView *collectionView = (UICollectionView *)playerModel.scrollView;
+            UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:playerModel.indexPath];
+            UIView *fatherView = [cell.contentView viewWithTag:playerModel.fatherViewTag];
+            [self addPlayerToFatherView:fatherView];
+        }
+    } else {
+        NSCAssert(playerModel.fatherView, @"请指定playerView的fatherView");
+        [self addPlayerToFatherView:playerModel.fatherView];
+    }
+    self.videoURL = playerModel.videoURL;
+}
+
+- (void)setShrinkRightBottomPoint:(CGPoint)shrinkRightBottomPoint {
+    _shrinkRightBottomPoint = shrinkRightBottomPoint;
+    CGFloat width = SCREEN_WIDTH * 0.5 - 20;
+    CGFloat height = (self.bounds.size.height / self.bounds.size.width);
+    self.width = width;
+    self.height = height;
+    self.bottom = -shrinkRightBottomPoint.y;
+    self.left = -shrinkRightBottomPoint.x - width;
+}
+
+- (void)setPlayerPushedOrPresented:(BOOL)playerPushedOrPresented {
+    _playerPushedOrPresented = playerPushedOrPresented;
+    if (playerPushedOrPresented) {
+        [self pause];
+    } else {
+        [self play];
+    }
 }
 
 #pragma mark    Getter
@@ -761,7 +1037,6 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
                                                  name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    
 }
 
 - (void)appDidEnterBackground {
@@ -838,7 +1113,17 @@ typedef NS_ENUM(NSUInteger, PanDirection) {
 }
 
 - (void)moviePlayDidEnd:(NSNotification *)noti {
-    
+    self.state = MMPlayerStateStopped;
+    if (self.isBottomVideo && !self.isFullScreen) { //播放完了，如果是在小屏模式 && 在bottom位置，直接关闭播放器
+        self.repeatToPlay = NO;
+        self.playDidEnd = NO;
+        [self resetPlayer];
+    } else {
+        if (!self.isDragged) { //如果不是拖拽中，直接结束播放
+            self.playDidEnd = YES;
+            [self.controlView mm_playerPlayEnd];
+        }
+    }
 }
 
 @end
