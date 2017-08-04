@@ -603,6 +603,29 @@ class leetcode: NSObject {
             }
         }
     }
+    
+    struct Easy_selectSort {
+        //这种写法无法保证 j的下标移动时得到最小值
+        static func sortArray(_ x: inout [Int]) -> [Int] {
+            if x.count <= 1 {
+                return x
+            }
+            
+            for i in 0...x.count-2 {
+                let min = x[i]
+                var index = i
+                for j in (i+1)...x.count-1 {
+                    if x[j] < min {
+                        index = j
+                    }
+                }
+                x[i] = x[index]
+                x[index] = min
+                print(x)
+            }
+            return x
+        }
+    }
 }
 
 private extension String {

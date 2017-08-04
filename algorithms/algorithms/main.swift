@@ -207,6 +207,6 @@ print(m);
 //let ali = leetcode.Easy_001_Palindrome_Number.isPalindromeNumber(1221)
 
 //let ali = leetcode.Easy_006_ZigZag_Conversion.convert(s: "HPLJLKJHKGHGKJHKJH", nRows: 3)
-
-let ali = leetcode.Easy_007_Reverse_Integer.reverse(987987997687)
+var array = [88, 9 , 2, 3, 100]
+let ali = leetcode.Easy_selectSort.sortArray(&array)
 print(ali)
