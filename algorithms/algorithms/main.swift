@@ -208,5 +208,6 @@ print(m);
 
 //let ali = leetcode.Easy_006_ZigZag_Conversion.convert(s: "HPLJLKJHKGHGKJHKJH", nRows: 3)
 var array = [88, 9 , 2, 3, 100]
-let ali = leetcode.Easy_selectSort.sortArray(&array)
+//let ali = leetcode.Easy_selectSort.sortArray(&array)
+let ali = leetcode.Easy_insertSort.sort(&array)
 print(ali)

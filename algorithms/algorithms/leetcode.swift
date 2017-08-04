@@ -626,6 +626,23 @@ class leetcode: NSObject {
             return x
         }
     }
+    
+    struct Easy_insertSort {
+        static func sort(_ array: inout [Int]) -> [Int] {
+            for i in 1..<array.count {
+                let current = array[i]
+                var pre = i - 1
+                while pre >= 0 && array[pre] > current {
+                    array[pre + 1] = array[pre]
+                    pre -= 1
+                    print(array)
+                }
+                array[pre+1] = current//上面的prek可能为-1 当current比前面的数都小时，pre就是-1
+                print("after--",array)
+            }
+            return array
+        }
+    }
 }
 
 private extension String {
