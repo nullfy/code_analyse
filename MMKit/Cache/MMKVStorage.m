@@ -31,7 +31,7 @@
     sqlite3 *_db;
     CFMutableDictionaryRef _dbStmtCache;
     NSTimeInterval _dbLastOpenErrorTime;
-    NSUInteger  _dbOpenErrorCount;
+    NSUInteger  _dbOpenErrorCount;//全局db初始化错误标示，超过最大次数时强制初始化
 }
 
 @end
@@ -748,6 +748,7 @@ static NSString *const kTrashDirectoryName = @"trash";
     [self _fileEmptyTrashInBachground];
 }
 
+#pragma mark  -Life-Cycle
 - (instancetype)init {
     @throw [NSException exceptionWithName:@"MMKVStorage init error" reason:@"please use the designed initializer and pass the 'path' and 'type'." userInfo:nil];
     return [self initWithPath:@"" type:MMKVStorageTypeFile];
@@ -810,6 +811,7 @@ static NSString *const kTrashDirectoryName = @"trash";
     }
 }
 
+#pragma mark    -Public Method
 - (BOOL)saveItem:(YYKVStorageItem *)item {
     return [self saveItemWithKey:item.key value:item.value fileName:item.filename extendedData:item.extendedData];
 }

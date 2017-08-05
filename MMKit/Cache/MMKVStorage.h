@@ -49,8 +49,21 @@ typedef NS_ENUM(NSUInteger, MMKVStorageType) {
 @property (nonatomic, readonly, assign) MMKVStorageType type;
 @property (nonatomic, assign) BOOL errorLogsEnabled;
 
-//UNAVAILABLE_ATTRIBUTE  __attribute__ 是clang提供的一种源码注释，这是告诉编译器该方法失效了
-//__attribute__((unavailable("new方法不可用，请用initWithName:")))  会出现报错提醒
+/*
+ UNAVAILABLE_ATTRIBUTE 加这个修饰后外部是无法直接调用init方法的
+ NS_DESIGNATED_INITIALIZER 这个是告诉开发者这个方法是被推荐用来初始化的
+ 
+  __attribute__ 是clang提供的一种源码注释，这是告诉编译器该方法失效了
+ 
+ __attribute__((unavailable("new方法不可用，请用initWithName:")))  会出现报错提醒
+ 它是GNU C的一大特色，可以设置函数属性(Function Attribute)、变量属性(Variable Attribute)、类型属性(Type Attribute)
+ __attribute__ 语法格式为: __attribute__((deprecated("Store references when using more than one HUD per view.")))
+ 它的约束范围为 声明的尾部 “；”之前
+ 
+ + (NSArray *)allHUDsForView:(UIView *)view __attribute__((deprecated("Store references when using more than one HUD per view.")));
+ 
+ 
+ */
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)new UNAVAILABLE_ATTRIBUTE;
 
