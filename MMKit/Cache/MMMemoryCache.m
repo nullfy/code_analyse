@@ -79,6 +79,12 @@ static inline dispatch_queue_t MMMemoryCacheGetReleaseQueue() {
     CFRelease(_dic);
 }
 
+/*
+ 插入节点到链表头部
+ 1.判断是否已有头部
+ 如果有node->next = _head; _head->prev = node; _head = node;
+ 如果没有就直接将 _head = _tail = node;
+ */
 - (void)insertNodeAtHead:(_MMLinkedMapNode *)node {
     CFDictionarySetValue(_dic, (__bridge const void *)(node -> _key), (__bridge const void *)(node));
     _totalCost += node->_cost;
@@ -92,6 +98,24 @@ static inline dispatch_queue_t MMMemoryCacheGetReleaseQueue() {
     }
 }
 
+/*
+ 将已有节点移到头部
+ 1.如果只有一个节点 返回
+ 2.如果节点为尾部
+    _tail = node->prev
+    _tail->next = nil;
+ 3.节点在中间 
+    先切断node后面的前指向
+    再切段node前面的后指向
+    node->next->prev = node->prev
+    node->prev->next = node->next
+ 
+ 4.将node的前后指向布置好
+    node->next = head
+    node->prev = nil;
+    _head->prev = node;
+    _head = node;
+ */
 - (void)bringNodeToHead:(_MMLinkedMapNode *)node {
     if (_head == node) return;
     if (_tail == node) {
@@ -107,7 +131,13 @@ static inline dispatch_queue_t MMMemoryCacheGetReleaseQueue() {
     _head = node;
 }
 
-
+/*
+ 移除节点
+ 1.先将node后节点的前指向重新指向
+ 2.再将node前节点的后指向重指向
+ 3.如果node为head 重新确定 head = node->next;
+ 4.如果node为tail  重新确定 tail = node->prev;
+ */
 - (void)removeNode:(_MMLinkedMapNode *)node {
     CFDictionaryRemoveValue(_dic, (__bridge const void *)(node->_key));
     _totalCost -= node->_cost;
