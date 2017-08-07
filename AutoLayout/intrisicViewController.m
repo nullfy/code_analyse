@@ -23,8 +23,10 @@ static BOOL closeIntrinsic = NO;
     if (self) {
         /*
          不兼容旧版AutoresizingMask 只使用autolayout
-         如果为YES，在autolayout中 系统会自动将frame和bounds 属性转换为约束
+         默认为YES，如果为YES，在autolayout中 系统会自动将frame和bounds 属性转换为约束
+         如果为NO，就可以只设置约束而不必写frame
          
+         下面的值如果为NO，会因为条件不足而无法正常添加intricsicView到VC中，self.view中会什么都没有
          */
         self.translatesAutoresizingMaskIntoConstraints = NO;
     }
