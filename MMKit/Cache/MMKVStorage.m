@@ -122,43 +122,43 @@
          sqlite3_close()    关闭数据
          sqlite3_errmsg()   错误信息
          sqlite3_exec()     操作SQl语句
-            int sqlite3_exec(sqlite3 *, const char *sql, sqlite3_callback, void *, char **errmsg)
-            1.第一个参数为sqlite3 *类型，可以通过sqlite3_open()获得
-            2.第二个参数是一个指向一个字符串的指针，该字符串的内容为一条完整的SQL语句(不需要再语句结束加 ";")，
-            3.第三个参数为一个回调函数，当这条语句执行之后，sqlite3 会去调用这个函数，其原型为 type int (*sqlite_callback) (void *, int, char **colvalue, char **colname)
-            4.第四个参数为提供回调函数的参数，如果不需要传递参数，则可以写为NULL
-            5.第五个参数为错误信息，这是指针的指针，通过打印printf(%s)，可以知道错误在什么地方
+         int sqlite3_exec(sqlite3 *, const char *sql, sqlite3_callback, void *, char **errmsg)
+         1.第一个参数为sqlite3 *类型，可以通过sqlite3_open()获得
+         2.第二个参数是一个指向一个字符串的指针，该字符串的内容为一条完整的SQL语句(不需要再语句结束加 ";")，
+         3.第三个参数为一个回调函数，当这条语句执行之后，sqlite3 会去调用这个函数，其原型为 type int (*sqlite_callback) (void *, int, char **colvalue, char **colname)
+         4.第四个参数为提供回调函数的参数，如果不需要传递参数，则可以写为NULL
+         5.第五个参数为错误信息，这是指针的指针，通过打印printf(%s)，可以知道错误在什么地方
          
          sqlite3_get_table()    非回调方法查询数据库
          
          sqlite3_exec()的替代，sqlite3_prepare(), sqlite3_step(), sqlite3_finalize()
-            1.共同涉及到的类型sqlite3_stmt  
-            2.这三个函数实现将sql语句编译成字节码，然后执行释放，这三个函数都有V2版本，应该尽量使用新版，V2版本和原版本都是基于UTF-8编码，在返回值上V2版本更丰富
-            3.函数原型
-                int sqlite3_prepare(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail)
-                int sqlite3_prepare_v2(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail)
-                int sqlite3_step(sqlite3_stmt *)
-                int sqlite3_finalize(sqlite3_stmt *pStmt)
-            4.参数说明 sqlite3_prepare()
-                1.参数为sqlite3 *类型，为指向sqlite3_open() 函数打开的数据库连接
-                2.参数为需要编译成字节码的sql 语句，如果输入的参数有多条sql 语句，只有第一个sql语句被编译
-                3.若小于0 的值，系统会自动读取第一个参数一直到出现字符结束符，若该参数大于0，则它表明要读入的sql 的最大的程度，建议设置其值为sql语句的字节数加上字符结束符后的值，执行的效率会提升
-                4.返回编译好的sqlite3_stmt指针， 若第一个参数不包含sql 语句或传进来的sql 语句有错，则此函数返回时被置为NULL
-                5.参数若不为NULL，则它会指向第一条sql 语句结尾后面的第一个字节，这个参数用于指向剩下的未编译的语句
-            5.函数功能说明
-                sqlite3_prepare() 函数用于将sql语句编译成字节码，并通过sqlite3_stmt 类型的参数返回，
-                sqlite3_step()  函数通过使用这个参数一次或多次来执行这个sql 语句，更具sqlite3_prepare() 函数版本不同，具体的操作也不同
-                sqlite3_finalize()  最后需要调用此函数将这个准备的sql 声明（sqlite3_stmt类型的参数） 销毁，避免内存泄漏
-            6.返回值
-                sqlite3_prepare() 系列函数和sqlite3_finalize() 函数执行成功返回SQLITE_OK, 否则返回错误码，
-                sqlite3_step() 函数返回根据sqlite3_prepare()版本不同
-                    老版本有：   
-                        SQLITE_BUSY:无法获取数据库锁来执行次操作
-                        SQLITE_DONE: sql 语句执行完成，在没有再次调用sqlite3_reset() 重设SQL 到初始状态前不能在调用sqlite3_setp()
-                        SQLITE_ROW: 如果执行的SQL语句返回了数据，则每次返回一行新的数据
-                        SQLITE_ERROR: 执行SQL语句出错
-                        SQLITE_MISUSE: 未知
-                    新版本：返回任何可能的结果编码
+         1.共同涉及到的类型sqlite3_stmt
+         2.这三个函数实现将sql语句编译成字节码，然后执行释放，这三个函数都有V2版本，应该尽量使用新版，V2版本和原版本都是基于UTF-8编码，在返回值上V2版本更丰富
+         3.函数原型
+         int sqlite3_prepare(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail)
+         int sqlite3_prepare_v2(sqlite3 *db, const char *zSql, int nByte, sqlite3_stmt **ppStmt, const char **pzTail)
+         int sqlite3_step(sqlite3_stmt *)
+         int sqlite3_finalize(sqlite3_stmt *pStmt)
+         4.参数说明 sqlite3_prepare()
+         1.参数为sqlite3 *类型，为指向sqlite3_open() 函数打开的数据库连接
+         2.参数为需要编译成字节码的sql 语句，如果输入的参数有多条sql 语句，只有第一个sql语句被编译
+         3.若小于0 的值，系统会自动读取第一个参数一直到出现字符结束符，若该参数大于0，则它表明要读入的sql 的最大的程度，建议设置其值为sql语句的字节数加上字符结束符后的值，执行的效率会提升
+         4.返回编译好的sqlite3_stmt指针， 若第一个参数不包含sql 语句或传进来的sql 语句有错，则此函数返回时被置为NULL
+         5.参数若不为NULL，则它会指向第一条sql 语句结尾后面的第一个字节，这个参数用于指向剩下的未编译的语句
+         5.函数功能说明
+         sqlite3_prepare() 函数用于将sql语句编译成字节码，并通过sqlite3_stmt 类型的参数返回，
+         sqlite3_step()  函数通过使用这个参数一次或多次来执行这个sql 语句，更具sqlite3_prepare() 函数版本不同，具体的操作也不同
+         sqlite3_finalize()  最后需要调用此函数将这个准备的sql 声明（sqlite3_stmt类型的参数） 销毁，避免内存泄漏
+         6.返回值
+         sqlite3_prepare() 系列函数和sqlite3_finalize() 函数执行成功返回SQLITE_OK, 否则返回错误码，
+         sqlite3_step() 函数返回根据sqlite3_prepare()版本不同
+         老版本有：
+         SQLITE_BUSY:无法获取数据库锁来执行次操作
+         SQLITE_DONE: sql 语句执行完成，在没有再次调用sqlite3_reset() 重设SQL 到初始状态前不能在调用sqlite3_setp()
+         SQLITE_ROW: 如果执行的SQL语句返回了数据，则每次返回一行新的数据
+         SQLITE_ERROR: 执行SQL语句出错
+         SQLITE_MISUSE: 未知
+         新版本：返回任何可能的结果编码
          
          */
         if (result == SQLITE_BUSY || result == SQLITE_LOCKED) {
@@ -280,7 +280,7 @@ static NSString *const kTrashDirectoryName = @"trash";
      5.sqlite3_bind_**(stmt, 1, ***, -1, NULL)      //不同类型的数据传入的参数会不同，详情见代码
      6.sqlite3_step(stmt)
      */
-
+    
     NSString *sql = @"insert or replace into mainfest (key, filename, size, inline_data, modification_time, last_access_time, extended_data) values (?1, ?2, ?3, ?4, ?5, ?6, ?7);";
     sqlite3_stmt *stmt = [self _dbPrepareStmt:sql];
     if (!stmt) return NO;
@@ -709,7 +709,7 @@ static NSString *const kTrashDirectoryName = @"trash";
     /**
      文件cache 移除方法是先将_dataPath里面的缓存移动到一个临时的文件中
      */
-
+    
     CFUUIDRef uuidRef = CFUUIDCreate(NULL);
     CFStringRef uuid = CFUUIDCreateString(NULL, uuidRef);
     CFRelease(uuidRef);
@@ -727,7 +727,7 @@ static NSString *const kTrashDirectoryName = @"trash";
     /**
      另外开一个线程去清理_trashPath 内的文件内容
      */
-
+    
     NSString *trashPath = _trashPath;
     dispatch_queue_t queue = _trashQueue;
     dispatch_async(queue, ^{
@@ -769,7 +769,7 @@ static NSString *const kTrashDirectoryName = @"trash";
     _type = type;
     _dataPath = [path stringByAppendingPathComponent:kDataDirectoryName];
     _trashPath = [path stringByAppendingPathComponent:kTrashDirectoryName];
-    _trashQueue = dispatch_queue_create("com.mumuno.cache.disk.trash", DISPATCH_QUEUE_SERIAL); //处理过期缓存的线程为串行
+    _trashQueue = dispatch_queue_create("com.mumuno.cache.disk.trash", DISPATCH_QUEUE_SERIAL); //处理过期缓存的线程为串行 异步串行
     _dbPath = [path stringByAppendingPathComponent:kDBFileName];
     _errorLogsEnabled = YES;
     NSError *error = nil;
@@ -893,7 +893,7 @@ static NSString *const kTrashDirectoryName = @"trash";
                 return YES;
             }
         }break;
-            case MMKVStorageTypeFile:
+        case MMKVStorageTypeFile:
         case MMKVStorageTypeMixed: {
             NSArray *filenames = [self _dbGetFilenamesWithSizeLargerThan:size];
             for (NSString *name in filenames) {
@@ -919,7 +919,7 @@ static NSString *const kTrashDirectoryName = @"trash";
                 return YES;
             }
         } break;
-            case MMKVStorageTypeFile:
+        case MMKVStorageTypeFile:
         case MMKVStorageTypeMixed: {
             NSArray *filenames = [self _dbGetFilenamesWithTimeEarlierThan:time];
             for (NSString *filename in filenames) {
