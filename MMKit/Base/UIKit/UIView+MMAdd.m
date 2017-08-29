@@ -26,7 +26,8 @@ MMSYNTH_DUMMY_CLASS(UIView_MMAdd)
     maskLayer.path = bezier.CGPath;
     borderLayer.path = bezier.CGPath;
     [self.layer setMask:maskLayer];
-    [self.layer insertSublayer:borderLayer atIndex:0];
+    if ([oldLayer isKindOfClass:[CAShapeLayer class]])  [self.layer replaceSublayer:oldLayer with:borderLayer];
+    else [self.layer insertSublayer:borderLayer atIndex:0];//防止重复绘制
 }
 
 - (UIImage *)snapshotImage {
