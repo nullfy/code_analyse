@@ -290,21 +290,21 @@ class leetcode: NSObject {
         }
         
         //Solution I
-//        for i in 0...array.count-1 {
-//            let a = array[i]
-//            for j in i...array.count-1 {
-//                if j == array.count-1 {
-//                    continue
-//                }
-//                let b = array[j+1]
-//                if a+b==target {
-//                    indexes.append(i+1)
-//                    indexes.append(j+1)
-//                    print("a---\(a)b---\(b)")
-//                }
-//            }
-//        }
-//        return indexes
+        //        for i in 0...array.count-1 {
+        //            let a = array[i]
+        //            for j in i...array.count-1 {
+        //                if j == array.count-1 {
+        //                    continue
+        //                }
+        //                let b = array[j+1]
+        //                if a+b==target {
+        //                    indexes.append(i+1)
+        //                    indexes.append(j+1)
+        //                    print("a---\(a)b---\(b)")
+        //                }
+        //            }
+        //        }
+        //        return indexes
         
         //Solution II 这个解法就是利用hash 的特性将时间复杂度从O(n^2) 降到 O(n)
         
@@ -371,7 +371,7 @@ class leetcode: NSObject {
      temp 1 maxl 3 ["b": 6, "a": 4, "c": 2]
      temp 2 maxl 3 ["b": 6, "a": 4, "d": 7, "c": 2]
      */
-
+    
     struct Medium_003_Longest_Substring_Without_Repeating_Characters {
         // t = O(N), s = O(1)
         static func longest(_ s: String) -> Int {
@@ -506,18 +506,18 @@ class leetcode: NSObject {
         }
     }
     /*
-    The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
-    P   A   H   N
-    A P L S I I G
-    Y   I   R
-    And then read line by line: "PAHNAPLSIIGYIR"
-    Write the code that will take a string and make this conversion given a number of rows:
-    string convert(string text, int nRows);
-    convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
-    Inspired by @dylan_yu at https://leetcode.com/discuss/10493/easy-to-understand-java-solution
+     The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+     P   A   H   N
+     A P L S I I G
+     Y   I   R
+     And then read line by line: "PAHNAPLSIIGYIR"
+     Write the code that will take a string and make this conversion given a number of rows:
+     string convert(string text, int nRows);
+     convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
+     Inspired by @dylan_yu at https://leetcode.com/discuss/10493/easy-to-understand-java-solution
      
      题解：输入一串字符串，然后按指定排数进行折线重排，然后在从左至右从上到下一次重新组合成字符串
-    */
+     */
     struct Easy_006_ZigZag_Conversion {
         // t = O(N), s = O(N)
         static func convert(s: String, nRows: Int) -> String {
@@ -563,7 +563,10 @@ class leetcode: NSObject {
      Update (2014-11-10):
      Test cases had been added to test the overflow behavior.
      Inspired by @wshaoxuan at https://leetcode.com/discuss/120/how-do-we-handle-the-overflow-case
-
+     数字反转 题解： 123->321
+     1、判断是否为负
+     2、设定返回的初值
+     3、对操作数进行递归／10的操作，得到
      */
     
     struct Easy_007_Reverse_Integer {
@@ -641,6 +644,73 @@ class leetcode: NSObject {
                 print("after--",array)
             }
             return array
+        }
+    }
+    
+    
+    /*
+     https://oj.leetcode.com/problems/string-to-integer-atoi/
+     
+     #8 String to Integer (atoi)
+     
+     Level: easy
+     
+     Implement atoi to convert a string to an integer.
+     函数首先放弃尽可能多的空字符直到找到一个非空白字符。然后从这个字符开始，带上可选的初始加 / 减字符，其后还可能跟着越多越好的数字，并将它们解释成一个数值。
+     
+     这个字符串可能在这些数字之后包含一些附加的字符，它们可以可以被忽略，并对函数的行为没有影响。
+     
+     如果字符串 str 中第一个非空格的序列不是一个有效的整型数，或者因为 str 为空或仅有空格字符而不存在这样一个序列，那么不执行任何转换。
+     
+     如果可以不执行任何有效的转换，则返回零值。如果正确的值在值域范围之外，则返回 INT_MAX（2147483647）或 INT_MIN（-2147483647）。
+     */
+    struct Easy_008_String_to_Integer_atoi {
+        static func atoi(_ s: String) -> Int {
+            var sign: Int?
+            var base = 0
+            for char in s.characters { //遍历字符串的每个字符
+                guard char != "+" else {
+                    if let signUnwrapped = sign {
+                        return base * signUnwrapped
+                    } else {
+                        sign = 1
+                        continue
+                    }
+                }
+                
+                guard char != " " else {
+                    continue
+                }
+                
+                guard char != "-" else {
+                    if let signUnwrapped = sign {
+                        return base * signUnwrapped
+                    } else {
+                        sign = -1
+                        continue
+                    }
+                }
+                
+                guard let intValue = Int(String(char)) else {
+                    return base
+                }
+                if sign == nil {
+                    sign = 1
+                }
+                
+                guard base < Int.max/10 || (base == Int.max/10 && intValue <= Int.max%10) else {
+                    if sign == nil || sign != 1 {
+                        return Int.max
+                    } else {
+                        return Int.min
+                    }
+                }
+                base = intValue + 10*base
+            }
+            if sign == nil {
+                sign = 1
+            }
+            return base * sign!
         }
     }
 }
