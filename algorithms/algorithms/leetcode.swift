@@ -656,6 +656,12 @@ class leetcode: NSObject {
      Level: easy
      
      Implement atoi to convert a string to an integer.
+     题解：
+     将字符串的数字转为整型
+     1、考虑空格
+     2、考虑正负号
+     
+     
      函数首先放弃尽可能多的空字符直到找到一个非空白字符。然后从这个字符开始，带上可选的初始加 / 减字符，其后还可能跟着越多越好的数字，并将它们解释成一个数值。
      
      这个字符串可能在这些数字之后包含一些附加的字符，它们可以可以被忽略，并对函数的行为没有影响。
@@ -686,13 +692,13 @@ class leetcode: NSObject {
                     if let signUnwrapped = sign {
                         return base * signUnwrapped
                     } else {
-                        sign = -1
+                        sign = -1 //第一步记录负号 sign=-1 base=0
                         continue
                     }
                 }
                 
-                guard let intValue = Int(String(char)) else {
-                    return base
+                guard let intValue = Int(String(char)) else { //如果char可以转为数字就继续走
+                    return base//否则就走这里
                 }
                 if sign == nil {
                     sign = 1
@@ -705,9 +711,9 @@ class leetcode: NSObject {
                         return Int.min
                     }
                 }
-                base = intValue + 10*base
+                base = intValue + 10*base//base的作用在于从左到右记录高位数值来方便后面的计算
             }
-            if sign == nil {
+            if sign == nil {//sign 用来记录正负号
                 sign = 1
             }
             return base * sign!
