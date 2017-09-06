@@ -41,8 +41,9 @@
     CGRect fromFrame = [transitionContext initialFrameForViewController:from];
     CGRect toFrame = [transitionContext finalFrameForViewController:to];
     
+    //CGVector 二维矢量
     CGVector offset = CGVectorMake(0.f, 0.f);
-    if (self.targetEdge == UIRectEdgeTop) {
+    if (self.targetEdge == UIRectEdgeTop) {//屏幕边缘在顶部的时候
         offset = CGVectorMake(0.f, 1.f);
     } else if (self.targetEdge == UIRectEdgeBottom) {
         offset = CGVectorMake(0.f, -1.f);
