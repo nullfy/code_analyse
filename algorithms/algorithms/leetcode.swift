@@ -820,7 +820,7 @@ private extension String {
     }
     
     subscript (range: Range<Int>) -> String {
-        return self[self.characters.index(self.startIndex, offsetBy: range.lowerBound)..<self.characters.inde(self.startIndex, offsetBy: range.upperBound)]
+        return self[self.characters.index(self.startIndex, offsetBy: range.lowerBound)..<self.characters.index(self.startIndex, offsetBy: range.upperBound)]
     }
 }
 
