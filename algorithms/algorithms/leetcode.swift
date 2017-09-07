@@ -719,6 +719,87 @@ class leetcode: NSObject {
             return base * sign!
         }
     }
+    
+    /*
+     
+     https://oj.leetcode.com/problems/palindrome-number/
+     
+     #9 Palindrome Number
+     
+     Level: easy
+     
+     Determine whether an integer is a palindrome. Do this without extra space.
+     
+     Some hints:
+     
+     Could negative integers be palindromes? (ie, -1)
+     
+     If you are thinking of converting the integer to string, note the restriction of using extra space.
+     
+     You could also try reversing an integer. However, if you have solved the problem "Reverse Integer", you know that the reversed integer might overflow. How would you handle such case?
+     
+     There is a more generic way of solving this problem.
+     
+     Inspired by @hln9319 https://leetcode.com/discuss/12693/neat-ac-java-code-o-n-time-complexity
+     
+     题解：回文数
+     1.首先创建一个临时变量X为0， tmp 等于传进来的数
+     2.对传进来的数取模拿到个位数再加上X
+     3.对tmp除以十拿到倒数两位
+     4.递归此操作
+     */
+    
+    struct Easy_009_Palindrome_Number {
+        static func isPalindrome (_ x: Int) -> Bool {
+            var palindromeX: Int = 0
+            var tmp: Int = x
+            while tmp > 0 {
+                palindromeX = tmp%10 + palindromeX * 10
+                tmp = tmp / 10
+            }
+            return palindromeX == x
+        }
+    }
+    
+    /*
+     
+     https://leetcode.com/problems/roman-to-integer/
+     
+     #13 Roman To Integer
+     
+     Level: easy
+     
+     Given a roman numeral, convert it to an integer.
+     
+     Input is guaranteed to be within the range from 1 to 3999.
+     
+     Inspired by @makeittrue at https://leetcode.com/discuss/2369/solution-for-this-question-but-dont-know-there-any-easier-way
+     题解：两个字符串的最长公共前缀长度
+     1.遍历按序逐个比较
+     */
+    struct Easy_014_Longest_Common_Prefix {
+        static func longestPrefix(_ arr: [String]?) -> String {
+            if let unwrapp = arr {
+                if unwrapp.count == 0 {
+                    return ""
+                } else {
+                    let length: Int = unwrapp[0].characters.count //拿到字符串的长度
+                    let count: Int = unwrapp.count
+                    for i in 0 ..< length {
+                        let c: Character = unwrapp[0][i]
+                        for j in 1 ..< count {
+                            if i == unwrapp[j].characters.count || unwrapp[j][i] != c {
+                                return unwrapp[0][0..<i]
+                            }
+                        }
+                    }
+                    return unwrapp[0]
+                }
+            } else {
+                return ""
+            }
+        }
+    }
 }
 
 private extension String {
@@ -731,6 +812,15 @@ private extension String {
      */
     func randomAccessCharactersArray() -> [Character] {
         return Array(self.characters)
+    }
+    
+    subscript (i: Int) -> Character {
+        let index: Index = self.characters.index(self.startIndex, offsetBy: i)
+        return self[index]
+    }
+    
+    subscript (range: Range<Int>) -> String {
+        return self[self.characters.index(self.startIndex, offsetBy: range.lowerBound)..<self.characters.inde(self.startIndex, offsetBy: range.upperBound)]
     }
 }
 
