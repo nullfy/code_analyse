@@ -27,6 +27,11 @@ import Cocoa
  Try to do this in one pass.
  
  Inspired by @i at https://leetcode.com/discuss/1656/is-there-a-solution-with-one-pass-and-o-1-space
+ 
+ 题解：验证有效括号
+ 栈法：验证一个有效的括号，有一个右括号必定有一个左括号在前面，所以我们可以将左括号和右括号利用Dictionary来对应好，
+ 1.遍历字符串，获得每一个字符
+ 2.
  */
 
 private extension String {
