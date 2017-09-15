@@ -207,9 +207,12 @@ print(m);
 //let ali = leetcode.Easy_001_Palindrome_Number.isPalindromeNumber(1221)
 
 //let ali = leetcode.Easy_006_ZigZag_Conversion.convert(s: "HPLJLKJHKGHGKJHKJH", nRows: 3)
-var array = [88, 9 , 2, 3, 100]
+//var array = [88, 9 , 2, 3, 100]
 //let ali = leetcode.Easy_selectSort.sortArray(&array)
 //let ali = leetcode.Easy_insertSort.sort(&array)
-let ali = leetcode.Easy_008_String_to_Integer_atoi.atoi("-09")
+//let ali = leetcode.Easy_008_String_to_Integer_atoi.atoi("-09")
+
+var array = [1, 1, 3, 3, 4, 4]
+let ali = Easy_026_Remove_Duplicates_From_Sorted_Array.removeDuplicated(&array)
 
 print(ali)
