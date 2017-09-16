@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		33784C091EEB9824003EB342 /* leetcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33784C081EEB9824003EB342 /* leetcode.swift */; };
 		33C98E911F6D39EE007DAC2C /* Easy_027_Remove_Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */; };
+		33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */; };
 		33C9DC1B1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C9DC1A1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift */; };
 		33C9DC341F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C9DC331F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift */; };
 		33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C9DC351F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		33784C081EEB9824003EB342 /* leetcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = leetcode.swift; sourceTree = "<group>"; };
 		33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_027_Remove_Element.swift; sourceTree = "<group>"; };
+		33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_001_Two_Sum.swift; sourceTree = "<group>"; };
 		33C9DC1A1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_020_Valid_Parenthess.swift; sourceTree = "<group>"; };
 		33C9DC331F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_021_Merge_Two_Sorted_Lists.swift; sourceTree = "<group>"; };
 		33C9DC351F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_026_Remove_Duplicates_From_Sorted_Array.swift; sourceTree = "<group>"; };
@@ -48,6 +50,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33C98E921F6D3E9E007DAC2C /* Medium */ = {
+			isa = PBXGroup;
+			children = (
+				33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */,
+			);
+			path = Medium;
+			sourceTree = "<group>";
+		};
 		33D50CA01EB874D500AF51B4 = {
 			isa = PBXGroup;
 			children = (
@@ -67,6 +77,7 @@
 		33D50CAB1EB874D500AF51B4 /* algorithms */ = {
 			isa = PBXGroup;
 			children = (
+				33C98E921F6D3E9E007DAC2C /* Medium */,
 				33D50CAC1EB874D500AF51B4 /* main.swift */,
 				33784C081EEB9824003EB342 /* leetcode.swift */,
 				33C9DC1A1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift */,
@@ -135,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */,
 				33784C091EEB9824003EB342 /* leetcode.swift in Sources */,
 				33D50CAD1EB874D500AF51B4 /* main.swift in Sources */,
 				33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */,
