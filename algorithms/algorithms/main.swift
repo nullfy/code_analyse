@@ -212,7 +212,11 @@ print(m);
 //let ali = leetcode.Easy_insertSort.sort(&array)
 //let ali = leetcode.Easy_008_String_to_Integer_atoi.atoi("-09")
 
-var array = [1, 1, 3, 3, 4, 4]
-let ali = Easy_026_Remove_Duplicates_From_Sorted_Array.removeDuplicated(&array)
+//let s = "kajdklajfalkjdfal;k"
+//print(s.characters.count,"---\n", s[s.characters.index(s.startIndex, offsetBy: 4)]) //s[6] 直接下标是不行的
 
+//var array = [1, 1, 3, 3, 4, 4]
+//let ali = Easy_026_Remove_Duplicates_From_Sorted_Array.removeDuplicated(&array)
+
+let ali = Easy_028_Implement_Str.strStr_brute_force(hayStack: "hehe", needle: "eh")
 print(ali)

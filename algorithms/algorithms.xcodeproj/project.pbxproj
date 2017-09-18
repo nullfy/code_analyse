@@ -14,6 +14,7 @@
 		33C9DC341F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C9DC331F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift */; };
 		33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C9DC351F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift */; };
 		33D50CAD1EB874D500AF51B4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D50CAC1EB874D500AF51B4 /* main.swift */; };
+		33E3742A1F6F62A6003FC96A /* Easy_028_Implement_Str.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E374291F6F62A6003FC96A /* Easy_028_Implement_Str.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,7 @@
 		33C9DC351F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_026_Remove_Duplicates_From_Sorted_Array.swift; sourceTree = "<group>"; };
 		33D50CA91EB874D500AF51B4 /* algorithms */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = algorithms; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D50CAC1EB874D500AF51B4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		33E374291F6F62A6003FC96A /* Easy_028_Implement_Str.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_028_Implement_Str.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				33C9DC331F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift */,
 				33C9DC351F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift */,
 				33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */,
+				33E374291F6F62A6003FC96A /* Easy_028_Implement_Str.swift */,
 			);
 			path = algorithms;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 				33784C091EEB9824003EB342 /* leetcode.swift in Sources */,
 				33D50CAD1EB874D500AF51B4 /* main.swift in Sources */,
 				33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */,
+				33E3742A1F6F62A6003FC96A /* Easy_028_Implement_Str.swift in Sources */,
 				33C9DC341F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift in Sources */,
 				33C98E911F6D39EE007DAC2C /* Easy_027_Remove_Element.swift in Sources */,
 				33C9DC1B1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift in Sources */,
