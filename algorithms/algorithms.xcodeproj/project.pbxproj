@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */; };
 		33784C091EEB9824003EB342 /* leetcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33784C081EEB9824003EB342 /* leetcode.swift */; };
 		33C98E911F6D39EE007DAC2C /* Easy_027_Remove_Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */; };
 		33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_038_Count_And_Say.swift; sourceTree = "<group>"; };
 		33784C081EEB9824003EB342 /* leetcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = leetcode.swift; sourceTree = "<group>"; };
 		33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_027_Remove_Element.swift; sourceTree = "<group>"; };
 		33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_001_Two_Sum.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */,
 				33E374291F6F62A6003FC96A /* Easy_028_Implement_Str.swift */,
 				33E3742D1F7131B3003FC96A /* Easy_036_Valid_Sudoku.swift */,
+				3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */,
 			);
 			path = algorithms;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 				33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */,
 				33784C091EEB9824003EB342 /* leetcode.swift in Sources */,
 				33E3742E1F7131B3003FC96A /* Easy_036_Valid_Sudoku.swift in Sources */,
+				3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */,
 				33D50CAD1EB874D500AF51B4 /* main.swift in Sources */,
 				33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */,
 				33E3742A1F6F62A6003FC96A /* Easy_028_Implement_Str.swift in Sources */,
