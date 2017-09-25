@@ -219,6 +219,6 @@ print(m);
 //let ali = Easy_026_Remove_Duplicates_From_Sorted_Array.removeDuplicated(&array)
 
 //let ali = Easy_028_Implement_Str.strStr_brute_force(hayStack: "hehe", needle: "eh")
-var plusOne = [0,1,0]
+var plusOne = [9, 9, 9]
 let ali = Easy_066_Plus_One.plusOne(&plusOne)
 print(ali)

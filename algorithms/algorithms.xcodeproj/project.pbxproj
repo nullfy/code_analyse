@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		332B55BD1F789C1C00EAD72B /* Easy_067_Add_Binary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332B55BC1F789C1C00EAD72B /* Easy_067_Add_Binary.swift */; };
 		3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */; };
 		3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */; };
 		3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		332B55BC1F789C1C00EAD72B /* Easy_067_Add_Binary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_067_Add_Binary.swift; sourceTree = "<group>"; };
 		3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_038_Count_And_Say.swift; sourceTree = "<group>"; };
 		3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_058_Length_Of_Last_Word.swift; sourceTree = "<group>"; };
 		3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_066_Plus_One.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */,
 				3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */,
 				3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */,
+				332B55BC1F789C1C00EAD72B /* Easy_067_Add_Binary.swift */,
 			);
 			path = algorithms;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 				33784C091EEB9824003EB342 /* leetcode.swift in Sources */,
 				33E3742E1F7131B3003FC96A /* Easy_036_Valid_Sudoku.swift in Sources */,
 				3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */,
+				332B55BD1F789C1C00EAD72B /* Easy_067_Add_Binary.swift in Sources */,
 				3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */,
 				33D50CAD1EB874D500AF51B4 /* main.swift in Sources */,
 				33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */,

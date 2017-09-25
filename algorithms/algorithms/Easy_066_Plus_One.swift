@@ -20,7 +20,12 @@ import Cocoa
  The digits are stored such that the most significant digit is at the head of the list.
  
  Inspired by @zezedi at https://leetcode.com/discuss/14616/is-it-a-simple-code-c
- 
+ 题解：将一个正整数逐位放进一个数组，完成加一的操作并返回
+【0， 9】  ------->  【1， 0】
+【9， 9】  ------->  【1， 0， 0】
+ 1、将数组从高位遍历，如果不为9 就将该元素加1然后返回
+ 2、如果最后位为9，将该元素赋值为0，
+ 需要注意的就是99的时候首尾要进位加一
  */
 class Easy_066_Plus_One: NSObject {
     class func plusOne (_ digits: inout [Int]) -> [Int]{
@@ -34,7 +39,7 @@ class Easy_066_Plus_One: NSObject {
             }
         }
         if digits.first == 0 {
-            digits.append(0)
+            digits.insert(1, at: 0)
         }
         return digits
     }
