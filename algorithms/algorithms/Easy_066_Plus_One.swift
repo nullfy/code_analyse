@@ -33,8 +33,9 @@ class Easy_066_Plus_One: NSObject {
                 return digits
             }
         }
-        digits[0] = 1
-        digits.append(0)
+        if digits.first == 0 {
+            digits.append(0)
+        }
         return digits
     }
 }
