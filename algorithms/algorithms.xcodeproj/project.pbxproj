@@ -13,6 +13,8 @@
 		3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */; };
 		3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */; };
 		33784C091EEB9824003EB342 /* leetcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33784C081EEB9824003EB342 /* leetcode.swift */; };
+		33A055BB1F7B321C00BAFE1B /* Easy_083_Remove_Duplicates_From_Sorted_List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A055BA1F7B321C00BAFE1B /* Easy_083_Remove_Duplicates_From_Sorted_List.swift */; };
+		33A055BD1F7B42F100BAFE1B /* Easy_088_Merge_Sorted_Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A055BC1F7B42F100BAFE1B /* Easy_088_Merge_Sorted_Array.swift */; };
 		33C98E911F6D39EE007DAC2C /* Easy_027_Remove_Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */; };
 		33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */; };
 		33C9DC1B1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C9DC1A1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift */; };
@@ -42,6 +44,8 @@
 		3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_058_Length_Of_Last_Word.swift; sourceTree = "<group>"; };
 		3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_066_Plus_One.swift; sourceTree = "<group>"; };
 		33784C081EEB9824003EB342 /* leetcode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = leetcode.swift; sourceTree = "<group>"; };
+		33A055BA1F7B321C00BAFE1B /* Easy_083_Remove_Duplicates_From_Sorted_List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_083_Remove_Duplicates_From_Sorted_List.swift; sourceTree = "<group>"; };
+		33A055BC1F7B42F100BAFE1B /* Easy_088_Merge_Sorted_Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_088_Merge_Sorted_Array.swift; sourceTree = "<group>"; };
 		33C98E901F6D39EE007DAC2C /* Easy_027_Remove_Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_027_Remove_Element.swift; sourceTree = "<group>"; };
 		33C98E931F6D3F23007DAC2C /* Medium_001_Two_Sum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_001_Two_Sum.swift; sourceTree = "<group>"; };
 		33C9DC1A1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_020_Valid_Parenthess.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 				3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */,
 				332B55BC1F789C1C00EAD72B /* Easy_067_Add_Binary.swift */,
 				332B55BE1F78B57D00EAD72B /* Easy_070_Climbing_Stairs.swift */,
+				33A055BA1F7B321C00BAFE1B /* Easy_083_Remove_Duplicates_From_Sorted_List.swift */,
+				33A055BC1F7B42F100BAFE1B /* Easy_088_Merge_Sorted_Array.swift */,
 			);
 			path = algorithms;
 			sourceTree = "<group>";
@@ -170,6 +176,7 @@
 				332B55BF1F78B57D00EAD72B /* Easy_070_Climbing_Stairs.swift in Sources */,
 				33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */,
 				33784C091EEB9824003EB342 /* leetcode.swift in Sources */,
+				33A055BB1F7B321C00BAFE1B /* Easy_083_Remove_Duplicates_From_Sorted_List.swift in Sources */,
 				33E3742E1F7131B3003FC96A /* Easy_036_Valid_Sudoku.swift in Sources */,
 				3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */,
 				332B55BD1F789C1C00EAD72B /* Easy_067_Add_Binary.swift in Sources */,
@@ -180,6 +187,7 @@
 				33C9DC341F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift in Sources */,
 				3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */,
 				33C98E911F6D39EE007DAC2C /* Easy_027_Remove_Element.swift in Sources */,
+				33A055BD1F7B42F100BAFE1B /* Easy_088_Merge_Sorted_Array.swift in Sources */,
 				33C9DC1B1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
