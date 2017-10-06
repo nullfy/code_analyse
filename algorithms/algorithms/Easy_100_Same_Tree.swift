@@ -7,38 +7,56 @@
 //
 
 import Cocoa
+/*
+ 
+ https://leetcode.com/problems/same-tree/
+ 
+ #100 Same Tree
+ 
+ Level: easy
+ 
+ Given two binary trees, write a function to check if they are equal or not.
+ 
+ Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+ 
+ Inspired by [@JohnWeiGitHub](https://leetcode.com/discuss/3470/seeking-for-better-solution) and [@scott](https://leetcode.com/discuss/22197/my-non-recursive-method)
+ 题解： 相同树、对称树
+ 复杂度： O(N)  O(h)递归栈空间
+ 1、如果两个根节点一个为空，一个不为空，或者两个根节点的值不同，直接返回false
+ 2、如果两个节点都是空，则是一样，返回true
+ 3、以上是特殊情况，以下是一般情况
+ 4、递归左右节点，如果递归结果有一个或以上为假，就返回假，否则说明左右子树完全一样
+ 
+ */
 
 class Easy_100_Same_Tree: NSObject {
-    class Node {
-        var left: Node?
-        var right: Node?
+    class TreeNode {
+        var left: TreeNode?
+        var right: TreeNode?
         var val: Int
-        init(value: Int, left: Node?, right: Node?) {
+        init(value: Int, left: TreeNode?, right: TreeNode?) {
             self.val = value
             self.left = left
             self.right = right
         }
     }
     
-    class func isSameTree_recursion(p: Node?, q: Node?) -> Bool {
-        if p == nil || q == nil {
-            return p == nil && q == nil
-        } else {
-            return p!.val == q!.val && isSameTree(p: p?.left, q: q?.left) && isSameTree(p: p?.right, q: q?.right)
-        }
+    class func isSameTree(p: TreeNode?, q: TreeNode?) -> Bool {
+        return isSameTree_iteration(p: p, q: q)
     }
     
-    class func isSameTree_iteration(p: Node?, q: Node?) -> Bool {
+    //迭代
+    class func isSameTree_iteration(p: TreeNode?, q: TreeNode?) -> Bool {
         if p == nil || q == nil {
             return (p == nil && q == nil)
         }
-        var stack_p: [Node] = []
-        var stack_q: [Node] = []
+        var stack_p: [TreeNode] = []
+        var stack_q: [TreeNode] = []
         stack_p.append(p!)
         stack_q.append(q!)
         while stack_p.isEmpty == false && stack_q.isEmpty == false {
-            let tmp_p: Node = stack_p.removeLast()
-            let tmp_q: Node = stack_q.removeLast()
+            let tmp_p: TreeNode = stack_p.removeLast()
+            let tmp_q: TreeNode = stack_q.removeLast()
             if tmp_p.val != tmp_q.val {
                 return false
             }
@@ -64,7 +82,12 @@ class Easy_100_Same_Tree: NSObject {
         return stack_q.count == stack_q.count
     }
     
-    class func isSameTree(p: Node?, q: Node?) -> Bool {
-        return isSameTree_iteration(p: p, q: q)
+    //递归
+    class func isSameTree_recursion(p: TreeNode?, q: TreeNode?) -> Bool {
+        if p == nil || q == nil {
+            return p == nil && q == nil
+        } else {
+            return p!.val == q!.val && isSameTree_recursion(p: p?.left, q: q?.left) && isSameTree_recursion(p: p?.right, q: q?.right)
+        }
     }
 }
