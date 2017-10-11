@@ -224,5 +224,7 @@ print(m);
 
 //let ali = Easy_067_Add_Binary.addbinary(a: "11", b: "10")
 
-let ali = Easy_070_Climbing_Stairs.climbStairs(4)
-print(ali)
+//let ali = Easy_070_Climbing_Stairs.climbStairs(4)
+
+Medium_002_Add_Two_Numbers.ali()
+
