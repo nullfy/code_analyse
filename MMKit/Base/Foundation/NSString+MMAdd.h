@@ -70,8 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)matchesRegex:(NSString *)regex options:(NSRegularExpressionOptions)options;
 
 - (void)enumerateRegexMatches:(NSString *)regex
-                     options:(NSRegularExpressionOptions)options
-                  usingBlock:(void (^)(NSString *match, NSRange matchRange, BOOL stop))block;
+                      options:(NSRegularExpressionOptions)options
+                   usingBlock:(void (^)(NSString *match, NSRange matchRange, BOOL stop))block;
 
 - (NSString *)stringByReplaceingRegex:(NSString *)regex
                               options:(NSRegularExpressionOptions)options
@@ -94,6 +94,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark    -Utilities  自定义
 
 + (NSString *)stringWithUUID;
+
++ (NSString *)macAddress;
+
++ (NSString *)SSIDName;
 
 + (nullable NSString *)stringWithUTF32Char:(UTF32Char)char32;
 

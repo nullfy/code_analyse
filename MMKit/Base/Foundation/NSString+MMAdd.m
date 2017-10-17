@@ -10,6 +10,8 @@
 #import "NSNumber+MMAdd.h"
 #import "NSData+MMAdd.h"
 #import "MMKitMacro.h"
+#import <NetworkExtension/NetworkExtension.h>
+#import <SystemConfiguration/CaptiveNetwork.h>
 
 MMSYNTH_DUMMY_CLASS(NSString_MMAdd)
 
@@ -279,6 +281,43 @@ MMSYNTH_DUMMY_CLASS(NSString_MMAdd)
     CFRelease(uuid);
     return (__bridge_transfer NSString *)string;
 }
+
++ (NSString *)macAddress {
+    NSArray *ifs = CFBridgingRelease(CNCopySupportedInterfaces());
+    id info = nil;
+    for (NSString *ifnam in ifs) {
+        info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((CFStringRef)ifnam);
+        if (info && [info count]) break;
+    }
+    NSDictionary *dic = (NSDictionary *)info;
+    NSString *bssid = dic[@"BSSID"];
+    return bssid;
+}
+
++ (NSString *)SSIDName {
+    NSArray *ifs = CFBridgingRelease(CNCopySupportedInterfaces());
+    id info = nil;
+    for (NSString *ifnam in ifs) {
+        info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((CFStringRef)ifnam);
+        if (info && [info count]) break;
+    }
+    NSDictionary *dic = (NSDictionary *)info;
+    NSString *ssid = [dic[@"SSID"] lowercaseString];
+    /*
+     单纯获取wifi 名称，和mac地址参考博客：http://www.jianshu.com/p/629fe552eeaf
+     
+     1、plist 中必须包含一个UIBackgroundModes 数组
+     2、应用程序必须设置com.apple.developer.networking.HotspotHelper 这个就必须要向苹果申请开发权限
+     
+     for (NEHotspotNetwork *hot in [NEHotspotHelper supportedNetworkInterfaces]) {
+     double signalStrength = hot.signalStrength;
+     NSLog(@"signalStrength : %f",signalStrength);
+     }
+     申请流程可参考：http://www.jianshu.com/p/ee038189f373
+     */
+    return ssid;
+}
+
 
 + (NSString *)stringWithUTF32Char:(UTF32Char)char32 {
     char32 = NSSwapHostIntToLittle(char32);
