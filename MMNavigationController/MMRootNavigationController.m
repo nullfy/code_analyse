@@ -7,7 +7,7 @@
 //
 
 #import "MMRootNavigationController.h"
-
+#import "UIViewController+MMRootNavigationController.h"
 
 @interface MMContainerController ()
 @property (nonatomic, strong) __kindof UIViewController *contentViewController;
@@ -364,9 +364,9 @@ __attribute((overloadable)) static inline UIViewController *MMSafeWrapViewContro
 - (void)setDelegate:(id<UINavigationControllerDelegate>)delegate
 {
     if (self.navigationController)
-        self.navigationController.delegate = delegate;
+    self.navigationController.delegate = delegate;
     else
-        [super setDelegate:delegate];
+    [super setDelegate:delegate];
 }
 
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated {
@@ -568,6 +568,7 @@ __attribute((overloadable)) static inline UIViewController *MMSafeWrapViewContro
 - (UIViewController *)mm_topViewController {
     return MMSafeUnwrapViewController([super topViewController]);
 }
+
 - (NSArray<__kindof UIViewController *> *)mm_viewControllers {
     __block NSMutableArray *arr = @[].mutableCopy;
     [[super viewControllers] enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -638,6 +639,47 @@ __attribute((overloadable)) static inline UIViewController *MMSafeWrapViewContro
         }
     }
     return arr;
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    BOOL isRootVC = viewController == navigationController.viewControllers.firstObject;
+    if (!isRootVC) {
+        viewController = MMSafeUnwrapViewController(viewController);
+        
+        BOOL hasSetLeftItem = viewController.navigationItem.leftBarButtonItem != nil;
+        if (hasSetLeftItem && !viewController.mm_hasSetInteractivePop) {
+            viewController.mm_disableInteractivePop = YES;
+        } else if (!viewController.mm_hasSetInteractivePop) {
+            viewController.mm_disableInteractivePop = NO;
+        }
+        if (!self.useSystemBackBarButtonItem && !hasSetLeftItem) {
+            if ([viewController respondsToSelector:@selector(mm_customBackItemWithTarget:action:)]) {
+                viewController.navigationItem.leftBarButtonItem = [viewController mm_customBackItemWithTarget:self
+                                                                                                       action:@selector(onBack:)];
+            } else if ([viewController respondsToSelector:@selector(customBackItemWithTarget:action:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+                viewController.navigationItem.leftBarButtonItem = [viewController mm_customBackItemWithTarget:self
+                                                                                                       action:@selector(onBack:)];
+#pragma clang diagnostic pop
+            } else {
+                viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Back", nil)
+                                                                                                   style:UIBarButtonItemStylePlain
+                                                                                                  target:self
+                                                                                                  action:@selector(onBack:)];
+            }
+        }
+    }
+    
+    if ([self.mm_delegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)]) {
+        [self.mm_delegate navigationController:navigationController
+                        willShowViewController:viewController
+                                      animated:animated];
+    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    
 }
 
 
