@@ -7,6 +7,19 @@
 //
 
 import Cocoa
+/*
+ 
+ https://oj.leetcode.com/problems/longest-palindromic-substring/
+ 
+ #5 Longest Palindromic Substring
+ 
+ Level: medium
+ 
+ Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.
+ 
+ Inspired by @hh1985 at https://leetcode.com/discuss/32204/simple-c-solution-8ms-13-lines
+ 
+ */
 
 private extension String {
     subscript (range: Range<Int>) -> String {
