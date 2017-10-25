@@ -16,6 +16,10 @@
 		332B55BF1F78B57D00EAD72B /* Easy_070_Climbing_Stairs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332B55BE1F78B57D00EAD72B /* Easy_070_Climbing_Stairs.swift */; };
 		33548C8B1F9ECC6300C0279F /* Medium_011_Container_With_Most_Water.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C8A1F9ECC6300C0279F /* Medium_011_Container_With_Most_Water.swift */; };
 		33548C8D1F9ED0DA00C0279F /* Medium_012_Integer_To_Roman.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C8C1F9ED0DA00C0279F /* Medium_012_Integer_To_Roman.swift */; };
+		33548C8F1F9EDB9200C0279F /* Medium_015_3Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C8E1F9EDB9200C0279F /* Medium_015_3Sum.swift */; };
+		33548C911F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C901F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift */; };
+		33548C931F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C921F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift */; };
+		33548C951F9EE98700C0279F /* Medium_018_4Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C941F9EE98700C0279F /* Medium_018_4Sum.swift */; };
 		3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */; };
 		3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */; };
 		3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */; };
@@ -54,6 +58,10 @@
 		332B55BE1F78B57D00EAD72B /* Easy_070_Climbing_Stairs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_070_Climbing_Stairs.swift; sourceTree = "<group>"; };
 		33548C8A1F9ECC6300C0279F /* Medium_011_Container_With_Most_Water.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_011_Container_With_Most_Water.swift; sourceTree = "<group>"; };
 		33548C8C1F9ED0DA00C0279F /* Medium_012_Integer_To_Roman.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_012_Integer_To_Roman.swift; sourceTree = "<group>"; };
+		33548C8E1F9EDB9200C0279F /* Medium_015_3Sum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_015_3Sum.swift; sourceTree = "<group>"; };
+		33548C901F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_016_3Sum_Closest.swift; sourceTree = "<group>"; };
+		33548C921F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_017_Letter_Combinations_Of_A_Phone_Number.swift; sourceTree = "<group>"; };
+		33548C941F9EE98700C0279F /* Medium_018_4Sum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_018_4Sum.swift; sourceTree = "<group>"; };
 		3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_038_Count_And_Say.swift; sourceTree = "<group>"; };
 		3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_058_Length_Of_Last_Word.swift; sourceTree = "<group>"; };
 		3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_066_Plus_One.swift; sourceTree = "<group>"; };
@@ -91,6 +99,10 @@
 				331571D11F8DBE4800AD6533 /* Medium_005_Longest_Palindromic_Substring.swift */,
 				33548C8A1F9ECC6300C0279F /* Medium_011_Container_With_Most_Water.swift */,
 				33548C8C1F9ED0DA00C0279F /* Medium_012_Integer_To_Roman.swift */,
+				33548C8E1F9EDB9200C0279F /* Medium_015_3Sum.swift */,
+				33548C901F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift */,
+				33548C921F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift */,
+				33548C941F9EE98700C0279F /* Medium_018_4Sum.swift */,
 			);
 			path = Medium;
 			sourceTree = "<group>";
@@ -198,6 +210,7 @@
 				332B55BF1F78B57D00EAD72B /* Easy_070_Climbing_Stairs.swift in Sources */,
 				33C98E941F6D3F23007DAC2C /* Medium_001_Two_Sum.swift in Sources */,
 				33784C091EEB9824003EB342 /* leetcode.swift in Sources */,
+				33548C931F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift in Sources */,
 				33A055BB1F7B321C00BAFE1B /* Easy_083_Remove_Duplicates_From_Sorted_List.swift in Sources */,
 				331571CE1F8CE9E100AD6533 /* Medium_002_Add_Two_Numbers.swift in Sources */,
 				33548C8B1F9ECC6300C0279F /* Medium_011_Container_With_Most_Water.swift in Sources */,
@@ -206,9 +219,12 @@
 				3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */,
 				332B55BD1F789C1C00EAD72B /* Easy_067_Add_Binary.swift in Sources */,
 				3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */,
+				33548C911F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift in Sources */,
 				33D50CAD1EB874D500AF51B4 /* main.swift in Sources */,
+				33548C8F1F9EDB9200C0279F /* Medium_015_3Sum.swift in Sources */,
 				33C9DC361F6B60AA005FF94D /* Easy_026_Remove_Duplicates_From_Sorted_Array.swift in Sources */,
 				331571D01F8DB06700AD6533 /* Medium_003_Longest_SubString_Without_Repeating_Characters.swift in Sources */,
+				33548C951F9EE98700C0279F /* Medium_018_4Sum.swift in Sources */,
 				33E3742A1F6F62A6003FC96A /* Easy_028_Implement_Str.swift in Sources */,
 				33C9DC341F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift in Sources */,
 				3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */,
