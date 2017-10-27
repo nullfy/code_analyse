@@ -226,5 +226,8 @@ print(m);
 
 //let ali = Easy_070_Climbing_Stairs.climbStairs(4)
 
-Medium_002_Add_Two_Numbers.ali()
+//Medium_002_Add_Two_Numbers.ali()
+
+let ali = Easy_038_Count_And_Say.conutAndSay(30)
+print(ali)
 
