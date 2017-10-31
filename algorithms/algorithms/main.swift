@@ -228,6 +228,8 @@ print(m);
 
 //Medium_002_Add_Two_Numbers.ali()
 
-let ali = Easy_038_Count_And_Say.conutAndSay(30)
+//let ali = Easy_038_Count_And_Say.conutAndSay(30)
+
+let ali = Sorting_Algorithm.Shell_sort(arr: [9, 78, 19, 0, 7, 8], n: 6)
 print(ali)
 
