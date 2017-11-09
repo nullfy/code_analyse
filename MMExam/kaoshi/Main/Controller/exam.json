@@ -1,0 +1,534 @@
+{
+    "status": "ok",
+    "msg": {
+        "message": "",
+        "data": {
+            "userId": 45,
+            "paperId": 1,
+            "paperTitle": "\u7ecf\u7eaa\u4eba\u6d4b\u8bd5\u9898",
+            "limitTime": 60,
+            "examType": 1,
+            "updated_at": "1509960834",
+            "created_at": "1509960834",
+            "id": 375,
+            "totalNumbers": 33,
+            "questionList": [{
+                             "qId": 133,
+                             "qPoint": "3",
+                             "qOrder": 1,
+                             "qSelects": [{
+                                          "select": "A.1",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.2",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.3",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.4",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u201c\u4e24\u4e2a\u9ec4\u9e42\u9e23\u7fe0\u67f3\uff0c\u4e00\u884c\u767d\u9e6d\u4e0a\u9752\u5929\u201d\u8fd9\u4e00\u8bd7\u53e5\u4e2d\u5305\u542b\u4e86\u51e0\u79cd\u989c\u8272\u201c\u4e24\u4e2a\u9ec4\u9e42\u9e23\u7fe0\u67f3\uff0c\u4e00\u884c\u767d\u9e6d\u4e0a\u9752\u5929\u201d\u8fd9\u4e00\u8bd7\u53e5\u4e2d\u5305\u542b\u4e86\u51e0\u79cd\u989c\u8272\u201c\u4e24\u4e2a\u9ec4\u9e42\u9e23\u7fe0\u67f3\uff0c\u4e00\u884c\u767d\u9e6d\u4e0a\u9752\u5929\u201d\u8fd9\u4e00\u8bd7\u53e5\u4e2d\u5305\u542b\u4e86\u51e0\u79cd\u989c\u8272\u201c\u4e24\u4e2a\u9ec4\u9e42\u9e23\u7fe0\u67f3\uff0c\u4e00\u884c\u767d\u9e6d\u4e0a\u9752\u5929\u201d\u8fd9\u4e00\u8bd7\u53e5\u4e2d\u5305\u542b\u4e86\u51e0\u79cd\u989c\u8272(  )\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 121,
+                             "qPoint": "3",
+                             "qOrder": 2,
+                             "qSelects": [{
+                                          "select": "A.Z\u00a0\u00a0\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.zh\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.zu\u00e0ng\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.zhu\u00e0ng\u00a0",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u201c\u58ee\u201d\u8fd9\u4e2a\u5b57\u5982\u679c\u7528\u97f3\u5e8f\u67e5\u5b57\u6cd5\u6765\u67e5\u7684\u8bdd\uff0c\u5e94\u67e5\uff08\u00a0\u00a0\u00a0 \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 137,
+                             "qPoint": "3",
+                             "qOrder": 3,
+                             "qSelects": [{
+                                          "select": "A.\u7a7a\u683c",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.\u786e\u8ba4",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.\u5220\u9664",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.\u4ee5\u4e0a\u90fd\u4e0d\u5bf9",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u5728\u8ba1\u7b97\u673a\u952e\u76d8\u4e0a\uff0cEnter\u4ee3\u8868\uff1f\uff08    \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 118,
+                             "qPoint": "3",
+                             "qOrder": 4,
+                             "qSelects": [{
+                                          "select": "A.ABCDEF",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.JMMKLG\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.OPQRST\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.UVWXYZ",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u4e0b\u5217\u5b57\u6bcd\u7684\u6392\u5217\u987a\u5e8f\u9519\u8bef\u7684\u4e00\u7ec4\u662f\uff08 \u00a0 \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 126,
+                             "qPoint": "3",
+                             "qOrder": 5,
+                             "qSelects": [{
+                                          "select": "A.\u4f60\u4e0d\u80fd\u505a\u3002",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.\u4f60\u4e00\u5b9a\u8981\u505a",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.\u4f60\u53ef\u4ee5\u4e0d\u505a\u3002",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.\u4f60\u4e0d\u53ef\u4ee5\u505a\u4e5f\u53ef\u4ee5\u4e0d\u505a",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u201c\u8fd9\u4ef6\u4e8b\u4f60\u4e0d\u80fd\u4e0d\u505a\u3002\u201d\u8fd9\u53e5\u8bdd\u7684\u610f\u601d\u662f\uff08 \u00a0 \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 111,
+                             "qPoint": "3",
+                             "qOrder": 6,
+                             "qSelects": [{
+                                          "select": "A.\u9886\u571f",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.\u9886\u609f",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.\u9886\u5531",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.\u9886\u8896",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u4e0b\u9762\u8bcd\u8bed\u4e2d\u7684\u201c\u9886\u201d\u5b57\u4e0e\u201c\u9886\u7565\u201d\u4e2d\u7684\u201c\u9886\u201d\u5b87\u610f\u601d\u76f8\u540c\u7684\u4e00\u9879\u662f\u4e0b\u9762\u8bcd\u8bed\u4e2d\u7684\u201c\u9886\u201d\u5b57\u4e0e\u201c\u9886\u7565\u201d\u4e2d\u7684\u201c\u9886\u201d\u5b87\u610f\u601d\u76f8\u540c\u7684\u4e00\u9879\u662f\u4e0b\u9762\u8bcd\u8bed\u4e2d\u7684\u201c\u9886\u201d\u5b57\u4e0e\u201c\u9886\u7565\u201d\u4e2d\u7684\u201c\u9886\u201d\u5b87\u610f\u601d\u76f8\u540c\u7684\u4e00\u9879\u662f\u4e0b\u9762\u8bcd\u8bed\u4e2d\u7684\u201c\u9886\u201d\u5b57\u4e0e\u201c\u9886\u7565\u201d\u4e2d\u7684\u201c\u9886\u201d\u5b87\u610f\u601d\u76f8\u540c\u7684\u4e00\u9879\u662f(   )",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 134,
+                             "qPoint": "3",
+                             "qOrder": 7,
+                             "qSelects": [{
+                                          "select": "A.30\u5206\u949f",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.60\u5206\u949f",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.90\u5206\u949f",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.120\u5206\u949f",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u533b\u751f\u7ed9\u4f603\u4e2a\u836f\u4e38\uff0c\u8981\u4f60\u6bcf30\u5206\u949f\u54031\u4e2a\uff0c\u8fd9\u4e9b\u836f\u4e38\u591a\u4e45\u540e\u4f1a\u88ab\u5403\u5b8c\uff1f\uff08\uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 141,
+                             "qPoint": "3",
+                             "qOrder": 8,
+                             "qSelects": [{
+                                          "select": "A.2",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.3",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.4",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.3\u62164",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u4e24\u5bf9\u7236\u5b50\u53bb\u4e70\u5e3d\u5b50\uff0c\u6bcf\u4eba\u4e00\u9876\uff0c\u8bf7\u95ee\u9700\u51e0\u9876?  (  )\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 123,
+                             "qPoint": "3",
+                             "qOrder": 9,
+                             "qSelects": [{
+                                          "select": "A.\u2460",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.\u2461",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.\u2462",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.\u2463",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u201c\u585e\u201d\u5728\u5b57\u5178\u4e2d\u6709\u5982\u4e0b\u89e3\u91ca\uff1a\u2460\u585e\u5b50\uff1b\u2461\u8fb9\u5173\uff0c\u585e\u5916\uff1b\u2462\u91cd\u8981\u7684\u5730\u65b9\uff1b \r\n\u2463\u628a\u7a9f\u7abf\u5835\u4f4f\u3002\u5728\u201c\u519b\u4e8b\u8981\u585e\u201d\u8fd9\u4e2a\u8bcd\u4e2d\u5b83\u5e94\u9009\uff08 \u00a0\u00a0 \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 129,
+                             "qPoint": "3",
+                             "qOrder": 10,
+                             "qSelects": [{
+                                          "select": "A.1",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.2 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.3",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.7",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "99+1919+9999\u7684\u4e2a\u4f4d\u6570\u662f\uff08\uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 119,
+                             "qPoint": "3",
+                             "qOrder": 11,
+                             "qSelects": [{
+                                          "select": "A.T t\u00a0 Wu\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.Y y\u00a0 N n\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.G g\u00a0 L I\u00a0",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.Q p\u00a0 R r",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u4e0b\u5217\u5927\u5c0f\u5f62\u5f0f\u4e92\u6362\u5b8c\u5168\u6b63\u786e\u7684\u662f\uff08\u00a0\u00a0 \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 114,
+                             "qPoint": "3",
+                             "qOrder": 12,
+                             "qSelects": [{
+                                          "select": "A.2\uff1a3  ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.3\uff1a2 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.2\uff1a5",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.5 : 3",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u4ece\u7532\u5730\u5f00\u5f80\u4e59\u5730\uff0c\u5ba2\u8f66\u898110\u5c0f\u65f6\uff0c\u8d27\u8f66\u898115\u5c0f\u65f6\uff0c\u5ba2\u8f66\u4e0e\u8d27\u8f66\u7684\u901f\u5ea6\u6bd4\u662f\uff08    \uff09\u3002   ",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 132,
+                             "qPoint": "3",
+                             "qOrder": 13,
+                             "qSelects": [{
+                                          "select": "A.Ctrl",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.Caps Lock",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.Alt  ",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u7535\u8111\u952e\u76e4\u4e2d\uff0c\u53ef\u4ee5\u5e6b\u52a9\u6211\u4eec\u8f93\u5165\u5927\u5199\u5b57\u6bcd\u7684\u952e\u662f\uff08\uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 130,
+                             "qPoint": "3",
+                             "qOrder": 14,
+                             "qSelects": [{
+                                          "select": "A.enter   ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.shift",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.delete  ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.insert",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "office\u8edf\u4ef6\u4e2d\uff0c\u522a\u9664\u7684\u5feb\u6377\u952e\u662f\uff1f( )\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 136,
+                             "qPoint": "3",
+                             "qOrder": 15,
+                             "qSelects": [{
+                                          "select": "A.\u767e\u5206\u4e4b200   ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.1\/200% ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.%200 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.200%",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u767e\u5206\u4e4b\u4e24\u767e\u7528\u6570\u5b57\u5982\u4f55\u8868\u793a?\uff08    \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 140,
+                             "qPoint": "3",
+                             "qOrder": 16,
+                             "qSelects": [{
+                                          "select": "A.\u4e0d\u4f46\u2026\u800c\u4e14 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.\u56e0\u4e3a\u2026\u6240\u6709 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.\u5982\u679c\u2026\u5c31 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.\u53ea\u6709\u2026\u624d",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\uff08\uff09\u4f60\u8981\u593a\u53d6\u51a0\u519b\uff0c\uff08\uff09\u5e94\u8be5\u575a\u6301\u4e0d\u61c8\u7684\u8fdb\u884c\u953b\u70bc\uff0c\u8bf7\u9009\u62e9\u6070\u5f53\u7684\u5173\u8054\u8bcd\uff1f    (  ) \r\n\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 149,
+                             "qPoint": "4",
+                             "qOrder": 17,
+                             "qSelects": [{
+                                          "select": "A.5\u5929",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.14\u5929 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.35\u5929",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.70\u5929",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u4e94\u6ef4\u773c\u836f\u6c34\u4e3a1\u6beb\u5347\u3002\u4e3a\u4fdd\u62a4\u773c\u775b\u6bcf\u5929\u65e9\u4e0a\u5c0f\u660e\u5728\u53cc\u773c\u5404\u6ef4\u4e00\u6ef4,\u4e00\u74f614\u6beb\u5347\u773c\u836f\u6c34\u5c0f\u660e\u80fd\u7528(   )\u3002",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 144,
+                             "qPoint": "4",
+                             "qOrder": 18,
+                             "qSelects": [{
+                                          "select": "A.\u7532\u4f5c\u6848\u3002",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.\u4e59\u4f5c\u6848\u3002",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.\u4e19\u4f5c\u6848\u3002",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.\u4e01\u4f5c\u6848\u3002",
+                                          "answer": ""
+                                          }, {
+                                          "select": "E.\u7532\u3001\u4e59\u3001\u4e19\u3001\u4e01\u5171\u540c\u4f5c\u6848\u3002 ",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u6709\u4e00\u5929\uff0c\u67d0\u4e00\u73e0\u5b9d\u5e97\u88ab\u76d7\u8d70\u4e86\u4e00\u5757\u8d35\u91cd\u7684\u94bb\u77f3\u3002\u7ecf\u4fa6\u7834\uff0c\u67e5\u660e\u4f5c\u6848\u4eba\u80af\u5b9a\u5728\u7532\u3001\u4e59\u3001\u4e19\u3001\u4e01\u4e4b\u4e2d\u3002\u4e8e\u662f\uff0c\u5bf9\u8fd9\u56db\u4e2a\u91cd\u5927\u5acc\u7591\u72af\u8fdb\u884c\u5ba1\u8baf\u3002\u5ba1\u8baf\u6240\u5f97\u5230\u7684\u53e3\u4f9b\u5982\u4e0b\uff1a\r\n\u3000\u3000\u7532\uff1a\u6211\u4e0d\u662f\u4f5c\u6848\u7684\u3002\r\n\u3000\u3000\u4e59\uff1a\u4e01\u662f\u7f6a\u72af\u3002\r\n\u3000\u3000\u4e19\uff1a\u4e59\u662f\u76d7\u7a83\u8fd9\u5757\u94bb\u77f3\u7684\u7f6a\u72af\u3002\r\n\u3000\u3000\u4e01\uff1a\u4f5c\u6848\u7684\u4e0d\u662f\u6211\u3002\r\n\u3000\u3000\u7ecf\u67e5\u5b9e\uff1a\u8fd9\u56db\u4e2a\u4eba\u7684\u53e3\u4f9b\u4e2d\u53ea\u6709\u4e00\u4e2a\u662f\u5047\u7684\u3002\u90a3\u4e48\uff0c\u4ee5\u4e0b\u54ea\u9879\u624d\u662f\u6b63\u786e\u7684\u7834\u6848\u7ed3\u679c?",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 145,
+                             "qPoint": "4",
+                             "qOrder": 19,
+                             "qSelects": [{
+                                          "select": "A.185",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.225",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.273",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.329 ",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "\u627e\u89c4\u5f8b\uff1a1 ,2 ,6 ,15 \uff0c40 \uff0c104\uff0c\uff08   \uff09\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 147,
+                             "qPoint": "4",
+                             "qOrder": 20,
+                             "qSelects": [{
+                                          "select": "A.5 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.2",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.9",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.11  ",
+                                          "answer": ""
+                                          }],
+                             "qTitle": "  \u4e00\u4e2a\u4eba\u82b18\u5757\u94b1\u4e70\u4e86\u4e00\u53ea\u9e21\uff0c9\u5757\u94b1\u5356\u6389\u4e86\uff0c\u7136\u540e\u4ed6\u89c9\u5f97\u4e0d\u5212\u7b97\uff0c\u82b110\u5757\u94b1\u53c8\u4e70\u56de\u6765\u4e86\uff0c11\u5757\u5356\u7ed9\u53e6\u5916\u4e00\u4e2a\u4eba\u3002\u95ee\u4ed6\u8d5a\u4e86\u591a\u5c11?\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 146,
+                             "qPoint": "4",
+                             "qOrder": 21,
+                             "qSelects": [{
+                                          "select": "A..1 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "B.2155 ",
+                                          "answer": ""
+                                          }, {
+                                          "select": "C.21455",
+                                          "answer": ""
+                                          }, {
+                                          "select": "D.5  ",
+                                          "answer": ""
+                                          }],
+                             "qTitle": " 1=5\uff0c2=15\uff0c3=215\uff0c4=2145\u90a3\u4e485=?\r\n",
+                             "qType": 1,
+                             "qTypeName": "\u9009\u62e9\u9898"
+                             }, {
+                             "qId": 156,
+                             "qPoint": "2",
+                             "qOrder": 22,
+                             "qSelects": [],
+                             "qTitle": "\u300a\u8bba\u8bed\u300b\u7684\u4f5c\u8005\u662f\u5b54\u5b50\u5417\u3002\u00a0",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 160,
+                             "qPoint": "2",
+                             "qOrder": 23,
+                             "qSelects": [],
+                             "qTitle": "\u7eff\u8272\u98df\u54c1\u5c31\u662f\u6307\u989c\u8272\u4e3a\u7eff\u8272\u7684\u98df\u54c1\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 168,
+                             "qPoint": "2",
+                             "qOrder": 24,
+                             "qSelects": [],
+                             "qTitle": "16-8*2=16\uff0c\u8fd9\u4e2a\u7b97\u5f0f\u662f\u6b63\u786e\u7684\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 151,
+                             "qPoint": "2",
+                             "qOrder": 25,
+                             "qSelects": [],
+                             "qTitle": "\u9664\u4e86\u9ed1\u829d\u9ebb\u5916\u6ca1\u6709\u767d\u829d\u9ebb\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 159,
+                             "qPoint": "2",
+                             "qOrder": 26,
+                             "qSelects": [],
+                             "qTitle": "\u4e0d\u660e\u98de\u884c\u7269\u7684\u82f1\u6587\u7f29\u5199\u662fUSO\u00a0\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 154,
+                             "qPoint": "2",
+                             "qOrder": 27,
+                             "qSelects": [],
+                             "qTitle": "\u591a\u5403\u9171\u6cb9\u76ae\u80a4\u4f1a\u53d8\u9ed1 ",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 158,
+                             "qPoint": "2",
+                             "qOrder": 28,
+                             "qSelects": [],
+                             "qTitle": "\u5929\u7a7a\u4e2d\u51fa\u73b0\u7684\u5f69\u8679\u9876\u90e8\u662f\u6a59\u8272\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 152,
+                             "qPoint": "2",
+                             "qOrder": 29,
+                             "qSelects": [],
+                             "qTitle": "\u5f53\u4e00\u5217\u706b\u8f66\u5411\u6211\u4eec\u5f00\u6765\u65f6\uff0c\u542c\u5230\u7684\u6c7d\u7b1b\u58f0\u4f1a\u8d8a\u6765\u8d8a\u9ad8\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 166,
+                             "qPoint": "2",
+                             "qOrder": 30,
+                             "qSelects": [],
+                             "qTitle": "\u767d\u5154\u7684\u773c\u775b\u662f\u9ed1\u8272\u7684\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 162,
+                             "qPoint": "2",
+                             "qOrder": 31,
+                             "qSelects": [],
+                             "qTitle": "\u6211\u56fd\u66fe\u6253\u7834\u7537\u5b50110\u7c73\u8de8\u680f\u4e16\u754c\u7eaa\u5f55\u7684\u8fd0\u52a8\u5458\u662f\u5218\u7fd4\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 170,
+                             "qPoint": "2",
+                             "qOrder": 32,
+                             "qSelects": [],
+                             "qTitle": "\u4f20\u7edf\u4e0a\uff0c\u6211\u56fd\u7528\u4e8c\u5341\u56db\u8282\u6c14\u4e2d\u7684\u56db\u4e2a\u8282\u6c14\u6765\u5212\u5206\u5b63\u8282\uff0c\u8fd9\u56db\u4e2a\u8282\u6c14\u662f\u7acb\u6625\u3001\u7acb\u590f\u3001\u7acb\u79cb\u3001\u7acb\u51ac\u3002\u4f20\u7edf\u4e0a\uff0c\u6211\u56fd\u7528\u4e8c\u5341\u56db\u8282\u6c14\u4e2d\u7684\u56db\u4e2a\u8282\u6c14\u6765\u5212\u5206\u5b63\u8282\uff0c\u8fd9\u56db\u4e2a\u8282\u6c14\u662f\u7acb\u6625\u3001\u7acb\u590f\u3001\u7acb\u79cb\u3001\u7acb\u51ac\u3002\u4f20\u7edf\u4e0a\uff0c\u6211\u56fd\u7528\u4e8c\u5341\u56db\u8282\u6c14\u4e2d\u7684\u56db\u4e2a\u8282\u6c14\u6765\u5212\u5206\u5b63\u8282\uff0c\u8fd9\u56db\u4e2a\u8282\u6c14\u662f\u7acb\u6625\u3001\u7acb\u590f\u3001\u7acb\u79cb\u3001\u7acb\u51ac\u3002",
+                             "qType": 9,
+                             "qTypeName": "\u5224\u65ad\u9898"
+                             }, {
+                             "qId": 179,
+                             "qPoint": "10",
+                             "qOrder": 33,
+                             "qSelects": [],
+                             "qTitle": "\u8bf7\u5199\u51fa26\u4e2a\u5c0f\u5199\u5b57\u6bcd",
+                             "qType": 11,
+                             "qTypeName": "26\u5b57\u6bcd"
+                             }]
+        }
+    }
+}
