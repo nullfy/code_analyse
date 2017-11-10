@@ -8,14 +8,11 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 let loginExpireCode:Int = 301 //登录过期
 let kErrorUnknown = "未知错误"
 let kRequestTimeOut = 30
-let AppSign = "f4b9ebc5-dcae-4214-9e45-216327d2b8ca" //
-
-
-
 
 
 var isTestSwitch: Bool {
@@ -28,7 +25,7 @@ var isTestSwitch: Bool {
 /*
  获取试卷
  username: "测试"
- userPhone: "18888888888"
+ userPhone: ""
  examType:  1 2(性格)
  */
 let API_getExamPaper = "getExamPaper"
@@ -55,7 +52,7 @@ class MMRequestManager {
 }
 
 extension MMRequestManager {
-    func getExamPaper(_ type: ExamType, success: @escaping (_ response: [String : AnyObject]) -> (), failure failRequest: @escaping (_ error: Error) -> ()) {
+    func getExamPaper(_ type: ExamType, success: @escaping (_ response: JSON ) -> (), failure failRequest: @escaping (_ error: Error) -> ()) {
         let url = API_Server + API_getExamPaper
         let t = type == .ExamTypeNormal ? "1" : "2" //2 性格测试
         let param = ["userName" : DataContainer.manager.data_name,
@@ -66,7 +63,7 @@ extension MMRequestManager {
             switch response.result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    success(value as! [String: AnyObject])
+                    success(JSON.init(value))
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -76,10 +73,11 @@ extension MMRequestManager {
         }
     }
     
-    func submitExamPaper(_ data: [Any], success: @escaping (_ response: [String : AnyObject]) -> (), failure failRequest: @escaping (_ error: Error) -> ()) {
+    func submitExamPaper(_ data: [Any], success: @escaping (_ response: JSON ) -> (), failure failRequest: @escaping (_ error: Error) -> ()) {
         let url = API_Server + API_submitExamPaper
+        let dataString = JSON.init(data)
         let param = ["userId" : DataContainer.manager.data_userID,
-                     "data": data,
+                     "data": dataString,
                      "outApp" : "",
                      "userPaperId": DataContainer.manager.data_paperID] as [String : Any]
         
@@ -87,7 +85,7 @@ extension MMRequestManager {
             switch response.result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    success(value as! [String: AnyObject])
+                    success(JSON.init(value))
                 }
             case .failure(let error):
                 DispatchQueue.main.async {

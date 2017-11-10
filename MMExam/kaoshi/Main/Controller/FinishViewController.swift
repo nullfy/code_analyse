@@ -89,13 +89,13 @@ class FinishViewController: UIViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             MMRequestManager.manager.submitExamPaper(datas, success: { (response) in
-                let msg = response["msg"] as! [String: Any]
-                ViewHelper.showResponseToast(msg["message"] as? String)
-                if response["status"] as! String == "ok" {
+                let msg = response["msg"].dictionaryValue
+                ViewHelper.showResponseToast(msg["message"]?.stringValue)
+                if response["status"].stringValue == "ok" {
                     let vc = ScoreViewController()
                     vc.type = self.type
                     if self.type == ExamType.ExamTypeNormal {
-                        vc.score = String.init(format: "智力分数: %@", msg["totalScore"] as! String)
+                        vc.score = String.init(format: "智力分数: %@", (msg["totalScore"]?.stringValue)!)
                         DataContainer.manager.data_examScore = vc.score
                     } else {
                         if DataContainer.manager.data_finishNormal != "" {

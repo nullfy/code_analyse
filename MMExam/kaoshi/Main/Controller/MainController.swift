@@ -35,7 +35,7 @@ class MainController: UIViewController {
     
     fileprivate func loadExamPaper(_ type: ExamType) {
         let hud = ViewHelper.showLoading(self.view)
-        MMRequestManager.manager.getExamPaper(type, success: { (response: [String: AnyObject]) in
+        MMRequestManager.manager.getExamPaper(type, success: { (response: JSON) in
             hud.hide(animated: true)
             //guard let 需要用于optional的变量
             if isTestSwitch {
@@ -111,18 +111,18 @@ class MainController: UIViewController {
                 }()
                 var title: String?
                 var detail: String?
-                if (response["status"]?.isEqual("ok"))!  {
-                    let msgDic = JSON.init(response)
-                    title = msgDic["paperTitle"].stringValue
-                    DataContainer.manager.data_userID = msgDic["userId"].stringValue
-                    DataContainer.manager.data_paperCreate = msgDic["created_at"].stringValue
-                    DataContainer.manager.data_paperID = msgDic["id"].stringValue
-                    DataContainer.manager.data_paperTime = msgDic["limitTime"].stringValue
-                    DataContainer.manager.data_timeTmp = msgDic["limitTime"].stringValue
+                if (response["status"].stringValue == "ok") {
+                    let msgDic = response["msg"]["data"].dictionaryValue
+                    title = msgDic["paperTitle"]?.stringValue
+                    DataContainer.manager.data_userID = (msgDic["userId"]?.stringValue)!
+                    DataContainer.manager.data_paperCreate = (msgDic["created_at"]?.stringValue)!
+                    DataContainer.manager.data_paperID = (msgDic["id"]?.stringValue)!
+                    DataContainer.manager.data_paperTime = (msgDic["limitTime"]?.stringValue)!
+                    DataContainer.manager.data_timeTmp = (msgDic["limitTime"]?.stringValue)!
                     var list = msgDic["questionList"]
                     
-                    for i in 0..<list.count {
-                        var model = QuestionModel.init(json: list[i])
+                    for i in 0..<(list?.count)! {
+                        var model = QuestionModel.init(json: (list?[i])!)
                         model.index = String.init(format: "%.2d", i+1)
                         model.style = type
                         let bottomModel = ExamModel.init(i+1, answer: "")
@@ -130,7 +130,7 @@ class MainController: UIViewController {
                         vc.bottomDatas.append(bottomModel)
                     }
                     
-                    detail = String.init(format: "共有%d道题,答题时间%d分钟，答题时不能退出，如果退出应用，你已答的题将不会保留", list.count, msgDic["limitTime"].intValue/60)
+                    detail = String.init(format: "共有%d道题,答题时间%d分钟，答题时不能退出，如果退出应用，你已答的题将不会保留", (list?.count)!, (msgDic["limitTime"]?.intValue)!/60)
                     
                     let aler = UIAlertController.init(title: title, message: detail, preferredStyle: .alert)
                     aler.addAction(UIAlertAction.init(title: "开始答题", style: .default, handler: { (action) in
@@ -145,7 +145,7 @@ class MainController: UIViewController {
                         self.present(aler, animated: true, completion: nil)
                     }
                 } else {
-                    let alert = response["msg"]?["message"] as! String
+                    let alert = response["msg"]["message"].stringValue
                     ViewHelper.showResponseToast(alert)
                 }
             }
@@ -207,7 +207,7 @@ extension MainController {
         let aler = UIAlertController.init(title: "提示", message: "请在iPhone的“设置-隐私-通讯录“选项中，允许我的打工网访问你的通讯录", preferredStyle: .alert)
         aler.addAction(UIAlertAction.init(title: "", style: .default, handler: { (alert) in
             if #available(iOS 8, *) {
-                UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString))
+                UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
             }
         }))
         if UIDevice.current.isPad {
