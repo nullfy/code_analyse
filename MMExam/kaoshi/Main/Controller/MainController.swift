@@ -204,7 +204,7 @@ extension MainController: instructionDelegate {
 
 extension MainController {
     func loadContact() {
-        let aler = UIAlertController.init(title: "提示", message: "请在iPhone的“设置-隐私-通讯录“选项中，允许我的打工网访问你的通讯录", preferredStyle: .alert)
+        let aler = UIAlertController.init(title: "提示", message: "请在iPhone的“设置-隐私-通讯录“选项中，允许访问你的通讯录", preferredStyle: .alert)
         aler.addAction(UIAlertAction.init(title: "", style: .default, handler: { (alert) in
             if #available(iOS 8, *) {
                 UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
