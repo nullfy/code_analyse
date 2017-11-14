@@ -15,7 +15,7 @@
     return self;
 }
 
-+ (instancetype)initWithTarget:(id)target {
++ (instancetype)proxyWithTarget:(id)target {
     return [[MMWeakProxy alloc] initWithTarget:target];
 }
 
