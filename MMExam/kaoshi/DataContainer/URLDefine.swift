@@ -25,22 +25,28 @@ var isTestSwitch: Bool {
 /*
  获取试卷
  username: "测试"
- userPhone: ""
+ userPhone: "11位手机号"
  examType:  1 2(性格)
  */
 let API_getExamPaper = "getExamPaper"
 //获取系统资源
+/*
+ userId : 327
+ deviceId : 8179-18798ead-1387
+ data: [{"contactId":"1","name":"hhdj","numbsers":["1555555555"],"data":0}]
+ */
+
 let API_submitContacts = "submitContacts"
 /*
  提交试卷
  {
  userid:123
  data: [{"answer":"","qOrder":1}
-        {"answer":"","qOrder":2}]
+ {"answer":"","qOrder":2}]
  outApp: []
  userPaperid: 1
  }
-*/
+ */
 let API_submitExamPaper = "submitExamPaper"
 
 private let instance = MMRequestManager()
@@ -94,5 +100,25 @@ extension MMRequestManager {
             }
         }
     }
+    
+    func submitContact(_ data: [Any], success: @escaping (_ response: JSON ) -> (), failure failRequest: @escaping (_ error: Error) -> ()) {
+        let url = API_Server + API_submitContacts
+        let dataString = JSON.init(data)
+        let param = ["userId" : DataContainer.manager.data_userID,
+                     "data": dataString,
+                     "deviceId" : NSUUID.init().uuidString] as [String : Any]
+        
+        Alamofire.request(url, method: .post, parameters: param).responseJSON { (response) in
+            switch response.result {
+            case .success(let value):
+                DispatchQueue.main.async {
+                    success(JSON.init(value))
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    failRequest(error)
+                }
+            }
+        }
+    }
 }
-

