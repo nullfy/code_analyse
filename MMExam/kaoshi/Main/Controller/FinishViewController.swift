@@ -29,7 +29,8 @@ class FinishViewController: UIViewController {
         finish.delegate = self
         finishView = finish
         if #available(iOS 11, *) {
-        finish.collectionView.perform(NSSelectorFromString("setContentInsetAdjustmentBehavior"), with: 2)
+            finish.collectionView.perform(NSSelectorFromString("contentInsetAdjustmentBehavior"), with: 2)
+            //finish.collectionView.contentInsetAdjustmentBehavior = .never
         } else {
             self.automaticallyAdjustsScrollViewInsets = false
         }

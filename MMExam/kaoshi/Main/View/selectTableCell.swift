@@ -54,6 +54,12 @@ class selectTableCell: UITableViewCell {
     @IBOutlet weak var btnD: UIButton!
     @IBOutlet weak var btnE: UIButton!
     
+    @IBOutlet weak var coverA: UIButton!
+    @IBOutlet weak var coverB: UIButton!
+    @IBOutlet weak var coverC: UIButton!
+    @IBOutlet weak var coverD: UIButton!
+    @IBOutlet weak var coverE: UIButton!
+    
     @IBOutlet weak var editConfirmBtn: UIButton!
     @IBOutlet weak var editContainer: UIView!
     @IBOutlet weak var textView: UITextView!
@@ -70,6 +76,7 @@ class selectTableCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.scrollView.isExclusiveTouch = true
     }
     
     override func layoutSubviews() {
@@ -80,7 +87,6 @@ class selectTableCell: UITableViewCell {
             superv = superv?.superview
         }
         self.width = (superv?.height)!
-        
         let cal = containerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
         cacheBottom = cal.height
         
@@ -152,6 +158,9 @@ class selectTableCell: UITableViewCell {
         btnC.isHidden = false
         btnD.isHidden = false
         btnE.isHidden = false
+        coverC.isHidden = false
+        coverD.isHidden = false
+        coverE.isHidden = false
         editContainer.isHidden = true
         let selects = model.qSelects
         confirmTopConstraint.constant = 20
@@ -167,6 +176,7 @@ class selectTableCell: UITableViewCell {
             itemC.text = selects[2]["select"] as? String
             itemD.text = selects[3]["select"] as? String
             btnE.isHidden = true
+            coverE.isHidden = true
             itemE.isHidden = true
             confirmTopConstraint.constant = 0
         } else if selects.count == 3 {
@@ -178,6 +188,8 @@ class selectTableCell: UITableViewCell {
             itemE.isHidden = true
             btnD.isHidden = true
             btnE.isHidden = true
+            coverD.isHidden = true
+            coverE.isHidden = true
             confirmTopConstraint.constant = -20
         } else if selects.count == 0 {
             if model.qType == 9 {//判断题
@@ -187,6 +199,10 @@ class selectTableCell: UITableViewCell {
                 btnD.isHidden = true
                 itemE.isHidden = true
                 btnE.isHidden = true
+                coverC.isHidden = true
+                coverD.isHidden = true
+                coverE.isHidden = true
+                
                 itemA.text = "是"
                 itemB.text = "否"
                 confirmTopConstraint.constant = -40
@@ -197,6 +213,10 @@ class selectTableCell: UITableViewCell {
                 btnD.isHidden = true
                 itemE.isHidden = true
                 btnE.isHidden = true
+                coverC.isHidden = true
+                coverD.isHidden = true
+                coverE.isHidden = true
+                
                 textView.layer.borderColor = UIColor.black.cgColor
                 textView.layer.borderWidth = 0.5
                 editContainer.isHidden = false
@@ -266,8 +286,31 @@ class selectTableCell: UITableViewCell {
         questionModel?.answer = "E"
     }
     
+    @IBAction func clickCoverA(_ sender: Any) {
+        let sender = self.viewWithTag(200) as Any
+        self.clickA(sender)
+    }
+    @IBAction func clickCoverB(_ sender: Any) {
+        let sender = self.viewWithTag(201) as Any
+        self.clickB(sender)
+    }
+    @IBAction func clickCoverC(_ sender: Any) {
+        let sender = self.viewWithTag(202) as Any
+        self.clickC(sender)
+    }
+    @IBAction func clickCoverD(_ sender: Any) {
+        let sender = self.viewWithTag(203) as Any
+        self.clickD(sender)
+    }
+    @IBAction func clickCoverE(_ sender: Any) {
+        let sender = self.viewWithTag(204) as Any
+        self.clickE(sender)
+    }
+    
+    
     private func clickSender(_ sender: Any) {
-        let n = self.questionModel?.qSelects.count
+        var n = self.questionModel?.qSelects.count
+        if self.questionModel?.qType == 9 { n = 5; }
         for i in 0..<n! {
             let tmp: UIButton = self.viewWithTag(i+200) as! UIButton
             tmp.isSelected = false
@@ -292,6 +335,8 @@ class selectTableCell: UITableViewCell {
         }
         return super.hitTest(point, with: event)
     }
+    
+    
 }
 
 extension selectTableCell: UITextViewDelegate {

@@ -29,26 +29,26 @@ class ExamViewController: UIViewController {
         return datas
     }()
     
-//    var contentCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout.init()
-//        layout.scrollDirection = .horizontal
-//        layout.minimumLineSpacing = 0.1
-//        layout.minimumInteritemSpacing = 0.1
-//        
-//        let collection = UICollectionView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth - btnBase*2, height: btnBase), collectionViewLayout: layout)
-//        collection.bounces = false
-//        collection.backgroundColor = UIColor.red
-//        collection.isPagingEnabled = true
-//        collection.register(UINib.init(nibName: "selectQuestionCell", bundle: nil), forCellWithReuseIdentifier: SelectCellID)
-//        return collection
-//    }()
-
-//    var flowLayout: UICollectionViewFlowLayout {
-//        return self.tableView.collectionViewLayout as! UICollectionViewFlowLayout
-//    }
+    //    var contentCollectionView: UICollectionView = {
+    //        let layout = UICollectionViewFlowLayout.init()
+    //        layout.scrollDirection = .horizontal
+    //        layout.minimumLineSpacing = 0.1
+    //        layout.minimumInteritemSpacing = 0.1
+    //
+    //        let collection = UICollectionView.init(frame: CGRect.init(x: 0, y: 0, width: kScreenWidth - btnBase*2, height: btnBase), collectionViewLayout: layout)
+    //        collection.bounces = false
+    //        collection.backgroundColor = UIColor.red
+    //        collection.isPagingEnabled = true
+    //        collection.register(UINib.init(nibName: "selectQuestionCell", bundle: nil), forCellWithReuseIdentifier: SelectCellID)
+    //        return collection
+    //    }()
+    
+    //    var flowLayout: UICollectionViewFlowLayout {
+    //        return self.tableView.collectionViewLayout as! UICollectionViewFlowLayout
+    //    }
     
     var tableView: UITableView = {
-        let tableView = UITableView.init(frame:CGRect.zero)
+        let tableView = UITableView.init(frame: CGRect.zero, style: .plain)
         tableView.bounces = false
         tableView.backgroundColor = UIColor.red
         tableView.isPagingEnabled = true
@@ -57,12 +57,12 @@ class ExamViewController: UIViewController {
         tableView.register(UINib.init(nibName: "selectTableCell", bundle: nil), forCellReuseIdentifier: SelectTableCellID)
         return tableView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configUI()
         self.configNav()
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) { 
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             DataContainer.manager.startExam()
         }
     }
@@ -77,13 +77,11 @@ class ExamViewController: UIViewController {
         bottomV.bottomDataArray = bottomDatas
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 400
         //flowLayout.estimatedItemSize = CGSize.init(width: self.view.width, height: self.view.height - 30 - 64)
         
         if #available(iOS 11, *) {
-            tableView.perform(NSSelectorFromString("setContentInsetAdjustmentBehavior"), with: 2)
-            tableView.estimatedSectionFooterHeight = 0.1
-            tableView.estimatedSectionHeaderHeight = 0.1
+            tableView.perform(NSSelectorFromString("contentInsetAdjustmentBehavior"), with: 2)
+            tableView.estimatedRowHeight = 0
         } else {
             self.automaticallyAdjustsScrollViewInsets = false
         }
@@ -144,7 +142,7 @@ class ExamViewController: UIViewController {
             tableView.scrollToRow(at: indexPath, at: .top, animated: true)
             //bottomV.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
             //bottomV.collectionView.setContentOffset(CGPoint.init(x: CGFloat(indexPath.row
-//                - 5) * btnBase, y: 0.0), animated: true)
+            //                - 5) * btnBase, y: 0.0), animated: true)
             self.updateBottomCell(indexPath.row)
         }
     }
@@ -201,11 +199,11 @@ class ExamViewController: UIViewController {
 //    func numberOfSections(in collectionView: UICollectionView) -> Int {
 //        return 1
 //    }
-//    
+//
 //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return dataArray.count
 //    }
-//    
+//
 //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectCellID, for: indexPath) as! selectQustionCell
 //        let model = dataArray[indexPath.row]
@@ -213,7 +211,7 @@ class ExamViewController: UIViewController {
 //        print("cell--",model.qId)
 //        return cell
 //    }
-//    
+//
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        var height: CGFloat = 0
 //        if self.preferredInterfaceOrientationForPresentation == UIInterfaceOrientation.portrait ||  self.preferredInterfaceOrientationForPresentation == UIInterfaceOrientation.portraitUpsideDown {
@@ -222,7 +220,7 @@ class ExamViewController: UIViewController {
 //            height = 32
 //        }
 //        let model = dataArray[indexPath.row]
-//        
+//
 //        print("heightcell--",model.qId,flowLayout.itemSize)
 //        return CGSize.init(width: self.view.width, height: self.view.height - self.bottomV.height - height)
 //    }
@@ -405,8 +403,8 @@ extension ExamViewController: BottomViewDelegate {
     func BottomViewDidClickedNext(_ sender: Any) {
         if tableView.contentOffset.y.truncatingRemainder(dividingBy: self.view.width) != 0 { return
         }
-        let i = tableView.contentOffset.y/320
-        if Int(i+1) == dataArray.count { return }
+        let i = tableView.contentOffset.y/self.view.width
+        if Int(i+1) >= dataArray.count { return }
         let offsetY = Int(i)+1 //* self.view.width
         self.scrollTableView(offsetY)
         //self.tableView.setContentOffset(CGPoint.init(x: 0, y: offsetY), animated: true)
@@ -414,8 +412,8 @@ extension ExamViewController: BottomViewDelegate {
     
     func BottomViewDidClickedPrev(_ sender: Any) {
         if tableView.contentOffset.y.truncatingRemainder(dividingBy: self.view.width) != 0 { return }
-        let i = tableView.contentOffset.y/320
-        if i == 0 { return }
+        let i = tableView.contentOffset.y/self.view.width
+        if i <= 0 { return }
         let offsetY = Int(i)-1 //* self.view.width
         self.scrollTableView(offsetY)
         //let offsetY = (i-1)*self.view.width

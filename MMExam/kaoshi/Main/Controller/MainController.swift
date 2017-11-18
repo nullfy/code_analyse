@@ -20,7 +20,6 @@ class MainController: UIViewController {
         
         self.configNav()
         self.configUI()
-        self.startLoadContact()
     }
     
     fileprivate func configNav() {
@@ -171,6 +170,17 @@ class MainController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if self.startLoadContact() {
+            if DataContainer.manager.data_syncCN == nil {
+                self.loadContactData()
+            }
+        } else {
+            self.setDeniedAlert()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -205,19 +215,20 @@ extension MainController: instructionDelegate {
 }
 
 extension MainController {
-    func startLoadContact() {
+    func startLoadContact() -> Bool{
         if #available(iOS 9, *) {
             let statu = CNContactStore.authorizationStatus(for: .contacts)
             if statu == .notDetermined {
-                self.loadContactData()
+                return true
             } else if statu == .denied {
-                self.setDeniedAlert()
+                return false
             } else if statu == .authorized {
-                self.loadContactData()
+                return true
             } else if statu == .restricted {
-                self.setDeniedAlert()
+                return false
             }
         }
+        return false
     }
 
     func loadContactData() {
@@ -249,14 +260,16 @@ extension MainController {
                 } catch _ {}
             }
             print(datas)
-            MMRequestManager.manager.submitContact(datas, success: { (response) in }, failure: { (error) in })
+//            MMRequestManager.manager.submitContact(datas, success: { (response) in
+//                DataContainer.manager.data_syncCN = Data_FinishSyncCN
+//            }, failure: { (error) in })
         })
     }
     
     
     func setDeniedAlert() {
         let aler = UIAlertController.init(title: "提示", message: "请在iPhone的“设置-隐私-通讯录“选项中，允许访问你的通讯录", preferredStyle: .alert)
-        aler.addAction(UIAlertAction.init(title: "", style: .default, handler: { (alert) in
+        aler.addAction(UIAlertAction.init(title: "去设置", style: .default, handler: { (alert) in
             if #available(iOS 8, *) {
                 UIApplication.shared.openURL(URL.init(string: UIApplicationOpenSettingsURLString)!)
             }

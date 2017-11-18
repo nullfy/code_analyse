@@ -62,7 +62,8 @@ class BottomView: UIView {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         if #available(iOS 11, *) {
-            collectionView.perform(NSSelectorFromString("setContentInsetAdjustmentBehavior"), with: 2)
+           //collectionView.contentInsetAdjustmentBehavior = .never
+            collectionView.perform(NSSelectorFromString("contentInsetAdjustmentBehavior"), with: 2)
         }
     }
     

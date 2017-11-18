@@ -6,7 +6,7 @@
             "userId": 45,
             "paperId": 1,
             "paperTitle": "\u7ecf\u7eaa\u4eba\u6d4b\u8bd5\u9898",
-            "limitTime": 60,
+            "limitTime": 600,
             "examType": 1,
             "updated_at": "1509960834",
             "created_at": "1509960834",
