@@ -191,6 +191,7 @@ class ExamViewController: UIViewController {
     func scrollTableView(_ index: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
             self.tableView.scrollToRow(at: IndexPath.init(row: index, section: 0), at: .bottom, animated: true)
+            self.navigationItem.title = "第\(index+1)题"
         }
     }
 }
