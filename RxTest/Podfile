@@ -1,0 +1,15 @@
+platform :ios, '9.0'
+use_frameworks!
+
+target 'RxTest' do
+pod 'Moya'
+pod 'Then',     '~>2.1.0' 
+pod 'RxSwift',		'~> 3.0'
+pod 'RxCocoa',		'~> 3.0'
+pod 'HandyJSON'
+pod 'Kingfisher',    '~>3.13.1'
+pod 'Moya/RxSwift'
+pod 'SwiftDate',	'~> 4.0.11'
+pod 'RxDataSources',    '~> 1.0'
+
+end
