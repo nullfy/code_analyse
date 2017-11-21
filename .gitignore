@@ -2,3 +2,6 @@
 *.xcuserstate
 
 *.pbxproj
+
+
+Podfile
