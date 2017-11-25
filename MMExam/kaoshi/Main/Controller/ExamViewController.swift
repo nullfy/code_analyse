@@ -79,11 +79,10 @@ class ExamViewController: UIViewController {
         tableView.dataSource = self
         //flowLayout.estimatedItemSize = CGSize.init(width: self.view.width, height: self.view.height - 30 - 64)
         
+        self.automaticallyAdjustsScrollViewInsets = false
         if #available(iOS 11, *) {
             tableView.perform(NSSelectorFromString("contentInsetAdjustmentBehavior"), with: 2)
             tableView.estimatedRowHeight = 0
-        } else {
-            self.automaticallyAdjustsScrollViewInsets = false
         }
         
         self.view.addSubview(tableView)

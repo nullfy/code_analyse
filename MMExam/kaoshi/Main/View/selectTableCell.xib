@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectTableCellID" rowHeight="494" id="KGk-i7-Jjw" customClass="selectTableCell" customModule="kaoshi" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectTableCellID" rowHeight="494" id="KGk-i7-Jjw" customClass="selectTableCell" customModule="kaoshi" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="494"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="493.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q3-xc-1Td">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Q3-xc-1Td">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="493.5"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" bounces="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Avn-cV-gMw">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Avn-cV-gMw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="493.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5U2-pj-0ZH">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5U2-pj-0ZH">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="      四个人在牙科医生的等候室坐成一排，布朗小姐下一个是格林小姐，但布朗小姐不在琼斯先生之后，琼斯先生不在吉尔先生之后，吉尔先生下一个是谁？" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTg-Qm-gD3" userLabel="四个人在牙科医生的等候室坐成一排，布朗小姐下一个是格林小姐，但布朗小姐不在琼斯先生之后，琼斯先生不在吉尔先生之后，吉尔先生下一个是谁">
@@ -190,6 +189,36 @@
                                                     <action selector="clickConfirm:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Ye6-Fl-bym"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojx-Qh-Gpj">
+                                                <rect key="frame" x="10" y="137" width="300" height="30"/>
+                                                <connections>
+                                                    <action selector="clickCoverA:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vws-cD-qDM"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFI-hQ-5fp">
+                                                <rect key="frame" x="10" y="177" width="300" height="54"/>
+                                                <connections>
+                                                    <action selector="clickCoverB:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MpV-Kd-eXv"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVK-if-Qpf">
+                                                <rect key="frame" x="10" y="241" width="300" height="30"/>
+                                                <connections>
+                                                    <action selector="clickCoverC:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="T9J-JN-Le5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Z7-OB-UBW">
+                                                <rect key="frame" x="10" y="281" width="300" height="30"/>
+                                                <connections>
+                                                    <action selector="clickCoverD:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sCj-69-bJQ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N68-pY-1CR">
+                                                <rect key="frame" x="10" y="321" width="300" height="30"/>
+                                                <connections>
+                                                    <action selector="clickCoverE:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pEX-nZ-Tvn"/>
+                                                </connections>
+                                            </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ekq-9j-qjR">
                                                 <rect key="frame" x="0.0" y="137" width="320" height="263"/>
                                                 <subviews>
@@ -235,36 +264,6 @@
                                                     <constraint firstAttribute="trailing" secondItem="yhv-67-n2P" secondAttribute="trailing" constant="10" id="puh-bQ-2G7"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ojx-Qh-Gpj">
-                                                <rect key="frame" x="10" y="137" width="300" height="30"/>
-                                                <connections>
-                                                    <action selector="clickCoverA:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vws-cD-qDM"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kFI-hQ-5fp">
-                                                <rect key="frame" x="10" y="177" width="300" height="54"/>
-                                                <connections>
-                                                    <action selector="clickCoverB:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="MpV-Kd-eXv"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CVK-if-Qpf">
-                                                <rect key="frame" x="10" y="241" width="300" height="30"/>
-                                                <connections>
-                                                    <action selector="clickCoverC:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="T9J-JN-Le5"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Z7-OB-UBW">
-                                                <rect key="frame" x="10" y="281" width="300" height="30"/>
-                                                <connections>
-                                                    <action selector="clickCoverD:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="sCj-69-bJQ"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N68-pY-1CR">
-                                                <rect key="frame" x="10" y="321" width="300" height="30"/>
-                                                <connections>
-                                                    <action selector="clickCoverE:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="pEX-nZ-Tvn"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>

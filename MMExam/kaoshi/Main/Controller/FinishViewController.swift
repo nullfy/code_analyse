@@ -28,11 +28,11 @@ class FinishViewController: UIViewController {
         finish.dumpArray = dataArray!
         finish.delegate = self
         finishView = finish
+        self.automaticallyAdjustsScrollViewInsets = false
         if #available(iOS 11, *) {
+            
             finish.collectionView.perform(NSSelectorFromString("contentInsetAdjustmentBehavior"), with: 2)
             //finish.collectionView.contentInsetAdjustmentBehavior = .never
-        } else {
-            self.automaticallyAdjustsScrollViewInsets = false
         }
         view.addSubview(finish)
     }
