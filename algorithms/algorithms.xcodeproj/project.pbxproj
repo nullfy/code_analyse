@@ -21,6 +21,7 @@
 		33548C911F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C901F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift */; };
 		33548C931F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C921F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift */; };
 		33548C951F9EE98700C0279F /* Medium_018_4Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33548C941F9EE98700C0279F /* Medium_018_4Sum.swift */; };
+		3362D8D91FD2F10400DDB437 /* Medium_022_Generate_Parentheses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3362D8D81FD2F10400DDB437 /* Medium_022_Generate_Parentheses.swift */; };
 		3369B29F1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */; };
 		3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */; };
 		3369B2E81F7611B400B0B35A /* Easy_066_Plus_One.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */; };
@@ -64,6 +65,7 @@
 		33548C901F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_016_3Sum_Closest.swift; sourceTree = "<group>"; };
 		33548C921F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_017_Letter_Combinations_Of_A_Phone_Number.swift; sourceTree = "<group>"; };
 		33548C941F9EE98700C0279F /* Medium_018_4Sum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_018_4Sum.swift; sourceTree = "<group>"; };
+		3362D8D81FD2F10400DDB437 /* Medium_022_Generate_Parentheses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medium_022_Generate_Parentheses.swift; sourceTree = "<group>"; };
 		3369B29E1F71F8F100B0B35A /* Easy_038_Count_And_Say.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_038_Count_And_Say.swift; sourceTree = "<group>"; };
 		3369B2A01F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_058_Length_Of_Last_Word.swift; sourceTree = "<group>"; };
 		3369B2E71F7611B400B0B35A /* Easy_066_Plus_One.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easy_066_Plus_One.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				33548C901F9EE2E800C0279F /* Medium_016_3Sum_Closest.swift */,
 				33548C921F9EE7DA00C0279F /* Medium_017_Letter_Combinations_Of_A_Phone_Number.swift */,
 				33548C941F9EE98700C0279F /* Medium_018_4Sum.swift */,
+				3362D8D81FD2F10400DDB437 /* Medium_022_Generate_Parentheses.swift */,
 			);
 			path = Medium;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				33E3742A1F6F62A6003FC96A /* Easy_028_Implement_Str.swift in Sources */,
 				33C9DC341F6AADB7005FF94D /* Easy_021_Merge_Two_Sorted_Lists.swift in Sources */,
 				3369B2A11F73490C00B0B35A /* Easy_058_Length_Of_Last_Word.swift in Sources */,
+				3362D8D91FD2F10400DDB437 /* Medium_022_Generate_Parentheses.swift in Sources */,
 				33C98E911F6D39EE007DAC2C /* Easy_027_Remove_Element.swift in Sources */,
 				33A055BD1F7B42F100BAFE1B /* Easy_088_Merge_Sorted_Array.swift in Sources */,
 				33C9DC1B1F68CC27005FF94D /* Easy_020_Valid_Parenthess.swift in Sources */,

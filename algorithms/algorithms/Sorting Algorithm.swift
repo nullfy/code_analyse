@@ -71,7 +71,7 @@ class Sorting_Algorithm: NSObject {
                     j = m
                     break;
                 }
-                print("----",res)
+                //print("----",res)
             }
             res[j+1] = tmp
             print(res)

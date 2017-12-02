@@ -230,6 +230,8 @@ print(m);
 
 //let ali = Easy_038_Count_And_Say.conutAndSay(30)
 
-let ali = Sorting_Algorithm.Shell_sort(arr: [9, 78, 19, 0, 7, 8], n: 6)
+//let ali = Sorting_Algorithm.Shell_sort(arr: [9, 78, 19, 0, 7, 8], n: 6)
+
+let ali = Medium_022_Generate_Parentheses.generateParenthesis(3)
 print(ali)
 
