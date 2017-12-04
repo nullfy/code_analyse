@@ -5,3 +5,7 @@
 
 
 Podfile
+
+*.xcuserstate
+
+*.pbxproj
