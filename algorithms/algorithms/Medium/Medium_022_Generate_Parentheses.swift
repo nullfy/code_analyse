@@ -26,7 +26,14 @@ import Foundation
 
  题解：给定一个非负整数n，生成n 对括号的所有合法排列
  1、使用二叉树的方法
- 
+ 2、n为3 的时候有以下这种情况
+ n      m
+ 3      0
+ 2      1
+  2      0
+  1      1
+  1      0
+
  */
 
 struct Medium_022_Generate_Parentheses {
@@ -37,8 +44,10 @@ struct Medium_022_Generate_Parentheses {
         }
         if m > 0 {
             help(arr: &arr, str: str + ")", n: n, m: m-1)
+            print("m > 0 n===\(n), m====\(m)")
         }
         if n > 0 {
+            print("n > 0 n===\(n), m====\(m)")
             help(arr: &arr, str: str + "(", n: n-1, m: m+1)
         }
         print(arr)
