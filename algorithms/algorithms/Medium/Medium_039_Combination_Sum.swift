@@ -29,6 +29,7 @@ import Foundation
  [2, 2, 3]
  
  Inspired by @dylan_yu at https://leetcode.com/discuss/10141/a-solution-avoid-using-set
+ 题解：给定一个整型数组，一个目标值。可以重复用其中的元素相加得到目标值，求解法有几种
  
  */
 
