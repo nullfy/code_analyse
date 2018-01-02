@@ -32,11 +32,11 @@ import Foundation
  */
 
 extension Array {
-    public mutating func swapAt(_ indexI: Int, _ indexJ: Int) {
+    public mutating func swapAt(_ indexI: Int, _ indexJ: Int) {//替换
         var tmp = self
         let i = self[indexI]
         let j = self[indexJ]
-        tmp .remove(at: indexI)
+        tmp.remove(at: indexI)
         tmp.remove(at: indexJ)
         tmp.insert(i, at: indexJ)
         tmp.insert(j, at: indexI)
