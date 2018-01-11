@@ -45,4 +45,25 @@ ps：[XHLaunchAd](https://github.com/CoderZhuXH/XHLaunchAd) 这个项目的广�
 > + NSArray/NSMutableArray
 > + NSDictionary/NSMutableDictionary
 
+# Apache配置
+
+如果哪天手抖不小心删掉了Mac系统自带的Apache的配置文件，这里是备份
+下面这些命令可能会用到
+
+这是vim 操作的退出命令
+:wq     保存退出
+:q!     强制退出
+
+sudo apachectl start    
+sudo apachectl stop
+sudo apachectl restart
+
+以下命令可以调试出httpd.conf 中不对的信息
+sudo apachectl configtest
+sudo /usr/sbin/httpd/ -k start  
+
+
+
+
+
 
