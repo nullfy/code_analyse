@@ -1,0 +1,3 @@
+
+cd [project path]
+pod install
