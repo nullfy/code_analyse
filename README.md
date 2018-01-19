@@ -61,7 +61,7 @@ sudo apachectl restart
 以下命令可以调试出httpd.conf 中不对的信息
 sudo apachectl configtest
 sudo /usr/sbin/httpd/ -k start  
-
+sudo lsof -iTCP:80 -sTCP:LISTEN     验证其他程序是否占用80端口
 
 
 
