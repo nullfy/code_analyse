@@ -9,3 +9,11 @@ Podfile
 *.xcuserstate
 
 *.pbxproj
+
+algorithms/algorithms.xcodeproj/project.xcworkspace/xcuserdata/lixiaodong.xcuserdatad/UserInterfaceState.xcuserstate
+
+algorithms/algorithms.xcodeproj/project.pbxproj
+
+*.pbxproj
+
+*.xcuserstate
