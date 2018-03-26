@@ -235,6 +235,8 @@ print(m);
 //let ali = Medium_022_Generate_Parentheses.generateParenthesis(3)
 
 //let ali = Medium_053_Maxinum_Subarray.maxSubArray([-3,1,-3,4,-1,2,1,5,4])
-let ali = Medium_055_Jump_Game.canJump([2,3,1,1,4])
+//let ali = Medium_055_Jump_Game.canJump([2,3,1,1,4])
+
+let ali = Meidum_069_Sqrt_X.mySqrt(169)
 print(ali)
 
