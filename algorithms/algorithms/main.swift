@@ -237,6 +237,7 @@ print(m);
 //let ali = Medium_053_Maxinum_Subarray.maxSubArray([-3,1,-3,4,-1,2,1,5,4])
 //let ali = Medium_055_Jump_Game.canJump([2,3,1,1,4])
 
-let ali = Meidum_069_Sqrt_X.mySqrt(169)
+//let ali = Meidum_069_Sqrt_X.mySqrt(169)
+let ali = Medium_071_Simplify_Path.simplifyPath("a/a//b/./../d")
 print(ali)
 

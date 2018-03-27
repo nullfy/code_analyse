@@ -33,8 +33,8 @@ struct Medium_064_Minimum_Path_Sum {
         if grid.count == 0 {
             return 0
         }
-        let rows = grid.count  // 行数
-        let cols = grid[0].count //列数
+        let rows = grid.count       // 行数
+        let cols = grid[0].count    //列数
 
         for i in 0..<rows {
             for j in 0 ..< cols {
