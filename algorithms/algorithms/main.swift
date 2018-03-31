@@ -238,6 +238,8 @@ print(m);
 //let ali = Medium_055_Jump_Game.canJump([2,3,1,1,4])
 
 //let ali = Meidum_069_Sqrt_X.mySqrt(169)
-let ali = Medium_071_Simplify_Path.simplifyPath("a/a//b/./../d")
-print(ali)
+//let ali = Medium_071_Simplify_Path.simplifyPath("a/a//b/./../d")
+var metrix = [[1,9,8,9,8],[1,1,3,0,0],[9,8,9,0,7]]
+Medium_073_Set_Matrix_Zeroes.setZeros(&metrix)
+//print(ali)
 
