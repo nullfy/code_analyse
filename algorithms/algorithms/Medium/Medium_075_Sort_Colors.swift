@@ -29,6 +29,14 @@
  
  Inspired by @xianlei at https://leetcode.com/discuss/1827/anyone-with-one-pass-and-constant-space-solution
  
+ 题解：
+ 0 -> 红
+ 1 -> 白
+ 2 -> 蓝
+ 给定一个数组里面的元素用来表示红白蓝三种颜色，排序后使得代表相同颜色的元素相邻在一起，
+ 
+ 要求不使用自带排序函数，计数排序
+ 
  */
 
 import Foundation

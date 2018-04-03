@@ -17,3 +17,7 @@ algorithms/algorithms.xcodeproj/project.pbxproj
 *.pbxproj
 
 *.xcuserstate
+
+*.xcbkptlist
+
+*.xcbkptlist
