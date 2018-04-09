@@ -239,7 +239,18 @@ print(m);
 
 //let ali = Meidum_069_Sqrt_X.mySqrt(169)
 //let ali = Medium_071_Simplify_Path.simplifyPath("a/a//b/./../d")
-var metrix = [[1,9,8,9,8],[1,1,3,0,0],[9,8,9,0,7]]
-Medium_073_Set_Matrix_Zeroes.setZeros(&metrix)
-//print(ali)
+//var metrix = [[1,9,8,9,8],[1,1,3,0,0],[9,8,9,0,7]]
+//Medium_073_Set_Matrix_Zeroes.setZeros(&metrix)
+
+//let ali = Medium_077_Combinations.combine(n: 3, k: 2)
+
+//let ali = Medium_078_Subsets.subsets_II([1,3,2])
+
+let ali = Medium_079_Word_Search().exist([
+    ["A","B","C","E"],
+    ["S","F","C","S"],
+    ["A","D","E","E"]
+    ]
+    , "ABC")
+print(ali)
 

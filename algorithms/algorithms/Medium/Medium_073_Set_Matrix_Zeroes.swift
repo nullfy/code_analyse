@@ -41,7 +41,7 @@ struct Medium_073_Set_Matrix_Zeroes {
         var col_has_zero = false
         let m = matrix.count
         let n = matrix[0].count
-        print("loop0\n",metrix[0],"\n",metrix[1],"\n",metrix[2],"\n\n")
+        print("loop0\n",matrix[0],"\n",matrix[1],"\n",matrix[2],"\n\n")
         
         //遍历首行
         for i in 0..<n {
@@ -61,28 +61,28 @@ struct Medium_073_Set_Matrix_Zeroes {
         
         /*
          这里的逻辑是如果某行某列的一个元素为0 那么就将第1行该列位元素改为0，第一列的该行位元素置为0
-         比如说metrix[2][3] 为0 那么metrix[0][3] metrix[2][0] 改为0
+         比如说matrix[2][3] 为0 那么matrix[0][3] matrix[2][0] 改为0
         */
         for i in 1..<m {
             for j in 1..<n {
                 if matrix[i][j] == 0 {
                     matrix[0][j] = 0
                     matrix[i][0] = 0
-                    print("loop1\n",metrix[0],"\n",metrix[1],"\n",metrix[2],"\n\n")
+                    print("loop1\n",matrix[0],"\n",matrix[1],"\n",matrix[2],"\n\n")
                 }
             }
         }
         
         /*
          这里的逻辑是如果某行第0个元素为0 那么就将第1行该列位元素改为0，第一列的该行位元素置为0
-         比如说metrix[2][0] 为0 那么第三行的元素都会设置为0
-         如果说metrix[0][3] 为0 那么第四列的元素都会设置为0
+         比如说matrix[2][0] 为0 那么第三行的元素都会设置为0
+         如果说matrix[0][3] 为0 那么第四列的元素都会设置为0
          */
         for i in 1..<m {
             for j in 1..<n {
                 if matrix[i][0] == 0 || matrix[0][j] == 0 {
                     matrix[i][j] = 0
-                    print("loop2\n",metrix[0],"\n",metrix[1],"\n",metrix[2],"\n\n")
+                    print("loop2\n",matrix[0],"\n",matrix[1],"\n",matrix[2],"\n\n")
                 }
             }
         }
@@ -90,14 +90,14 @@ struct Medium_073_Set_Matrix_Zeroes {
         if row_has_zero {
             for i in 0..<n {
                 matrix[0][i] = 0
-                print("loop3\n",metrix[0],"\n",metrix[1],"\n",metrix[2],"\n\n")
+                print("loop3\n",matrix[0],"\n",matrix[1],"\n",matrix[2],"\n\n")
             }
         }
         
         if col_has_zero {
             for i in 0..<m {
                 matrix[i][0] = 0
-                print("loop4\n",metrix[0],"\n",metrix[1],"\n",metrix[2],"\n\n")
+                print("loop4\n",matrix[0],"\n",matrix[1],"\n",matrix[2],"\n\n")
             }
         }
     }
