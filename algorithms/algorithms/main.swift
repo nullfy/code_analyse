@@ -246,11 +246,14 @@ print(m);
 
 //let ali = Medium_078_Subsets.subsets_II([1,3,2])
 
-let ali = Medium_079_Word_Search().exist([
-    ["A","B","C","E"],
-    ["S","F","C","S"],
-    ["A","D","E","E"]
-    ]
-    , "ABC")
+//let ali = Medium_079_Word_Search().exist([
+//    ["A","B","C","E"],
+//    ["S","F","C","S"],
+//    ["A","D","E","E"]
+//    ]
+//    , "ABC")
+
+var nums = [1,1,2,2,3,3,4,5,5,7]
+let ali = Medium_080_Remove_Duplicates_From_Sorted_Array_II.removeDuplicates(&nums)
 print(ali)
 
