@@ -37,7 +37,7 @@ class Node {
     }
 }
 
-class Easy_083_Remove_Duplicates_From_Sorted_List: NSObject {
+class Easy_081_Remove_Duplicates_From_Sorted_List: NSObject {
     class func deleteDuplicate(_ head: Node?) -> Node? {
         if head == nil {
             return nil
