@@ -41,7 +41,7 @@ struct Medium_093_Restore_IP_Addresses {
         var res = Array<String>()
         let len: Int = s.characters.count
         for i in 1..<min(4, len-2) {
-            for j in i+1 ..< min(j+4, len) {
+            for j in i+1 ..< min(i+4, len) {
                 for k in j+1 ..< min(j+4, len) {
                     let s0: String = s[0..<i]
                     let s1: String = s[i..<j]
