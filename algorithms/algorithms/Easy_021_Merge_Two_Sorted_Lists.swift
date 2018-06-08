@@ -19,6 +19,7 @@ import Cocoa
  Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
  
  Inspired by @xiaohui7 at https://leetcode.com/discuss/18986/14-line-clean-c-solution
+ 题解：合并两个已排序的链表b遍历 
  
  */
 class Easy_021_Merge_Two_Sorted_Lists: NSObject {

@@ -9,29 +9,26 @@
 import Cocoa
 
 /*
- #19 Remove Nth Node From End of List
+ 
+ https://leetcode.com/problems/valid-parentheses/
+ 
+ #20 Valid_Parentheses
  
  Level: easy
  
- Given a linked list, remove the nth node from the end of list and return its head.
+ Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
  
- For example,
+ The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
  
- Given linked list: 1->2->3->4->5, and n = 2.
+ Inspired by @exodia at https://leetcode.com/discuss/21440/sharing-my-simple-cpp-code-with-2ms
  
- After removing the second node from the end, the linked list becomes 1->2->3->5.
- 
- Note:
- 
- Given n will always be valid.
- Try to do this in one pass.
- 
- Inspired by @i at https://leetcode.com/discuss/1656/is-there-a-solution-with-one-pass-and-o-1-space
- 
+
+
  题解：验证有效括号
  栈法：验证一个有效的括号，有一个右括号必定有一个左括号在前面，所以我们可以将左括号和右括号利用Dictionary来对应好，
- 1.遍历字符串，获得每一个字符
- 2.
+ 1.将每种括号的后面那个作为key，前面的括号作为value,建好 dic
+ 2.遍历所有字符，如果字符为后面那个括号 就判断栈中是否有值，且栈顶是不是一种前括号
+ 3.如果是前括号都进行压栈操作
  */
 
 private extension String {
