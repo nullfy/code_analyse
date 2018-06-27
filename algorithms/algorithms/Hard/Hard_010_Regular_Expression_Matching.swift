@@ -35,6 +35,7 @@
  
  Inspired by @xiaohui7 at https://leetcode.com/discuss/18970/concise-recursive-and-dp-solutions-with-full-explanation-in
  题解：通过传入的两个字符来判断是否匹配，其中 "."匹配任何单个字母, "*"匹配0个或多个前面的元素
+ 有两种解法，一种是动态规划，一种是递归
  */
 
 import Foundation
