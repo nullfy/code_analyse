@@ -73,8 +73,8 @@ sudo lsof -iTCP:80 -sTCP:LISTEN  //验证其他程序是否占用80端口
 ````
 
 
-# MMExam
+# kaoshi_swift
 
-纯Swift 练手项目，有一个小坑，在iOS10上`UITableViewCell`手势响应没有问题，但是在iOS11下出现了手势冲突，需要手动解决一下，如果有兴趣可以测试一下。
+纯Swift 练手项目，有一个小坑，在iOS10上`UITableViewCell`手势响应没有问题，但是在iOS11下出现了手势冲突，需要手动解决一下，如果有兴趣可以测试一下[地址](https://github.com/nullfy/kaoshi_swift)。
 
 
